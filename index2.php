@@ -159,16 +159,21 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
       INNER JOIN Roles ON Users.IdRole = Roles.IdRole 
       WHERE DeleteAt IS NULL ORDER BY IdUser DESC LIMIT '.(($_GET['list']-1)*$PageCount).','.$PageCount.';');
 
-      echo "<table class='table table-striped'><tr><th>Id</th><th>Login</th>
+      echo "<table class='table table-striped'><tr><th></th><th>Id</th><th>Login</th>
       <th>Email</th><th>Phone</th><th>Role</th><th></th><th></th></tr>";
       while ($row = $stmt->fetch())
       {
         echo "<tr>";
+        echo "<td><form method='post' action='PageAdminCheckUser.php'>
+        <input type='number' name='idUserForCheck' value=".$row["IdUser"]." readonly hidden>
+        <input type='submit' class='btn btn-outline-secondary' value='Просмотр'></form></td>";
+
         echo "<td>" . $row["IdUser"] . "</td>";
         echo "<td>" . $row["Login"] . "</td>";
         echo "<td>" . $row["Email"] . "</td>";
         echo "<td>" . $row["Phone"] . "</td>";
         echo "<td>" . $row["Role"] . "</td>";
+
         echo "<td><form method='post' action='PageEditUser.php'>
         <input type='number' name='iduser' value=".$row["IdUser"]." readonly hidden>
         <input type='text' name='login' value=".$row["Login"]." readonly hidden>

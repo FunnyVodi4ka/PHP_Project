@@ -17,6 +17,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
         if($connection->connect_error){
             die("Ошибка: " . $connection->connect_error);
         }
+        
         $now_iduser = (int)$_POST['iduserEditer'];
         $now_login = $connection->real_escape_string($_POST["loginEditer"]);
         $now_password = $connection->real_escape_string($_POST["passwordEditer"]);

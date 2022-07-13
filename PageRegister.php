@@ -1,4 +1,9 @@
 <?php
+  //Вывод сообщения
+  function alertMessage($message) {
+    echo "<script type='text/javascript'>alert('$message');</script>";
+  }
+
   if(isset($_POST['loginRegister']) && isset($_POST['passwordRegister']) && 
   isset($_POST['emailRegister']) && isset($_POST['phoneRegister'])){
     require_once('ConnectionValidation.php');
@@ -20,7 +25,8 @@
             $query = "INSERT INTO Users (Login, Password, Email, Phone, IdRole) 
             VALUES ('$now_login', '$hashPassword', '$now_email', '$now_phone', 2)";
             if($connection->query($query)){
-                echo "Регистрация прошла успешно!";
+                alertMessage("Регистрация прошла успешно!");
+                header("Refresh:0; url=index.php");
             } else{
                 echo "Ошибка: ".$connection->error;
             }
