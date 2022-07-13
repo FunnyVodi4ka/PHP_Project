@@ -44,7 +44,7 @@
         }
     }
     function CheckPassword($password){
-        if(!empty($password) && strlen($password) >= 5 && strlen($password) <= 50){
+        if(!empty($password) && strlen($password) >= 6 && strlen($password) <= 50){
             if (preg_match("/^[a-z0-9-_]{5,50}$/i", $password)) {
                 return true;
             }
@@ -54,7 +54,7 @@
             }
         }
         else{
-            echo "\nОшибка: Длина пароля не может быть меньше 5 и не больше 50 символов!";
+            echo "\nОшибка: Длина пароля не может быть меньше 6 и не больше 50 символов!";
             return false;
         }
     }

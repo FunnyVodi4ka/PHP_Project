@@ -14,7 +14,8 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 2): ?>
   <link rel="stylesheet" href="styles/style.css">
  </head>
  <body>
-    <p><a href="LogOut.php" class="btn btn-primary" onclick="return  confirm('Вы точно хотите выйти?')">Выход</a></p>
+    <b><a href="LogOut.php" class="btn btn-primary" onclick="return  confirm('Вы точно хотите выйти?')">Выход</a></b>
+    <b>Добрый день, Клиент!</b>
     <h2>Ваши данные:</h2>
     <?php
         session_start();
