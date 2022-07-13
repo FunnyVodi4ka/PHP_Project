@@ -4,7 +4,11 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
 
 <?php
     require_once('ConnectionValidation.php');
+    // 1) Сделать автарки
+    // 2) Валидация над формой
+    // 3) Запоминать введённые, но не сохраннёные данные
     
+    // 4) ЧПУ
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD   HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
