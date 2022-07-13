@@ -19,13 +19,14 @@
         if($connection->connect_error){
             die("Ошибка: " . $connection->connect_error);
         }
+        $id = 0;
         $now_login = $connection->real_escape_string($_POST["login"]);
         $now_password = $connection->real_escape_string($_POST["password"]);
         $now_email = $connection->real_escape_string($_POST["email"]);
         $now_phone = $connection->real_escape_string($_POST["phone"]);
         $now_role = $connection->real_escape_string($_POST["role"]);
 
-        if(CheckLogin($now_login) && CheckPassword($now_password) && CheckEmail($now_email) 
+        if(CheckLogin($now_login, $id) && CheckPassword($now_password) && CheckEmail($now_email) 
         && CheckPhone($now_phone) && CheckRole($now_role)){
             $query = "SELECT * FROM Users WHERE Login = '$now_login'";
             $result = mysqli_query($connection, $query);
