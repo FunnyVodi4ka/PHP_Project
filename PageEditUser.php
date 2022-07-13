@@ -10,6 +10,9 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
 
   if(isset($_POST['loginEditer']) && isset($_POST['passwordEditer']) && 
   isset($_POST['emailEditer']) && isset($_POST['phoneEditer']) && isset($_POST['roleEditer'])){
+    $_SESSION['customLogin'] = $_POST['loginRegister'];
+    $_SESSION['customEmail'] = $_POST['emailRegister'];
+    $_SESSION['customPhone'] = $_POST['phoneRegister'];
     require_once('ConnectionValidation.php');
     if($_SESSION["is_role"] == 1 && $_SESSION['is_auth'] == true){
         $connection = new mysqli("localhost", "root", "Password_12345", "CrudDatabase");
@@ -90,16 +93,16 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
         <input name="iduserEditer" type="text" <?php echo "value=".(int)$_POST['iduser']; ?> readonly>
         </p>
         <p><b>Введите новый логин:</b><br>
-        <input name="loginEditer" type="text" size="50" <?php echo "value=".$_POST['login'];?> required>
+        <input name="loginEditer" type="text" size="50" value="<?= $_SESSION['customLogin'] ?? $_POST['login'] ?>" required>
         </p>
         <p><b>Введите новый пароль:</b><br>
         <input name="passwordEditer" type="password" size="50">
         </p>
         <p><b>Введите новый Email:</b><br>
-        <input name="emailEditer" type="email" size="50" <?php echo "value=".$_POST['email'];?> required>
+        <input name="emailEditer" type="email" size="50" value="<?= $_SESSION['customEmail'] ?? $_POST['email'] ?>" required>
         </p>
         <p><b>Введите новый телефон (8XXXXXXXXXX):</b><br>
-        <input name="phoneEditer" type="text" pattern="8[0-9]{10}" size="50" <?php echo "value=".$_POST['phone'];?> required>
+        <input name="phoneEditer" type="text" pattern="8[0-9]{10}" size="50" value="<?= $_SESSION['customPhone'] ?? $_POST['phone'] ?>" required>
         </p>
         <p><b>Выберите новую роль пользователя:</b><br>
         <p>

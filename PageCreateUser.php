@@ -5,6 +5,9 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
 <?php
   if(isset($_POST['loginCreater']) && isset($_POST['passwordCreater']) && 
   isset($_POST['emailCreater']) && isset($_POST['phoneCreater']) && isset($_POST['roleCreater'])){
+    $_SESSION['customLogin'] = $_POST['loginRegister'];
+    $_SESSION['customEmail'] = $_POST['emailRegister'];
+    $_SESSION['customPhone'] = $_POST['phoneRegister'];
     require_once('ConnectionValidation.php');
     #session_start();
     if($_SESSION["is_role"] == 1 && $_SESSION['is_auth'] == true){
@@ -68,16 +71,16 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
         <h2>Добавление пользователя в БД</h2>
       <form name="register" method="post" action="PageCreateUser.php">
         <p><b>Введите логин:</b><br>
-        <input name="loginCreater" type="text" size="50" required>
+        <input name="loginCreater" type="text" size="50" value="<?= $_SESSION['customLogin'] ?? '' ?>" required>
         </p>
         <p><b>Введите пароль:</b><br>
         <input name="passwordCreater" type="password" size="50" required>
         </p>
         <p><b>Введите Email:</b><br>
-        <input name="emailCreater" type="email" size="50" required>
+        <input name="emailCreater" type="email" size="50" value="<?= $_SESSION['customEmail'] ?? '' ?>" required>
         </p>
         <p><b>Введите телефон (8XXXXXXXXXX):</b><br>
-        <input name="phoneCreater" type="text" pattern="8[0-9]{10}" size="50" required>
+        <input name="phoneCreater" type="text" pattern="8[0-9]{10}" size="50" value="<?= $_SESSION['customPhone'] ?? '' ?>" required>
         </p>
         <p><b>Выберите роль пользователя:</b><br>
         <p>

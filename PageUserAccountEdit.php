@@ -26,6 +26,9 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 2): ?>
 
     if(isset($_POST['loginUserEditer']) && isset($_POST['emailUserEditer']) && 
     isset($_POST['phoneUserEditer'])){
+        $_SESSION['customLogin'] = $_POST['loginRegister'];
+        $_SESSION['customEmail'] = $_POST['emailRegister'];
+        $_SESSION['customPhone'] = $_POST['phoneRegister'];
 
         require_once('ConnectionValidation.php');
         $connection = new mysqli("localhost", "root", "Password_12345", "CrudDatabase");
@@ -89,16 +92,16 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 2): ?>
         <input name="iduserUserEditer" type="text" <?php echo "value=".(int)$_SESSION['is_userid']; ?> readonly>
         </p>
         <p><b>Введите новый логин:</b><br>
-        <input name="loginUserEditer" type="text" size="50" <?php echo "value=".$_POST['Login'];?> required>
+        <input name="loginUserEditer" type="text" size="50" value="<?= $_SESSION['customLogin'] ?? $_POST['Login'] ?>" required>
         </p>
         <p><b>Введите новый пароль:</b><br>
         <input name="passwordUserEditer" type="password" size="50">
         </p>
         <p><b>Введите новый Email:</b><br>
-        <input name="emailUserEditer" type="email" size="50" <?php echo "value=".$_POST['Email'];?> required>
+        <input name="emailUserEditer" type="email" size="50" value="<?= $_SESSION['customEmail'] ?? $_POST['Email'] ?>" required>
         </p>
         <p><b>Введите новый телефон (8XXXXXXXXXX):</b><br>
-        <input name="phoneUserEditer" type="text" pattern="8[0-9]{10}" size="50" <?php echo "value=".$_POST['Phone'];?> required>
+        <input name="phoneUserEditer" type="text" pattern="8[0-9]{10}" size="50" value="<?= $_SESSION['customPhone'] ?? $_POST['Phone'] ?>" required>
         </p>
         <input type="submit" class="btn btn-outline-warning" value="Изменить мой аккаунт">
         <input type="reset" class="btn btn-info" value="Очистить"></p>

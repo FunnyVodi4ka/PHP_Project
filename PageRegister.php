@@ -6,6 +6,10 @@
 
   if(isset($_POST['loginRegister']) && isset($_POST['passwordRegister']) && 
   isset($_POST['emailRegister']) && isset($_POST['phoneRegister'])){
+    session_start();
+    $_SESSION['customLogin'] = $_POST['loginRegister'];
+    $_SESSION['customEmail'] = $_POST['emailRegister'];
+    $_SESSION['customPhone'] = $_POST['phoneRegister'];
     require_once('ConnectionValidation.php');
 
     if($_POST["passwordRegister"] == $_POST["passwordSecondRegister"]){
@@ -55,7 +59,7 @@
     <h1>Регистрация</h1>
       <form name="register" method="post" action="PageRegister.php">
         <p><b>Введите логин:</b><br>
-        <input name="loginRegister" type="text" size="50" required>
+        <input name="loginRegister" type="text" size="50" value="<?= $_SESSION['customLogin'] ?? '' ?>" required>
         </p>
         <p><b>Введите пароль:</b><br>
         <input name="passwordRegister" type="password" size="50" required>
@@ -64,10 +68,10 @@
         <input name="passwordSecondRegister" type="password" size="50" required>
         </p>
         <p><b>Введите Email:</b><br>
-        <input name="emailRegister" type="email" size="50" required>
+        <input name="emailRegister" type="email" size="50" value="<?= $_SESSION['customEmail'] ?? '' ?>" required>
         </p>
         <p><b>Введите телефон (8XXXXXXXXXX):</b><br>
-        <input name="phoneRegister" type="text" pattern="8[0-9]{10}" size="50" required>
+        <input name="phoneRegister" type="text" pattern="8[0-9]{10}" size="50" value="<?= $_SESSION['customPhone'] ?? '' ?>" required>
         </p>
         <input type="submit" class="btn btn-outline-success" value="Создать аккаунт">
         <a href="index.php" class="btn btn-outline-warning">Авторизоваться</a>
