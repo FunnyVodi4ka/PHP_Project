@@ -36,12 +36,11 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
     echo "<script type='text/javascript'>alert('$message');</script>";
   }
 
-  //удаление пользователя
+  //Удаление пользователя
   if(isset($_POST['idUserForDelete'])){
     session_start();
     if($_SESSION["is_role"] == 1 && $_SESSION['is_auth'] == true){
         $now_iduser = (int)$_POST['idUserForDelete'];
-        unset($_POST['idUserForDelete']);
         if($now_iduser != $_SESSION['is_userid']){
             if(CheckIdUser($now_iduser)){
                 $stmt = Connection()->prepare('UPDATE Users SET DeleteAt = NOW() WHERE IdUser = ?;');
@@ -59,6 +58,8 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
     else{
       alertMessage("Ошибка доступа, повторите попытку позже!");
     }
+    unset($_POST['idUserForDelete']);
+    header("Refresh:0");
   }
   //--
 ?>
