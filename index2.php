@@ -1,6 +1,7 @@
 <?php 
 session_start();
-if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
+if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): 
+?>
 
 <?php
   require_once('ConnectionValidation.php');
@@ -182,6 +183,6 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
  </body>
 </html>
 <?php else: ?>
-	<p>Пожалуйста, авторизуйтесь!</p>
+	<p>Ошибка доступа, авторизуйтесь!</p>
   <a class="btn btn-primary" href="index.php">Авторизоваться</a>
 <?php endif; ?>

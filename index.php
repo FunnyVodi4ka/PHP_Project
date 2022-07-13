@@ -1,30 +1,37 @@
 <?php
-    require_once('ConnectionValidation.php');
-    
-    session_start();
-    if(isset($_GET['PageRows'])){
-      $_SESSION['PageRows'] = $_GET['PageRows'];
-    }
+  session_start();
+  if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1){
+    header("Refresh:0; url=index2.php");
+  }
+  elseif($_SESSION["is_auth"] && $_SESSION["is_role"] == 2){
+    header("Refresh:0; url=PageUserAccount.php");
+  }
+
+  require_once('ConnectionValidation.php');
   
-    if(empty($_SESSION['PageRows'])){
-      $PageCount = 10;
-    } else{
-      $PageCount = $_SESSION['PageRows'];
-    }
+  if(isset($_GET['PageRows'])){
+    $_SESSION['PageRows'] = $_GET['PageRows'];
+  }
 
-    if(!isset($_GET['list'])) {
-      $_GET['list'] = 1;
-    }
-    $usersCountResult = Connection()->query("SELECT count(*) FROM Users WHERE DeleteAt IS NULL");
-    $usersCount = $usersCountResult->fetch();
+  if(empty($_SESSION['PageRows'])){
+    $PageCount = 10;
+  } else{
+    $PageCount = $_SESSION['PageRows'];
+  }
 
-    if ($_GET['list'] > $usersCount['count(*)'] / $PageCount) {
-      $_GET['list'] = ceil($usersCount['count(*)'] / $PageCount);
-    }
+  if(!isset($_GET['list'])) {
+    $_GET['list'] = 1;
+  }
+  $usersCountResult = Connection()->query("SELECT count(*) FROM Users WHERE DeleteAt IS NULL");
+  $usersCount = $usersCountResult->fetch();
 
-    if ($_GET['list'] < 1){
-      $_GET['list'] = 1;
-    }
+  if ($_GET['list'] > $usersCount['count(*)'] / $PageCount) {
+    $_GET['list'] = ceil($usersCount['count(*)'] / $PageCount);
+  }
+
+  if ($_GET['list'] < 1){
+    $_GET['list'] = 1;
+  }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>

@@ -7,7 +7,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>Регистрация</title>    
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-  <link rel="stylesheet" href="styles/style.css">
+  <link rel="stylesheet" href="style.css">
   <?php
     function Redirect($status){
         if($status == 1){
@@ -26,13 +26,13 @@
         if($connection->connect_error){
             die("Ошибка: " . $connection->connect_error);
         }
-        
+        $id = 0;
         $now_login = $connection->real_escape_string($_POST["login"]);
         $now_password = $connection->real_escape_string($_POST["password"]);
         $now_email = $connection->real_escape_string($_POST["email"]);
         $now_phone = $connection->real_escape_string($_POST["phone"]);  
 
-        if(CheckLogin($now_login) && CheckPassword($now_password) && CheckEmail($now_email) 
+        if(CheckLogin($now_login, $id) && CheckPassword($now_password) && CheckEmail($now_email) 
         && CheckPhone($now_phone)){
             $hashPassword = password_hash($now_password, PASSWORD_DEFAULT);
             $query = "INSERT INTO Users (Login, Password, Email, Phone, IdRole) 
