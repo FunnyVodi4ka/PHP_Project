@@ -57,6 +57,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 2): ?>
         echo "<p><b>Ваша фотография:</b> "."</p>";
         }
     ?>
+    <a class="btn btn-warning" href="PageUserAccountEdit.php">Изменить данные</a>
 <h2>Список пользователей</h2>
 <nav>
   <ul class="pagination justify-content-center">

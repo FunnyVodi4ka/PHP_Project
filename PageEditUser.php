@@ -11,7 +11,6 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
   if(isset($_POST['loginEditer']) && isset($_POST['passwordEditer']) && 
   isset($_POST['emailEditer']) && isset($_POST['phoneEditer']) && isset($_POST['roleEditer'])){
     require_once('ConnectionValidation.php');
-    #session_start();
     if($_SESSION["is_role"] == 1 && $_SESSION['is_auth'] == true){
         $connection = new mysqli("localhost", "root", "Password_12345", "CrudDatabase");
         if($connection->connect_error){
@@ -25,21 +24,41 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
         $now_phone = $connection->real_escape_string($_POST["phoneEditer"]);
         $now_role = $connection->real_escape_string($_POST["roleEditer"]);    
         
-        if(CheckIdUser($now_iduser) && CheckLogin($now_login, $now_iduser) && CheckPassword($now_password) && CheckEmail($now_email) 
-        && CheckPhone($now_phone) && CheckRole($now_role)){
-            if($now_role == "Администратор")
-                $code_role = 1;
-            else
-                $code_role = 2;
-            $hashPassword = password_hash($now_password, PASSWORD_DEFAULT);
-            $query = "UPDATE Users SET Login = '$now_login', Password = '$hashPassword', Email = '$now_email', 
-            Phone = '$now_phone', IdRole = $code_role WHERE IdUser = $now_iduser";
-            if($connection->query($query)){
-                alertMessage("Данные успешно изменены!");
-                header("Refresh:0; url=index2.php");
-            } else{
-                echo "Ошибка: " . $connection->error;
-            }
+        if(empty($now_password)){
+          if(CheckIdUser($now_iduser) && CheckLogin($now_login, $now_iduser) && CheckEmail($now_email) 
+          && CheckPhone($now_phone) && CheckRole($now_role)){
+              if($now_role == "Администратор")
+                  $code_role = 1;
+              else
+                  $code_role = 2;
+              $hashPassword = password_hash($now_password, PASSWORD_DEFAULT);
+              $query = "UPDATE Users SET Login = '$now_login', Email = '$now_email', 
+              Phone = '$now_phone', IdRole = $code_role WHERE IdUser = $now_iduser";
+              if($connection->query($query)){
+                  alertMessage("Данные успешно изменены!");
+                  header("Refresh:0; url=index2.php");
+              } else{
+                  echo "Ошибка: " . $connection->error;
+              }
+          }
+        }
+        else{
+          if(CheckIdUser($now_iduser) && CheckLogin($now_login, $now_iduser) && CheckPassword($now_password) && CheckEmail($now_email) 
+          && CheckPhone($now_phone) && CheckRole($now_role)){
+              if($now_role == "Администратор")
+                  $code_role = 1;
+              else
+                  $code_role = 2;
+              $hashPassword = password_hash($now_password, PASSWORD_DEFAULT);
+              $query = "UPDATE Users SET Login = '$now_login', Password = '$hashPassword', Email = '$now_email', 
+              Phone = '$now_phone', IdRole = $code_role WHERE IdUser = $now_iduser";
+              if($connection->query($query)){
+                  alertMessage("Данные успешно изменены!");
+                  header("Refresh:0; url=index2.php");
+              } else{
+                  echo "Ошибка: " . $connection->error;
+              }
+          }
         }
     }
     else{
@@ -72,7 +91,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
         <input name="loginEditer" type="text" size="50" <?php echo "value=".$_POST['login'];?> required>
         </p>
         <p><b>Введите новый пароль:</b><br>
-        <input name="passwordEditer" type="password" size="50" required>
+        <input name="passwordEditer" type="password" size="50">
         </p>
         <p><b>Введите новый Email:</b><br>
         <input name="emailEditer" type="email" size="50" <?php echo "value=".$_POST['email'];?> required>
