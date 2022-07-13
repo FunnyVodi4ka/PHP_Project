@@ -19,6 +19,7 @@
         if($connection->connect_error){
             die("Ошибка: " . $connection->connect_error);
         }
+        
         $now_iduser = (int)$_POST['iduser'];
         $now_login = $connection->real_escape_string($_POST["login"]);
         $now_password = $connection->real_escape_string($_POST["password"]);
