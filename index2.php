@@ -41,6 +41,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
     session_start();
     if($_SESSION["is_role"] == 1 && $_SESSION['is_auth'] == true){
         $now_iduser = (int)$_POST['idUserForDelete'];
+        unset($_POST['idUserForDelete']);
         if($now_iduser != $_SESSION['is_userid']){
             if(CheckIdUser($now_iduser)){
                 $stmt = Connection()->prepare('UPDATE Users SET DeleteAt = NOW() WHERE IdUser = ?;');
@@ -169,7 +170,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
         <input type='text' name='role' value=".$row["Role"]." readonly hidden>
         <input type='submit' class='btn btn-outline-warning' value='Редактировать'></form></td>";
 
-        echo "<td><form method='post' action='' onsubmit='deleteName(this);return false;'>
+        echo "<td><form method='post' action='index2.php' onsubmit='deleteName(this);return false;'>
         <input type='number' name='idUserForDelete' value=".$row["IdUser"]." readonly hidden>
         <input type='submit' class='btn btn-outline-danger' value='Удалить'></form></td>";
         echo "</tr>";
