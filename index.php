@@ -32,6 +32,51 @@
   if ($_GET['list'] < 1){
     $_GET['list'] = 1;
   }
+
+  if(isset($_POST['loginEnter']) && isset($_POST['passwordEnter'])){
+    session_start();
+	  unset($_SESSION['is_auth']);
+    unset($_SESSION['is_userid']);
+    unset($_SESSION['is_role']);
+    $_SESSION = array();
+
+    $now_login = $_POST["loginEnter"];
+    $now_password = $_POST["passwordEnter"];
+    $stmt = Connection()->prepare('SELECT * FROM Users WHERE Login = ? AND DeleteAt IS NULL');
+    $stmt->execute([$now_login]);
+    if(count($stmt->fetchAll()) == 1){
+        $stmt->execute([$now_login]);
+        while ($row = $stmt->fetch())
+        {
+            if (password_verify($now_password, $row["Password"])) {
+                echo 'Вы авторизовались, поздравляю!';
+                if($row["IdRole"] == 1){
+                    $_SESSION["is_auth"] = true;
+                    $_SESSION["is_userid"] = $row["IdUser"];
+                    $_SESSION["is_role"] = 1;
+                    header("Refresh:0; url=index2.php");
+                }
+                elseif($row["IdRole"] == 2){
+                    $_SESSION["is_auth"] = true;
+                    $_SESSION["is_userid"] = $row["IdUser"];
+                    $_SESSION["is_role"] = 2;
+                    header("Refresh:0; url=PageUserAccount.php");
+                }
+                else{
+                    echo 'Ошибка доступа, обратитесь к администратору!';
+                }
+            }
+            else {
+                echo 'Ошибка авторизации, неправильный логин или пароль!';
+            }
+        }
+    }
+    else{
+        echo 'Ошибка авторизации, неправильный логин или пароль!';
+    }
+    unset($_POST['loginEnter']);
+    unset($_POST['passwordEnter']);
+  }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
@@ -45,12 +90,12 @@
  <br>
   <h1>Авторизация</h1>
   <div class="divcenter">
-    <form name="register" method="post" action="TryEnter.php">
+    <form name="register" method="post" action="index.php">
         <p><b>Введите логин:</b><br>
-        <input name="enter_login" type="text" size="40" required>
+        <input name="loginEnter" type="text" size="40" required>
         </p>
         <p><b>Введите пароль:</b><br>
-        <input name="enter_password" type="password" size="40" required>
+        <input name="passwordEnter" type="password" size="40" required>
         </p>
         <input type="submit" class="btn btn-outline-success" value="Войти">
         <a href="PageRegister.php" class="btn btn-outline-warning">Регистрация</a>
@@ -120,24 +165,8 @@
     </ul>
 </nav>
 
-    <?php
-      $stmt = Connection()->query('SELECT IdUser, Login, Password, Email, Phone, Role FROM Users 
-      INNER JOIN Roles ON Users.IdRole = Roles.IdRole 
-      WHERE DeleteAt IS NULL LIMIT '.(($_GET['list']-1)*$PageCount).','.$PageCount.';');
-
-      echo "<table class='table table-striped'><tr><th>Id</th><th>Login</th>
-      <th>Email</th><th>Phone</th><th>Role</th></tr>";
-      while ($row = $stmt->fetch())
-      {
-        echo "<tr>";
-        echo "<td>" . $row["IdUser"] . "</td>";
-        echo "<td>" . $row["Login"] . "</td>";
-        echo "<td>" . $row["Email"] . "</td>";
-        echo "<td>" . $row["Phone"] . "</td>";
-        echo "<td>" . $row["Role"] . "</td>";
-        echo "</tr>";
-      }
-      echo "</table>";
-    ?>
+  <?php 
+    require_once('TableOutputForUsers.php');
+  ?>
  </body>
 </html>

@@ -157,7 +157,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
     <?php
       $stmt = Connection()->query('SELECT IdUser, Login, Password, Email, Phone, Role FROM Users 
       INNER JOIN Roles ON Users.IdRole = Roles.IdRole 
-      WHERE DeleteAt IS NULL LIMIT '.(($_GET['list']-1)*$PageCount).','.$PageCount.';');
+      WHERE DeleteAt IS NULL ORDER BY IdUser DESC LIMIT '.(($_GET['list']-1)*$PageCount).','.$PageCount.';');
 
       echo "<table class='table table-striped'><tr><th>Id</th><th>Login</th>
       <th>Email</th><th>Phone</th><th>Role</th><th></th><th></th></tr>";
