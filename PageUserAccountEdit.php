@@ -47,6 +47,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 2): ?>
                 if($connection->query($query)){
                     alertMessage("Данные успешно изменены!");
                     header("Refresh:0; url=PageUserAccount.php");
+                    $_POST = Array();
                 } 
                 else{
                     echo "Ошибка: " . $connection->error;
@@ -62,6 +63,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 2): ?>
             if($connection->query($query)){
                 alertMessage("Данные успешно изменены!");
                 header("Refresh:0; url=PageUserAccount.php");
+                $_POST = Array();
             } else{
                 echo "Ошибка: " . $connection->error;
             }
