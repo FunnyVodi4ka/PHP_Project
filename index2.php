@@ -5,6 +5,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
 <?php
   require_once('ConnectionValidation.php');
 
+  //Пагинация
   if(isset($_GET['PageRows'])){
     $_SESSION['PageRows'] = $_GET['PageRows'];
   }
@@ -28,7 +29,39 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
   if ($_GET['list'] < 1){
     $_GET['list'] = 1;
   }
+  //--
+
+  //Вывод сообщения
+  function alertMessage($message) {
+    echo "<script type='text/javascript'>alert('$message');</script>";
+  }
+
+  //удаление пользователя
+  if(isset($_POST['idUserForDelete'])){
+    session_start();
+    if($_SESSION["is_role"] == 1 && $_SESSION['is_auth'] == true){
+        $now_iduser = (int)$_POST['idUserForDelete'];
+        if($now_iduser != $_SESSION['is_userid']){
+            if(CheckIdUser($now_iduser)){
+                $stmt = Connection()->prepare('UPDATE Users SET DeleteAt = NOW() WHERE IdUser = ?;');
+                $stmt->execute([$now_iduser]);
+                alertMessage("Данные успешно удалены!");
+            }
+            else{
+              alertMessage("\nОшибка: Данные не удалены!");
+            }
+        }
+        else{
+          alertMessage("Вы не можете удалить сами себя!");
+        }
+    }
+    else{
+      alertMessage("Ошибка доступа, повторите попытку позже!");
+    }
+  }
+  //--
 ?>
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
  <head>
@@ -136,8 +169,8 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
         <input type='text' name='role' value=".$row["Role"]." readonly hidden>
         <input type='submit' class='btn btn-outline-warning' value='Редактировать'></form></td>";
 
-        echo "<td><form method='post' action='DBDeleteUser.php' onsubmit='deleteName(this);return false;'>
-        <input type='number' name='iduser' value=".$row["IdUser"]." readonly hidden>
+        echo "<td><form method='post' action='' onsubmit='deleteName(this);return false;'>
+        <input type='number' name='idUserForDelete' value=".$row["IdUser"]." readonly hidden>
         <input type='submit' class='btn btn-outline-danger' value='Удалить'></form></td>";
         echo "</tr>";
       }
