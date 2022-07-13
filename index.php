@@ -53,7 +53,7 @@
         <input name="enter_password" type="password" size="40" required>
         </p>
         <input type="submit" class="btn btn-outline-success" value="Войти">
-        <a href="reguser.php" class="btn btn-outline-warning">Регистрация</a>
+        <a href="PageRegister.php" class="btn btn-outline-warning">Регистрация</a>
         <input type="reset" class="btn btn-outline-danger" value="Очистить">
       </form>
       <p><a href="index2.php" class="btn btn-outline-primary" hidden>Админ-панель</a></p>

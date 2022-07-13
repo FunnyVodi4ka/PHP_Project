@@ -14,7 +14,7 @@
             echo '<meta http-equiv="refresh" content="5;URL=http://localhost/index.php"/>';
         }
         else{
-            echo '<meta http-equiv="refresh" content="5;URL=http://localhost/reguser.php"/>';
+            echo '<meta http-equiv="refresh" content="5;URL=http://localhost/PageRegister.php"/>';
         }
     }
   ?>
@@ -43,14 +43,14 @@
                 Redirect(1);
             } else{
                 echo "Ошибка: ".$connection->error;
-                echo '<p><a href="reguser.php" class="btn btn-primary">Зарегистрироваться</a></p>';
+                echo '<p><a href="PageRegister.php" class="btn btn-primary">Зарегистрироваться</a></p>';
                 Redirect(2);
             }
         }
     }
     else{
         echo "Пароли не совподают, попробуйте снова!";
-        echo '<p><a href="reguser.php" class="btn btn-primary">Зарегистрироваться</a></p>';
+        echo '<p><a href="PageRegister.php" class="btn btn-primary">Зарегистрироваться</a></p>';
         Redirect(2);
     }
     ?>
