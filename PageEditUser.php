@@ -3,7 +3,53 @@ session_start();
 if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
 
 <?php
+  //Вывод сообщения
+  function alertMessage($message) {
+    echo "<script type='text/javascript'>alert('$message');</script>";
+  }
+
+  if(isset($_POST['loginEditer']) && isset($_POST['passwordEditer']) && 
+  isset($_POST['emailEditer']) && isset($_POST['phoneEditer']) && isset($_POST['roleEditer'])){
     require_once('ConnectionValidation.php');
+    #session_start();
+    if($_SESSION["is_role"] == 1 && $_SESSION['is_auth'] == true){
+        $connection = new mysqli("localhost", "root", "Password_12345", "CrudDatabase");
+        if($connection->connect_error){
+            die("Ошибка: " . $connection->connect_error);
+        }
+        $now_iduser = (int)$_POST['iduserEditer'];
+        $now_login = $connection->real_escape_string($_POST["loginEditer"]);
+        $now_password = $connection->real_escape_string($_POST["passwordEditer"]);
+        $now_email = $connection->real_escape_string($_POST["emailEditer"]);
+        $now_phone = $connection->real_escape_string($_POST["phoneEditer"]);
+        $now_role = $connection->real_escape_string($_POST["roleEditer"]);    
+        
+        if(CheckIdUser($now_iduser) && CheckLogin($now_login, $now_iduser) && CheckPassword($now_password) && CheckEmail($now_email) 
+        && CheckPhone($now_phone) && CheckRole($now_role)){
+            if($now_role == "Администратор")
+                $code_role = 1;
+            else
+                $code_role = 2;
+            $hashPassword = password_hash($now_password, PASSWORD_DEFAULT);
+            $query = "UPDATE Users SET Login = '$now_login', Password = '$hashPassword', Email = '$now_email', 
+            Phone = '$now_phone', IdRole = $code_role WHERE IdUser = $now_iduser";
+            if($connection->query($query)){
+                alertMessage("Данные успешно изменены!");
+                header("Refresh:0; url=index2.php");
+            } else{
+                echo "Ошибка: " . $connection->error;
+            }
+        }
+    }
+    else{
+        echo "Ошибка доступа, повторите попытку позже!";
+    }
+    unset($_POST['loginEditer']);
+    unset($_POST['passwordEditer']);
+    unset($_POST['emailEditer']);
+    unset($_POST['phoneEditer']);
+    unset($_POST['roleEditer']);
+  }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD   HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
@@ -14,28 +60,28 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
   <link rel="stylesheet" href="styles/style.css">
  </head>
  <body>
-    <a href="index2.php" class="btn btn-primary">Назад</a>
+    <p><a href="index2.php" class="btn btn-primary">Назад</a></p>
 <div class="divcenter">
       <h2>Изменение пользователя в БД</h2>
-      <form name="editrecord" method="post" action="DBEditUser.php">
+      <form name="editrecord" method="post" action="PageEditUser.php">
         <p><b>Id пользователя:</b>
-        <input name="iduser" type="text" <?php echo "value=".(int)$_POST['iduser']; ?> readonly>
+        <input name="iduserEditer" type="text" <?php echo "value=".(int)$_POST['iduser']; ?> readonly>
         </p>
         <p><b>Введите новый логин:</b><br>
-        <input name="login" type="text" size="50" <?php echo "value=".$_POST['login'];?> required>
+        <input name="loginEditer" type="text" size="50" <?php echo "value=".$_POST['login'];?> required>
         </p>
         <p><b>Введите новый пароль:</b><br>
-        <input name="password" type="password" size="50" required>
+        <input name="passwordEditer" type="password" size="50" required>
         </p>
         <p><b>Введите новый Email:</b><br>
-        <input name="email" type="email" size="50" <?php echo "value=".$_POST['email'];?> required>
+        <input name="emailEditer" type="email" size="50" <?php echo "value=".$_POST['email'];?> required>
         </p>
         <p><b>Введите новый телефон (8XXXXXXXXXX):</b><br>
-        <input name="phone" type="text" pattern="8[0-9]{10}" size="50" <?php echo "value=".$_POST['phone'];?> required>
+        <input name="phoneEditer" type="text" pattern="8[0-9]{10}" size="50" <?php echo "value=".$_POST['phone'];?> required>
         </p>
         <p><b>Выберите новую роль пользователя:</b><br>
         <p>
-          <input type="radio" id="contactChoice1" name="role" value="Администратор" 
+          <input type="radio" id="contactChoice1" name="roleEditer" value="Администратор" 
           <?php 
           if($_POST['role'] == "Администратор"){
             echo "checked";
@@ -43,7 +89,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
           <label for="contactChoice1">Администратор</label>
         </p>
         <p>
-          <input type="radio" id="contactChoice2" name="role" value="Клиент" 
+          <input type="radio" id="contactChoice2" name="roleEditer" value="Клиент" 
           <?php 
           if($_POST['role'] == "Клиент"){
             echo "checked";

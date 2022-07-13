@@ -1,3 +1,40 @@
+<?php
+  if(isset($_POST['loginRegister']) && isset($_POST['passwordRegister']) && 
+  isset($_POST['emailRegister']) && isset($_POST['phoneRegister'])){
+    require_once('ConnectionValidation.php');
+
+    if($_POST["passwordRegister"] == $_POST["passwordSecondRegister"]){
+        $connection = new mysqli("localhost", "root", "Password_12345", "CrudDatabase");
+        if($connection->connect_error){
+            die("Ошибка: " . $connection->connect_error);
+        }
+        $id = 0;
+        $now_login = $connection->real_escape_string($_POST["loginRegister"]);
+        $now_password = $connection->real_escape_string($_POST["passwordRegister"]);
+        $now_email = $connection->real_escape_string($_POST["emailRegister"]);
+        $now_phone = $connection->real_escape_string($_POST["phoneRegister"]);  
+
+        if(CheckLogin($now_login, $id) && CheckPassword($now_password) && CheckEmail($now_email) 
+        && CheckPhone($now_phone)){
+            $hashPassword = password_hash($now_password, PASSWORD_DEFAULT);
+            $query = "INSERT INTO Users (Login, Password, Email, Phone, IdRole) 
+            VALUES ('$now_login', '$hashPassword', '$now_email', '$now_phone', 2)";
+            if($connection->query($query)){
+                echo "Регистрация прошла успешно!";
+            } else{
+                echo "Ошибка: ".$connection->error;
+            }
+        }
+    }
+    else{
+        echo "Пароли не совподают, попробуйте снова!";
+    }
+    unset($_POST['loginRegister']);
+    unset($_POST['passwordRegister']);
+    unset($_POST['emailRegister']);
+    unset($_POST['phoneRegister']);
+  }
+?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
  <head>
@@ -10,21 +47,21 @@
     <div class="divcenter">
       <br>
     <h1>Регистрация</h1>
-      <form name="register" method="post" action="ActionRegUser.php">
+      <form name="register" method="post" action="PageRegister.php">
         <p><b>Введите логин:</b><br>
-        <input name="login" type="text" size="50" required>
+        <input name="loginRegister" type="text" size="50" required>
         </p>
         <p><b>Введите пароль:</b><br>
-        <input name="password" type="password" size="50" required>
+        <input name="passwordRegister" type="password" size="50" required>
         </p>
         <p><b>Повторите пароль:</b><br>
-        <input name="passwordSecond" type="password" size="50" required>
+        <input name="passwordSecondRegister" type="password" size="50" required>
         </p>
         <p><b>Введите Email:</b><br>
-        <input name="email" type="email" size="50" required>
+        <input name="emailRegister" type="email" size="50" required>
         </p>
         <p><b>Введите телефон (8XXXXXXXXXX):</b><br>
-        <input name="phone" type="text" pattern="8[0-9]{10}" size="50" required>
+        <input name="phoneRegister" type="text" pattern="8[0-9]{10}" size="50" required>
         </p>
         <input type="submit" class="btn btn-outline-success" value="Создать аккаунт">
         <a href="index.php" class="btn btn-outline-warning">Авторизоваться</a>
