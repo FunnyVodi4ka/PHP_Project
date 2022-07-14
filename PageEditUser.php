@@ -35,6 +35,9 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
               else
                   $code_role = 2;
               $hashPassword = password_hash($now_password, PASSWORD_DEFAULT);
+              if($_POST['iduser'] == $_SESSION['is_userid']){
+                $code_role = 1;
+              }
               $query = "UPDATE Users SET Login = '$now_login', Email = '$now_email', 
               Phone = '$now_phone', IdRole = $code_role WHERE IdUser = $now_iduser";
               if($connection->query($query)){
@@ -55,6 +58,9 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
               else
                   $code_role = 2;
               $hashPassword = password_hash($now_password, PASSWORD_DEFAULT);
+              if($_POST['iduser'] == $_SESSION['is_userid']){
+                $code_role = 1;
+              }
               $query = "UPDATE Users SET Login = '$now_login', Password = '$hashPassword', Email = '$now_email', 
               Phone = '$now_phone', IdRole = $code_role WHERE IdUser = $now_iduser";
               if($connection->query($query)){
@@ -112,7 +118,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
           <?php 
           if($_POST['role'] == "Администратор"){
             echo "checked";
-          }?> required>
+          }?> required <?php if($_POST['iduser'] == $_SESSION['is_userid']) echo "disabled"; ?>>
           <label for="contactChoice1">Администратор</label>
         </p>
         <p>
@@ -120,7 +126,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
           <?php 
           if($_POST['role'] == "Клиент"){
             echo "checked";
-          }?>
+          }?> required <?php if($_POST['iduser'] == $_SESSION['is_userid']) echo "disabled"; ?>>
           <label for="contactChoice2">Клиент</label>
         </p>
         <input type="submit" class="btn btn-outline-warning" value="Изменить пользователя">

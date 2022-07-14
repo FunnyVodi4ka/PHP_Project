@@ -1,7 +1,7 @@
 <?php
 $target_dir = "userImages/";
 $parts = pathinfo($_FILES['imageUserEditer']['name']);
-$target_file = $target_dir . basename(password_hash($_FILES["imageUserEditer"]["name"], PASSWORD_DEFAULT).'.'.$parts['extension']);
+$target_file = $target_dir . basename(mt_rand().$_FILES["imageUserEditer"]["name"]);
 $uploadOk = 1;
 $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
