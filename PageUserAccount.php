@@ -130,7 +130,6 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 2): ?>
  </body>
 </html>
 
-<?php else: ?>
-	<p>Пожалуйста, авторизуйтесь!</p>
-  <a class="btn btn-primary" href="index.php">Авторизоваться</a>
-<?php endif; ?>
+<?php else: 
+    header("Refresh:0; url=index.php");
+endif; ?>
