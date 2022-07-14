@@ -31,6 +31,7 @@
             if($connection->query($query)){
                 alertMessage("Регистрация прошла успешно!");
                 header("Refresh:0; url=auth.php");
+                die();
             } else{
                 echo "Ошибка: ".$connection->error;
             }

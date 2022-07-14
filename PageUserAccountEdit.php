@@ -52,8 +52,9 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 2): ?>
                         require_once("imageUpload.php");
                     }
                     alertMessage("Данные успешно изменены!");
-                    header("Refresh:0; url=PageUserAccount.php");
                     $_POST = Array();
+                    header("Refresh:0; url=PageUserAccount.php");
+                    die();
                 } 
                 else{
                     echo "Ошибка: " . $connection->error;
@@ -71,8 +72,9 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 2): ?>
                     require_once("imageUpload.php");        
                 }
                 alertMessage("Данные успешно изменены!");
-                header("Refresh:0; url=PageUserAccount.php");
                 $_POST = Array();
+                header("Refresh:0; url=PageUserAccount.php");
+                die();
             } else{
                 echo "Ошибка: " . $connection->error;
             }
@@ -121,4 +123,5 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 2): ?>
 
 <?php else: 
     header("Refresh:0; url=auth.php");
+    die();
 endif; ?>

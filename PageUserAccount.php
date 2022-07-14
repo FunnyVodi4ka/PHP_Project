@@ -73,4 +73,5 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 2): ?>
 
 <?php else: 
     header("Refresh:0; url=auth.php");
+    die();
 endif; ?>

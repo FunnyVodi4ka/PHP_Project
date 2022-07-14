@@ -39,8 +39,9 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
               Phone = '$now_phone', IdRole = $code_role WHERE IdUser = $now_iduser";
               if($connection->query($query)){
                   alertMessage("Данные успешно изменены!");
-                  header("Refresh:0; url=/");
                   $_POST = Array();
+                  header("Refresh:0; url=/");
+                  die();
               } else{
                   echo "Ошибка: " . $connection->error;
               }
@@ -58,8 +59,9 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
               Phone = '$now_phone', IdRole = $code_role WHERE IdUser = $now_iduser";
               if($connection->query($query)){
                   alertMessage("Данные успешно изменены!");
-                  header("Refresh:0; url=/");
                   $_POST = Array();
+                  header("Refresh:0; url=/");
+                  die();
               } else{
                   echo "Ошибка: " . $connection->error;
               }
@@ -131,4 +133,5 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
 
 <?php else: 
     header("Refresh:0; url=auth.php");
+    die();
 endif; ?>

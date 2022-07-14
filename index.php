@@ -61,6 +61,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
     }
     unset($_POST['idUserForDelete']);
     header("Refresh:0");
+    die();
   }
   //--
 ?>
@@ -200,4 +201,5 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
 </html>
 <?php else: 
     header("Refresh:0; url=auth.php");
+    die();
 endif; ?>
