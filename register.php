@@ -1,4 +1,14 @@
 <?php
+  session_start();
+  if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1){
+    header("Refresh:0; url=/");
+    die();
+  }
+  elseif($_SESSION["is_auth"] && $_SESSION["is_role"] == 2){
+    header("Refresh:0; url=PageUserAccount.php");
+    die();
+  }
+
   //Вывод сообщения
   function alertMessage($message) {
     echo "<script type='text/javascript'>alert('$message');</script>";

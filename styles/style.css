@@ -84,8 +84,11 @@ button{
 
 .profile__img {
   transition: .4s;
-  margin: 15px;
 }
 .profile__img:hover {
   transform: scale(1.1);
+}
+
+.accountbox{
+  margin: 15px;
 }
