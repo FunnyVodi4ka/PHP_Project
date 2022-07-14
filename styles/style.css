@@ -81,3 +81,11 @@ button{
   height: 42px;
   margin: 5px;
 }
+
+.profile__img {
+  transition: .4s;
+  margin: 15px;
+}
+.profile__img:hover {
+  transform: scale(1.1);
+}

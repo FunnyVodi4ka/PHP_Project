@@ -1,6 +1,5 @@
 <?php
 $target_dir = "userImages/";
-#$hashPassword = password_hash($filename, PASSWORD_DEFAULT);
 $parts = pathinfo($_FILES['imageUserEditer']['name']);
 $target_file = $target_dir . basename(password_hash($_FILES["imageUserEditer"]["name"], PASSWORD_DEFAULT).'.'.$parts['extension']);
 $uploadOk = 1;

@@ -56,10 +56,10 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 2): ?>
         echo "<p><b>Ваша роль:</b> ".$row["Role"]."</p>";
         echo "<p><b>Ваша фотография:</b> "."</p>";
         if(!empty($row["AvatarImage"]) && file_exists($row["AvatarImage"])){
-          echo "<p><img src='".$row["AvatarImage"]."' alt='Loading...' width='200' height='200'></p>";
+          echo "<p><img class='profile__img' src='".$row["AvatarImage"]."' alt='Loading...' width='200' height='200'></p>";
         }
         else{
-          echo "<p><img src='userImages/standartPhoto.png' alt='Loading...' width='200' height='200'></p>";
+          echo "<p><img class='profile__img' src='userImages/standartPhoto.png' alt='Loading...' width='200' height='200'></p>";
         }
       }
     ?>
