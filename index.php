@@ -8,30 +8,6 @@
   }
 
   require_once('ConnectionValidation.php');
-  
-  if(isset($_GET['PageRows'])){
-    $_SESSION['PageRows'] = $_GET['PageRows'];
-  }
-
-  if(empty($_SESSION['PageRows'])){
-    $PageCount = 10;
-  } else{
-    $PageCount = $_SESSION['PageRows'];
-  }
-
-  if(!isset($_GET['list'])) {
-    $_GET['list'] = 1;
-  }
-  $usersCountResult = Connection()->query("SELECT count(*) FROM Users WHERE DeleteAt IS NULL");
-  $usersCount = $usersCountResult->fetch();
-
-  if ($_GET['list'] > $usersCount['count(*)'] / $PageCount) {
-    $_GET['list'] = ceil($usersCount['count(*)'] / $PageCount);
-  }
-
-  if ($_GET['list'] < 1){
-    $_GET['list'] = 1;
-  }
 
   if(isset($_POST['loginEnter']) && isset($_POST['passwordEnter'])){
     session_start();
@@ -101,72 +77,10 @@
         <a href="PageRegister.php" class="btn btn-outline-warning">Регистрация</a>
         <input type="reset" class="btn btn-outline-danger" value="Очистить">
       </form>
-      <p><a href="index2.php" class="btn btn-outline-primary" hidden>Админ-панель</a></p>
-      <p><a href="PageUserAccount.php" class="btn btn-outline-primary" hidden>Вход в личный кабинет</a></p>
     </div>
     <h2>Список пользователей</h2>
-
-<nav>
-  <ul class="pagination justify-content-center">
-  <li class="page-item">
-      <a class="page-link" href="/?list=1">
-        Первая
-      </a>
-    </li>
-
-    <li class="page-item">
-        <a class="page-link" href="/?list=<?= $_GET['list']-1 ?>"><<</a>
-    </li>
-
-  <?php if(!($_GET['list'] < 3)): ?>
-      <li class="page-item">
-        <a class="page-link" href="/?list=<?= $_GET['list']-2 ?>"><?= $_GET['list']-2 ?></a>
-      </li>
-    <?php endif ?>
-      
-    <?php if(!($_GET['list'] < 2)): ?>  
-      <li class="page-item">
-        <a class="page-link" href="/?list=<?= $_GET['list']-1 ?>"><?= $_GET['list']-1 ?></a>
-      </li>
-    <?php endif ?>
-
-    <li class="page-item active">
-      <a class="page-link" href="/?list=<?= $_GET['list'] ?>"><?= $_GET['list'] ?></a>
-    </li>
-
-    <?php if(!($_GET['list']+1 > $usersCount['count(*)'] / $PageCount)): ?>
-      <li class="page-item">
-        <a class="page-link" href="/?list=<?= $_GET['list']+1 ?>"><?= $_GET['list']+1 ?></a>
-      </li>
-    <?php endif ?>
-
-    <?php if(!($_GET['list']+2 > $usersCount['count(*)'] / $PageCount)): ?>
-      <li class="page-item">
-        <a class="page-link" href="/?list=<?= $_GET['list']+1 ?>"><?= $_GET['list']+2 ?></a>
-      </li>
-    <?php endif ?>
-
-    <li class="page-item">
-        <a class="page-link" href="/?list=<?= $_GET['list']+1 ?>">>></a>
-    </li>
-
-    <li class="page-item">
-      <a class="page-link" href="/?list=<?= ceil($usersCount['count(*)'] / $PageCount) ?>">
-        Последняя
-      </a>
-    </li>
-    <form method="get">
-    <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="PageRows" onchange="form.submit();">
-      <option value="10" <?php if ($_SESSION['PageRows'] == 10) {echo "selected";}?>>10</option>
-      <option value="25" <?php if ($_SESSION['PageRows'] == 25) {echo "selected";}?>>25</option>
-      <option value="50" <?php if ($_SESSION['PageRows'] == 50) {echo "selected";}?>>50</option>
-    </select>
-    </form>
-    </ul>
-</nav>
-
-  <?php 
-    require_once('TableOutputForUsers.php');
-  ?>
+    <div class="divcenter">
+    <a class="btn btn-primary" href="users.php">Просмотреть список пользователей</a>
+    </div>
  </body>
 </html>
