@@ -66,7 +66,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
   <link rel="stylesheet" href="styles/style.css">
  </head>
  <body>
-  <p><a href="index2.php" class="btn btn-primary">Назад</a></p>
+  <p><a href="index.php" class="btn btn-primary">Назад</a></p>
 <div class="divcenter">
         <h2>Добавление пользователя в БД</h2>
       <form name="register" method="post" action="PageCreateUser.php">

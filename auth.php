@@ -1,7 +1,7 @@
 <?php
   session_start();
   if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1){
-    header("Refresh:0; url=index2.php");
+    header("Refresh:0; url=index.php");
   }
   elseif($_SESSION["is_auth"] && $_SESSION["is_role"] == 2){
     header("Refresh:0; url=PageUserAccount.php");
@@ -30,7 +30,7 @@
                     $_SESSION["is_auth"] = true;
                     $_SESSION["is_userid"] = $row["IdUser"];
                     $_SESSION["is_role"] = 1;
-                    header("Refresh:0; url=index2.php");
+                    header("Refresh:0; url=index.php");
                 }
                 elseif($row["IdRole"] == 2){
                     $_SESSION["is_auth"] = true;

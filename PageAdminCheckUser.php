@@ -14,7 +14,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
   <link rel="stylesheet" href="styles/style.css">
  </head>
  <body>
-    <b><a href="index2.php" class="btn btn-primary">Назад</a></b>
+    <b><a href="index.php" class="btn btn-primary">Назад</a></b>
     <?php
         session_start();
         $userId = $_POST["idUserForCheck"];
