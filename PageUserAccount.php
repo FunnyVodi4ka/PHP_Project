@@ -55,12 +55,12 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 2): ?>
         echo "<p><b>Ваш телефон:</b> ".$row["Phone"]."</p>";
         echo "<p><b>Ваша роль:</b> ".$row["Role"]."</p>";
         echo "<p><b>Ваша фотография:</b> "."</p>";
-        if(empty($row["AvatarImage"])){
-          echo "<p><img src='userImages/standartPhoto.png' alt='Loading...' width='200' height='200'></p>";
+        if(!empty($row["AvatarImage"]) && file_exists($row["AvatarImage"])){
+          echo "<td><img src='".$row["AvatarImage"]."' alt='Loading...' width='40' height='40'></td>";
         }
         else{
-          echo "<p><img src='".$row["AvatarImage"]."' alt='Loading...' width='200' height='200'></p>";
-        }  
+          echo "<td><img src='userImages/standartPhoto.png' alt='Loading...' width='40' height='40'></td>";
+        }
       }
     ?>
     <a class="btn btn-warning" href="PageUserAccountEdit.php">Изменить данные</a>

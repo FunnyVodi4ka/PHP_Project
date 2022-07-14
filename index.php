@@ -169,11 +169,11 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
         <input type='number' name='idUserForCheck' value=".$row["IdUser"]." readonly hidden>
         <input type='submit' class='btn btn-outline-secondary' value='Просмотр'></form></td>";
 
-        if(empty($row["AvatarImage"])){
-          echo "<td><img src='userImages/standartPhoto.png' alt='Loading...' width='40' height='40'></td>";
+        if(!empty($row["AvatarImage"]) && file_exists($row["AvatarImage"])){
+          echo "<td><img src='".$row["AvatarImage"]."' alt='Loading...' width='40' height='40'></td>";
         }
         else{
-          echo "<td><img src='".$row["AvatarImage"]."' alt='Loading...' width='40' height='40'></td>";
+          echo "<td><img src='userImages/standartPhoto.png' alt='Loading...' width='40' height='40'></td>";
         } 
         echo "<td>" . $row["IdUser"] . "</td>";
         echo "<td>" . $row["Login"] . "</td>";

@@ -30,12 +30,12 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
         echo "<p><b>Телефон пользователя:</b> ".$row["Phone"]."</p>";
         echo "<p><b>Роль пользователя:</b> ".$row["Role"]."</p>";
         echo "<p><b>Фотография пользователя:</b> "."</p>";
-        if(empty($row["AvatarImage"])){
-            echo "<p><img src='userImages/standartPhoto.png' alt='Loading...' width='200' height='200'></p>";
-          }
-          else{
-            echo "<p><img src='".$row["AvatarImage"]."' alt='Loading...' width='200' height='200'></p>";
-          }
+        if(!empty($row["AvatarImage"]) && file_exists($row["AvatarImage"])){
+          echo "<td><img src='".$row["AvatarImage"]."' alt='Loading...' width='40' height='40'></td>";
+        }
+        else{
+          echo "<td><img src='userImages/standartPhoto.png' alt='Loading...' width='40' height='40'></td>";
+        }
         }
     ?>
 </body>

@@ -109,12 +109,12 @@
     while ($row = $stmt->fetch())
     {
     echo "<tr>";
-    if(empty($row["AvatarImage"])){
-        echo "<td><img src='userImages/standartPhoto.png' alt='Loading...' width='40' height='40'></td>";
-      }
-      else{
-        echo "<td><img src='".$row["AvatarImage"]."' alt='Loading...' width='40' height='40'></td>";
-      }
+    if(!empty($row["AvatarImage"]) && file_exists($row["AvatarImage"])){
+      echo "<td><img src='".$row["AvatarImage"]."' alt='Loading...' width='40' height='40'></td>";
+    }
+    else{
+      echo "<td><img src='userImages/standartPhoto.png' alt='Loading...' width='40' height='40'></td>";
+    } 
     echo "<td>" . $row["IdUser"] . "</td>";
     echo "<td>" . $row["Login"] . "</td>";
     echo "<td>" . $row["Email"] . "</td>";
