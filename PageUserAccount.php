@@ -45,7 +45,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 2): ?>
         session_start();
         $userId = $_SESSION["is_userid"];
 
-        $stmt = Connection()->prepare('SELECT Login, Email, Phone, Role FROM Users 
+        $stmt = Connection()->prepare('SELECT Login, Email, Phone, Role, AvatarImage FROM Users 
         INNER JOIN Roles ON Users.IdRole = Roles.IdRole WHERE IdUser = ?');
         $stmt->execute([$userId]);
         while ($row = $stmt->fetch())
@@ -55,7 +55,13 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 2): ?>
         echo "<p><b>Ваш телефон:</b> ".$row["Phone"]."</p>";
         echo "<p><b>Ваша роль:</b> ".$row["Role"]."</p>";
         echo "<p><b>Ваша фотография:</b> "."</p>";
+        if(empty($row["AvatarImage"])){
+          echo "<p><img src='userImages/standartPhoto.png' alt='Loading...' width='200' height='200'></p>";
         }
+        else{
+          echo "<p><img src='".$row["AvatarImage"]."' alt='Loading...' width='200' height='200'></p>";
+        }  
+      }
     ?>
     <a class="btn btn-warning" href="PageUserAccountEdit.php">Изменить данные</a>
 <h2>Список пользователей</h2>

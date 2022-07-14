@@ -155,11 +155,11 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
 
     <a href="PageCreateUser.php" class='btn btn-outline-success'>Создать запись</a>
     <?php
-      $stmt = Connection()->query('SELECT IdUser, Login, Password, Email, Phone, Role FROM Users 
+      $stmt = Connection()->query('SELECT IdUser, Login, Password, Email, Phone, Role, AvatarImage FROM Users 
       INNER JOIN Roles ON Users.IdRole = Roles.IdRole 
       WHERE DeleteAt IS NULL ORDER BY IdUser DESC LIMIT '.(($_GET['list']-1)*$PageCount).','.$PageCount.';');
 
-      echo "<table class='table table-striped'><tr><th></th><th>Id</th><th>Login</th>
+      echo "<table class='table table-striped'><tr><th></th><th>Photo</th><th>Id</th><th>Login</th>
       <th>Email</th><th>Phone</th><th>Role</th><th></th><th></th></tr>";
       while ($row = $stmt->fetch())
       {
@@ -168,6 +168,12 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
         <input type='number' name='idUserForCheck' value=".$row["IdUser"]." readonly hidden>
         <input type='submit' class='btn btn-outline-secondary' value='Просмотр'></form></td>";
 
+        if(empty($row["AvatarImage"])){
+          echo "<td><img src='userImages/standartPhoto.png' alt='Loading...' width='40' height='40'></td>";
+        }
+        else{
+          echo "<td><img src='".$row["AvatarImage"]."' alt='Loading...' width='40' height='40'></td>";
+        } 
         echo "<td>" . $row["IdUser"] . "</td>";
         echo "<td>" . $row["Login"] . "</td>";
         echo "<td>" . $row["Email"] . "</td>";

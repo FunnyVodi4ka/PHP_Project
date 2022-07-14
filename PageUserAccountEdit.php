@@ -48,6 +48,9 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 2): ?>
                 $query = "UPDATE Users SET Login = '$now_login', Email = '$now_email', 
                 Phone = '$now_phone' WHERE IdUser = $now_iduser";
                 if($connection->query($query)){
+                    if(isset($_FILES['imageUserEditer'])){
+                        require_once("imageUpload.php");
+                    }
                     alertMessage("Данные успешно изменены!");
                     header("Refresh:0; url=PageUserAccount.php");
                     $_POST = Array();
@@ -64,6 +67,9 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 2): ?>
             $query = "UPDATE Users SET Login = '$now_login', Password = '$hashPassword', Email = '$now_email', 
             Phone = '$now_phone' WHERE IdUser = $now_iduser";
             if($connection->query($query)){
+                if(isset($_FILES['imageUserEditer'])){
+                    require_once("imageUpload.php");        
+                }
                 alertMessage("Данные успешно изменены!");
                 header("Refresh:0; url=PageUserAccount.php");
                 $_POST = Array();
@@ -87,7 +93,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 2): ?>
  <p><a href="PageUserAccount.php" class="btn btn-primary">Назад</a></p>
 <div class="divcenter">
       <h2>Настройки аккаунта</h2>
-      <form name="editrecord" method="post" action="PageUserAccountEdit.php">
+      <form name="editrecord" method="post" action="PageUserAccountEdit.php" enctype="multipart/form-data">
         <p><b>Ваш Id:</b>
         <input name="iduserUserEditer" type="text" <?php echo "value=".(int)$_SESSION['is_userid']; ?> readonly>
         </p>
@@ -103,6 +109,8 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 2): ?>
         <p><b>Введите новый телефон (8XXXXXXXXXX):</b><br>
         <input name="phoneUserEditer" type="text" pattern="8[0-9]{10}" size="50" value="<?= $_SESSION['customPhone'] ?? $_POST['Phone'] ?>" required>
         </p>
+        <p><b>Выберите фотографию профиля:</b><br>
+        <input type="file" name="imageUserEditer"></p>
         <input type="submit" class="btn btn-outline-warning" value="Изменить мой аккаунт">
         <input type="reset" class="btn btn-info" value="Очистить"></p>
       </form>

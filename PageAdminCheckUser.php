@@ -20,7 +20,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
         $userId = $_POST["idUserForCheck"];
         echo "<h2>Аккаунт клиента с Id:".$userId."</h2>";
 
-        $stmt = Connection()->prepare('SELECT Login, Email, Phone, Role FROM Users 
+        $stmt = Connection()->prepare('SELECT Login, Email, Phone, Role, AvatarImage FROM Users 
         INNER JOIN Roles ON Users.IdRole = Roles.IdRole WHERE IdUser = ?');
         $stmt->execute([$userId]);
         while ($row = $stmt->fetch())
@@ -30,6 +30,12 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
         echo "<p><b>Телефон пользователя:</b> ".$row["Phone"]."</p>";
         echo "<p><b>Роль пользователя:</b> ".$row["Role"]."</p>";
         echo "<p><b>Фотография пользователя:</b> "."</p>";
+        if(empty($row["AvatarImage"])){
+            echo "<p><img src='userImages/standartPhoto.png' alt='Loading...' width='200' height='200'></p>";
+          }
+          else{
+            echo "<p><img src='".$row["AvatarImage"]."' alt='Loading...' width='200' height='200'></p>";
+          }
         }
     ?>
 </body>
