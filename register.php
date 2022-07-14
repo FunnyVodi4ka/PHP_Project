@@ -57,7 +57,7 @@
     <div class="divcenter">
       <br>
     <h1>Регистрация</h1>
-      <form name="register" method="post" action="PageRegister.php">
+      <form name="register" method="post" action="register.php">
         <p><b>Введите логин:</b><br>
         <input name="loginRegister" type="text" size="50" value="<?= $_SESSION['customLogin'] ?? '' ?>" required>
         </p>

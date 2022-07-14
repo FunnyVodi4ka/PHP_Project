@@ -74,7 +74,7 @@
         <input name="passwordEnter" type="password" size="40" required>
         </p>
         <input type="submit" class="btn btn-outline-success" value="Войти">
-        <a href="PageRegister.php" class="btn btn-outline-warning">Регистрация</a>
+        <a href="register.php" class="btn btn-outline-warning">Регистрация</a>
         <input type="reset" class="btn btn-outline-danger" value="Очистить">
       </form>
     </div>
