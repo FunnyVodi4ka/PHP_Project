@@ -97,49 +97,49 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
 <nav>
   <ul class="pagination justify-content-center">
   <li class="page-item">
-      <a class="page-link" href="/index.php?list=1">
+      <a class="page-link" href="/?list=1">
         Первая
       </a>
     </li>
 
     <li class="page-item">
-        <a class="page-link" href="/index.php?list=<?= $_GET['list']-1 ?>"><<</a>
+        <a class="page-link" href="/?list=<?= $_GET['list']-1 ?>"><<</a>
     </li>
 
   <?php if(!($_GET['list'] < 3)): ?>
       <li class="page-item">
-        <a class="page-link" href="/index.php?list=<?= $_GET['list']-2 ?>"><?= $_GET['list']-2 ?></a>
+        <a class="page-link" href="/?list=<?= $_GET['list']-2 ?>"><?= $_GET['list']-2 ?></a>
       </li>
     <?php endif ?>
       
     <?php if(!($_GET['list'] < 2)): ?>
       <li class="page-item">
-        <a class="page-link" href="/index.php?list=<?= $_GET['list']-1 ?>"><?= $_GET['list']-1 ?></a>
+        <a class="page-link" href="/?list=<?= $_GET['list']-1 ?>"><?= $_GET['list']-1 ?></a>
       </li>
     <?php endif ?>
 
     <li class="page-item active">
-      <a class="page-link" href="/index.php?list=<?= $_GET['list'] ?>"><?= $_GET['list'] ?></a>
+      <a class="page-link" href="/?list=<?= $_GET['list'] ?>"><?= $_GET['list'] ?></a>
     </li>
 
     <?php if(!($_GET['list']+1 > $usersCount['count(*)'] / $PageCount)): ?>
       <li class="page-item">
-        <a class="page-link" href="/index.php?list=<?= $_GET['list']+1 ?>"><?= $_GET['list']+1 ?></a>
+        <a class="page-link" href="/?list=<?= $_GET['list']+1 ?>"><?= $_GET['list']+1 ?></a>
       </li>
     <?php endif ?>
 
     <?php if(!($_GET['list']+2 > $usersCount['count(*)'] / $PageCount)): ?>
       <li class="page-item">
-        <a class="page-link" href="/index.php?list=<?= $_GET['list']+1 ?>"><?= $_GET['list']+2 ?></a>
+        <a class="page-link" href="/?list=<?= $_GET['list']+1 ?>"><?= $_GET['list']+2 ?></a>
       </li>
     <?php endif ?>
 
     <li class="page-item">
-        <a class="page-link" href="/index.php?list=<?= $_GET['list']+1 ?>">>></a>
+        <a class="page-link" href="/?list=<?= $_GET['list']+1 ?>">>></a>
     </li>
 
     <li class="page-item">
-      <a class="page-link" href="/index.php?list=<?= ceil($usersCount['count(*)'] / $PageCount) ?>">
+      <a class="page-link" href="/?list=<?= ceil($usersCount['count(*)'] / $PageCount) ?>">
         Последняя
       </a>
     </li>
@@ -188,7 +188,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
         <input type='text' name='role' value=".$row["Role"]." readonly hidden>
         <input type='submit' class='btn btn-outline-warning' value='Редактировать'></form></td>";
 
-        echo "<td><form method='post' action='index.php' onsubmit='deleteName(this);return false;'>
+        echo "<td><form method='post' action='/' onsubmit='deleteName(this);return false;'>
         <input type='number' name='idUserForDelete' value=".$row["IdUser"]." readonly hidden>
         <input type='submit' class='btn btn-outline-danger' value='Удалить'></form></td>";
         echo "</tr>";

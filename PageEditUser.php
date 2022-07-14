@@ -39,7 +39,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
               Phone = '$now_phone', IdRole = $code_role WHERE IdUser = $now_iduser";
               if($connection->query($query)){
                   alertMessage("Данные успешно изменены!");
-                  header("Refresh:0; url=index.php");
+                  header("Refresh:0; url=/");
                   $_POST = Array();
               } else{
                   echo "Ошибка: " . $connection->error;
@@ -58,7 +58,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
               Phone = '$now_phone', IdRole = $code_role WHERE IdUser = $now_iduser";
               if($connection->query($query)){
                   alertMessage("Данные успешно изменены!");
-                  header("Refresh:0; url=index.php");
+                  header("Refresh:0; url=/");
                   $_POST = Array();
               } else{
                   echo "Ошибка: " . $connection->error;
@@ -85,7 +85,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
   <link rel="stylesheet" href="styles/style.css">
  </head>
  <body>
-    <p><a href="index.php" class="btn btn-primary">Назад</a></p>
+    <p><a href="/" class="btn btn-primary">Назад</a></p>
 <div class="divcenter">
       <h2>Изменение пользователя в БД</h2>
       <form name="editrecord" method="post" action="PageEditUser.php">
