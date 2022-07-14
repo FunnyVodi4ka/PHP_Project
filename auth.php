@@ -66,7 +66,7 @@
  <br>
   <h1>Авторизация</h1>
   <div class="divcenter">
-    <form name="register" method="post" action="index.php">
+    <form name="register" method="post" action="auth.php">
         <p><b>Введите логин:</b><br>
         <input name="loginEnter" type="text" size="40" required>
         </p>

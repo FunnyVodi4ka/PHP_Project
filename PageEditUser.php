@@ -130,5 +130,5 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
 </html>
 
 <?php else: 
-    header("Refresh:0; url=index.php");
+    header("Refresh:0; url=auth.php");
 endif; ?>

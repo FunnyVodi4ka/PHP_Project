@@ -30,7 +30,7 @@
             VALUES ('$now_login', '$hashPassword', '$now_email', '$now_phone', 2)";
             if($connection->query($query)){
                 alertMessage("Регистрация прошла успешно!");
-                header("Refresh:0; url=index.php");
+                header("Refresh:0; url=auth.php");
             } else{
                 echo "Ошибка: ".$connection->error;
             }
@@ -74,7 +74,7 @@
         <input name="phoneRegister" type="text" pattern="8[0-9]{10}" size="50" value="<?= $_SESSION['customPhone'] ?? '' ?>" required>
         </p>
         <input type="submit" class="btn btn-outline-success" value="Создать аккаунт">
-        <a href="index.php" class="btn btn-outline-warning">Авторизоваться</a>
+        <a href="auth.php" class="btn btn-outline-warning">Авторизоваться</a>
         <input type="reset" class="btn btn-outline-danger" value="Очистить">
       </form>
 </div>

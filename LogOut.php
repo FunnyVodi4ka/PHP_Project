@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="styles/style.css">
   <?php
     function LogOut(){
-        echo '<meta http-equiv="refresh" content="0;URL=http://localhost/index.php"/>';
+        echo '<meta http-equiv="refresh" content="0;URL=http://localhost/auth.php"/>';
     }
   ?>
  </head>

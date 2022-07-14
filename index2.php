@@ -81,7 +81,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
   <link rel="stylesheet" href="styles/style.css">
   <?php
     function CheckAuthorization(){
-      echo '<meta http-equiv="refresh" content="0;URL=http://localhost/index.php"/>';
+      echo '<meta http-equiv="refresh" content="0;URL=http://localhost/auth.php"/>';
     }
   ?>
  </head>
@@ -199,5 +199,5 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
  </body>
 </html>
 <?php else: 
-    header("Refresh:0; url=index.php");
+    header("Refresh:0; url=auth.php");
 endif; ?>
