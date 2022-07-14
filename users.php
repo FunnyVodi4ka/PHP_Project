@@ -76,7 +76,7 @@
 
     <?php if(!($_GET['list']+2 > $usersCount['count(*)'] / $PageCount)): ?>
       <li class="page-item">
-        <a class="page-link" href="/users.php?list=<?= $_GET['list']+1 ?>"><?= $_GET['list']+2 ?></a>
+        <a class="page-link" href="/users.php?list=<?= $_GET['list']+2 ?>"><?= $_GET['list']+2 ?></a>
       </li>
     <?php endif ?>
 
