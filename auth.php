@@ -16,7 +16,7 @@
 	  unset($_SESSION['is_auth']);
     unset($_SESSION['is_userid']);
     unset($_SESSION['is_role']);
-    $_SESSION = array();
+    $_SESSION = [];
 
     $now_login = $_POST["loginEnter"];
     $now_password = $_POST["passwordEnter"];

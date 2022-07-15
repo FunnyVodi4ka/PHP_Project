@@ -1,4 +1,18 @@
 <?php 
+require('Router.php');
+Router::route('/users', function(){
+  include 'users.php';
+  die();
+});
+Router::route('/register', function(){
+  include 'register.php';
+  die();
+});
+Router::route('/auth', function(){
+  include 'auth.php';
+  die();
+});
+
 session_start();
 if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): 
 ?>
