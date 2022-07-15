@@ -26,7 +26,7 @@
   $_GET['list'] = 1;
   }
 
-  $paginationUrl = "users.php";
+  $paginationUrl = "users";
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
@@ -38,8 +38,8 @@
   <link rel="stylesheet" href="styles/style.css">
  </head>
  <body>
- <a class="btn btn-primary" href="LogOut.php" onclick="return  confirm('Вы точно хотите выйти?')">Выход</a>
- <a class="btn btn-primary" href="PageUserAccount.php">В личный кабинет</a>
+ <a class="btn btn-primary" href="LogOut" onclick="return  confirm('Вы точно хотите выйти?')">Выход</a>
+ <a class="btn btn-primary" href="PageUserAccount">В личный кабинет</a>
  <h2>Список пользователей</h2>
  <?php 
       require_once('pagination.php');

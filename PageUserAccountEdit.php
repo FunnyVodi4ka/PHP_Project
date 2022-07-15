@@ -47,17 +47,22 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 2): ?>
             && CheckPhone($now_phone)){
                 $query = "UPDATE Users SET Login = '$now_login', Email = '$now_email', 
                 Phone = '$now_phone' WHERE IdUser = $now_iduser";
-                if($connection->query($query)){
-                    if(isset($_FILES['imageUserEditer'])){
-                        require_once("imageUpload.php");
-                    }
-                    alertMessage("Данные успешно изменены!");
-                    $_POST = Array();
-                    header("Refresh:0; url=PageUserAccount.php");
-                    die();
-                } 
+                if(isset($_FILES['imageUserEditer'])){
+                    require_once("imageUpload.php");
+                }
+                if($uploadOk == 0){
+                    echo "Ошибка при обновлении данных!";
+                }
                 else{
-                    echo "Ошибка: " . $connection->error;
+                    if($connection->query($query)){
+                        alertMessage("Данные успешно изменены!");
+                        $_POST = Array();
+                        header("Refresh:0; url=PageUserAccount");
+                        die();
+                    } 
+                    else{
+                        echo "Ошибка: " . $connection->error;
+                    }
                 }
             }
         }
@@ -67,16 +72,22 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 2): ?>
             $hashPassword = password_hash($now_password, PASSWORD_DEFAULT);
             $query = "UPDATE Users SET Login = '$now_login', Password = '$hashPassword', Email = '$now_email', 
             Phone = '$now_phone' WHERE IdUser = $now_iduser";
-            if($connection->query($query)){
-                if(isset($_FILES['imageUserEditer'])){
-                    require_once("imageUpload.php");        
+            if(isset($_FILES['imageUserEditer'])){
+                require_once("imageUpload.php");
+            }
+            if($uploadOk == 0){
+                echo "Ошибка при обновлении данных!";
+            }
+            else{
+                if($connection->query($query)){
+                    alertMessage("Данные успешно изменены!");
+                    $_POST = Array();
+                    header("Refresh:0; url=PageUserAccount");
+                    die();
+                } 
+                else{
+                    echo "Ошибка: " . $connection->error;
                 }
-                alertMessage("Данные успешно изменены!");
-                $_POST = Array();
-                header("Refresh:0; url=PageUserAccount.php");
-                die();
-            } else{
-                echo "Ошибка: " . $connection->error;
             }
         }
         }
@@ -92,10 +103,10 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 2): ?>
   <link rel="stylesheet" href="styles/style.css">
  </head>
  <body>
- <p><a href="PageUserAccount.php" class="btn btn-primary">Назад</a></p>
+ <p><a href="PageUserAccount" class="btn btn-primary">Назад</a></p>
 <div class="divcenter">
       <h2>Настройки аккаунта</h2>
-      <form name="editrecord" method="post" action="PageUserAccountEdit.php" enctype="multipart/form-data">
+      <form name="editrecord" method="post" action="PageUserAccountEdit" enctype="multipart/form-data">
         <p><b>Ваш Id:</b>
         <input name="iduserUserEditer" type="text" <?php echo "value=".(int)$_SESSION['is_userid']; ?> readonly>
         </p>
@@ -122,6 +133,6 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 2): ?>
 </html>
 
 <?php else: 
-    header("Refresh:0; url=auth.php");
+    header("Refresh:0; url=auth");
     die();
 endif; ?>

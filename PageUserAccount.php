@@ -38,7 +38,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 2): ?>
   <link rel="stylesheet" href="styles/style.css">
  </head>
  <body>
-    <b><a href="LogOut.php" class="btn btn-primary" onclick="return  confirm('Вы точно хотите выйти?')">Выход</a></b>
+    <b><a href="LogOut" class="btn btn-primary" onclick="return  confirm('Вы точно хотите выйти?')">Выход</a></b>
     <b>Добрый день, Клиент!</b>
     <h2>Ваши данные:</h2>
     <div class="accountbox">
@@ -64,16 +64,16 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 2): ?>
           }
         }
       ?>
-      <a class="btn btn-warning" href="PageUserAccountEdit.php">Изменить данные</a>
+      <a class="btn btn-warning" href="PageUserAccountEdit">Изменить данные</a>
     </div>
     <h2>Список пользователей</h2>
     <div class="divcenter">
-    <a class="btn btn-primary" href="users.php">Просмотреть список пользователей</a>
+    <a class="btn btn-primary" href="users">Просмотреть список пользователей</a>
     </div>
  </body>
 </html>
 
 <?php else: 
-    header("Refresh:0; url=auth.php");
+    header("Refresh:0; url=auth");
     die();
 endif; ?>

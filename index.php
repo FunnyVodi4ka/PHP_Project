@@ -1,4 +1,5 @@
 <?php 
+
 require('Router.php');
 Router::route('/users', function(){
   include 'users.php';
@@ -12,6 +13,27 @@ Router::route('/auth', function(){
   include 'auth.php';
   die();
 });
+Router::route('/PageCreateUser', function(){
+  include 'PageCreateUser.php';
+  die();
+});
+Router::route('/PageEditUser', function(){
+  include 'PageEditUser.php';
+  die();
+});
+Router::route('/PageUserAccountEdit', function(){
+  include 'PageUserAccountEdit.php';
+  die();
+});
+Router::route('/PageUserAccount', function(){
+  include 'PageUserAccount.php';
+  die();
+});
+Router::route('/LogOut', function(){
+  include 'LogOut.php';
+  die();
+});
+Router::execute($_SERVER['REQUEST_URI']);
 
 session_start();
 if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): 
@@ -97,14 +119,14 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
   <link rel="stylesheet" href="styles/style.css">
   <?php
     function CheckAuthorization(){
-      echo '<meta http-equiv="refresh" content="0;URL=http://localhost/auth.php"/>';
+      echo '<meta http-equiv="refresh" content="0;URL=http://localhost/auth"/>';
     }
   ?>
  </head>
  <body>
     <div class="exit">
       <b>
-        <a class="btn btn-primary" href="LogOut.php" onclick="return  confirm('Вы точно хотите выйти?')">Выход</a>
+        <a class="btn btn-primary" href="LogOut" onclick="return  confirm('Вы точно хотите выйти?')">Выход</a>
       </b>
       <b>Добрый день, Администратор!</b>
     </div>
@@ -113,7 +135,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
     <?php 
       require_once('pagination.php');
     ?>
-    <a href="PageCreateUser.php" class='btn btn-outline-success'>Создать запись</a>
+    <a href="PageCreateUser" class='btn btn-outline-success'>Создать запись</a>
     <?php
       $stmt = Connection()->query('SELECT IdUser, Login, Password, Email, Phone, Role, AvatarImage FROM Users 
       INNER JOIN Roles ON Users.IdRole = Roles.IdRole 
@@ -124,7 +146,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
       while ($row = $stmt->fetch())
       {
         echo "<tr>";
-        echo "<td><form method='post' action='PageAdminCheckUser.php'>
+        echo "<td><form method='post' action='PageAdminCheckUser'>
         <input type='number' name='idUserForCheck' value=".$row["IdUser"]." readonly hidden>
         <input type='submit' class='btn btn-outline-secondary' value='Просмотр'></form></td>";
 
@@ -140,7 +162,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
         echo "<td>" . $row["Phone"] . "</td>";
         echo "<td>" . $row["Role"] . "</td>";
 
-        echo "<td><form method='post' action='PageEditUser.php'>
+        echo "<td><form method='post' action='PageEditUser'>
         <input type='number' name='iduser' value=".$row["IdUser"]." readonly hidden>
         <input type='text' name='login' value=".$row["Login"]." readonly hidden>
         <input type='text' name='email' value=".$row["Email"]." readonly hidden>
@@ -159,6 +181,6 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
  </body>
 </html>
 <?php else: 
-    header("Refresh:0; url=auth.php");
+    header("Refresh:0; url=auth");
     die();
 endif; ?>

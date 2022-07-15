@@ -96,7 +96,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
     <p><a href="/" class="btn btn-primary">Назад</a></p>
 <div class="divcenter">
       <h2>Изменение пользователя в БД</h2>
-      <form name="editrecord" method="post" action="PageEditUser.php">
+      <form name="editrecord" method="post" action="PageEditUser">
         <p><b>Id пользователя:</b>
         <input name="iduserEditer" type="text" <?php echo "value=".(int)$_POST['iduser']; ?> readonly>
         </p>
@@ -138,6 +138,6 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
 </html>
 
 <?php else: 
-    header("Refresh:0; url=auth.php");
+    header("Refresh:0; url=auth");
     die();
 endif; ?>

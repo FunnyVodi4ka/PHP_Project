@@ -5,7 +5,7 @@
     die();
   }
   elseif($_SESSION["is_auth"] && $_SESSION["is_role"] == 2){
-    header("Refresh:0; url=PageUserAccount.php");
+    header("Refresh:0; url=PageUserAccount");
     die();
   }
 
@@ -39,7 +39,7 @@
                     $_SESSION["is_auth"] = true;
                     $_SESSION["is_userid"] = $row["IdUser"];
                     $_SESSION["is_role"] = 2;
-                    header("Refresh:0; url=PageUserAccount.php");
+                    header("Refresh:0; url=PageUserAccount");
                     die();
                 }
                 else{
@@ -70,7 +70,7 @@
  <br>
   <h1>Авторизация</h1>
   <div class="divcenter">
-    <form name="register" method="post" action="auth.php">
+    <form name="register" method="post" action="auth">
         <p><b>Введите логин:</b><br>
         <input name="loginEnter" type="text" size="40" required>
         </p>
@@ -78,13 +78,13 @@
         <input name="passwordEnter" type="password" size="40" required>
         </p>
         <input type="submit" class="btn btn-outline-success" value="Войти">
-        <a href="register.php" class="btn btn-outline-warning">Регистрация</a>
+        <a href="register" class="btn btn-outline-warning">Регистрация</a>
         <input type="reset" class="btn btn-outline-danger" value="Очистить">
       </form>
     </div>
     <h2>Список пользователей</h2>
     <div class="divcenter">
-    <a class="btn btn-primary" href="users.php">Просмотреть список пользователей</a>
+    <a class="btn btn-primary" href="users">Просмотреть список пользователей</a>
     </div>
  </body>
 </html>

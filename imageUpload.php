@@ -15,10 +15,11 @@ if(isset($_POST["imageUserEditer"])) {
     }
   }
   
-  if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-  && $imageFileType != "gif" ) {
-    alertMessage("К сожалению, разрешены только файлы JPG, JPEG, PNG и GIF.");
+  if (mime_content_type($_FILES['imageUserEditer']['tmp_name']) != 'image/jpeg'
+  && mime_content_type($_FILES['imageUserEditer']['tmp_name']) != 'image/jpg'
+  && mime_content_type($_FILES['imageUserEditer']['tmp_name']) != 'image/png') {
     $uploadOk = 0;
+    alertMessage("К сожалению, разрешены только файлы JPG, JPEG и PNG.");
   }
   elseif (file_exists($target_file)) {
     alertMessage("Извините, файл уже существует.");
@@ -30,7 +31,7 @@ if(isset($_POST["imageUserEditer"])) {
   }
   
   if ($uploadOk == 0) {
-    alertMessage("Извините, ваш файл не был загружен.");
+    #alertMessage("Извините, ваш файл не был загружен.");
   } 
   else {
     if (move_uploaded_file($_FILES["imageUserEditer"]["tmp_name"], $target_file)) {

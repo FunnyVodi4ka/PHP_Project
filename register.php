@@ -5,7 +5,7 @@
     die();
   }
   elseif($_SESSION["is_auth"] && $_SESSION["is_role"] == 2){
-    header("Refresh:0; url=PageUserAccount.php");
+    header("Refresh:0; url=PageUserAccount");
     die();
   }
 
@@ -40,7 +40,7 @@
             VALUES ('$now_login', '$hashPassword', '$now_email', '$now_phone', 2)";
             if($connection->query($query)){
                 alertMessage("Регистрация прошла успешно!");
-                header("Refresh:0; url=auth.php");
+                header("Refresh:0; url=auth");
                 die();
             } else{
                 echo "Ошибка: ".$connection->error;
@@ -68,7 +68,7 @@
     <div class="divcenter">
       <br>
     <h1>Регистрация</h1>
-      <form name="register" method="post" action="register.php">
+      <form name="register" method="post" action="register">
         <p><b>Введите логин:</b><br>
         <input name="loginRegister" type="text" size="50" value="<?= $_SESSION['customLogin'] ?? '' ?>" required>
         </p>
@@ -85,7 +85,7 @@
         <input name="phoneRegister" type="text" pattern="8[0-9]{10}" size="50" value="<?= $_SESSION['customPhone'] ?? '' ?>" required>
         </p>
         <input type="submit" class="btn btn-outline-success" value="Создать аккаунт">
-        <a href="auth.php" class="btn btn-outline-warning">Авторизоваться</a>
+        <a href="auth" class="btn btn-outline-warning">Авторизоваться</a>
         <input type="reset" class="btn btn-outline-danger" value="Очистить">
       </form>
 </div>

@@ -69,7 +69,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
   <p><a href="/" class="btn btn-primary">Назад</a></p>
 <div class="divcenter">
         <h2>Добавление пользователя в БД</h2>
-      <form name="register" method="post" action="PageCreateUser.php">
+      <form name="register" method="post" action="PageCreateUser">
         <p><b>Введите логин:</b><br>
         <input name="loginCreater" type="text" size="50" value="<?= $_SESSION['customLogin'] ?? '' ?>" required>
         </p>
@@ -99,6 +99,6 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
 </html>
 
 <?php else: 
-    header("Refresh:0; url=auth.php");
+    header("Refresh:0; url=auth");
     die();
 endif; ?>
