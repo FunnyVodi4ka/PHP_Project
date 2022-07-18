@@ -2,31 +2,32 @@
   require_once('ConnectionValidation.php');
 
   session_start();
+  //Пагинация
   if(isset($_GET['PageRows'])){
-  $_SESSION['PageRows'] = $_GET['PageRows'];
+    $_SESSION['PageRows'] = $_GET['PageRows'];
   }
 
   if(empty($_SESSION['PageRows'])){
-  $PageCount = 10;
+    $PageCount = 10;
   } else{
-  $PageCount = $_SESSION['PageRows'];
+    $PageCount = $_SESSION['PageRows'];
   }
 
   if(!isset($_GET['list'])) {
-  $_GET['list'] = 1;
+    $_GET['list'] = 1;
   }
   $usersCountResult = Connection()->query("SELECT count(*) FROM Users WHERE DeleteAt IS NULL");
   $usersCount = $usersCountResult->fetch();
 
-  if ($_GET['list'] > $usersCount['count(*)'] / $PageCount) {
-  $_GET['list'] = ceil($usersCount['count(*)'] / $PageCount);
+  if ($_GET['list'] > $usersCount['count(*)'] / $PageCount){
+    $_GET['list'] = ceil($usersCount['count(*)'] / $PageCount);
   }
 
   if ($_GET['list'] < 1){
-  $_GET['list'] = 1;
+    $_GET['list'] = 1;
   }
-
   $paginationUrl = "users";
+  //--
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
@@ -41,10 +42,8 @@
  <a class="btn btn-primary" href="LogOut" onclick="return  confirm('Вы точно хотите выйти?')">Выход</a>
  <a class="btn btn-primary" href="PageUserAccount">В личный кабинет</a>
  <h2>Список пользователей</h2>
- <?php 
-      require_once('pagination.php');
-  ?>
-  <?php
+ <?php
+  require_once('pagination.php');
   require_once('ConnectionValidation.php');
   $stmt = Connection()->query('SELECT IdUser, Login, Password, Email, Phone, Role, AvatarImage FROM Users 
   INNER JOIN Roles ON Users.IdRole = Roles.IdRole 

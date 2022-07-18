@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 require('Router.php');
 Router::route('/users', function(){
@@ -31,6 +31,10 @@ Router::route('/PageUserAccount', function(){
 });
 Router::route('/LogOut', function(){
   include 'LogOut.php';
+  die();
+});
+Router::route('/PageAdminCheckUser', function(){
+  include 'PageAdminCheckUser.php';
   die();
 });
 Router::execute($_SERVER['REQUEST_URI']);
@@ -66,7 +70,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
   if ($_GET['list'] < 1){
     $_GET['list'] = 1;
   }
-  $paginationUrl = "";
+  $paginationUrl = "users";
   //--
 
   //Вывод сообщения
