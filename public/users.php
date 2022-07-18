@@ -26,7 +26,7 @@
   if ($_GET['list'] < 1){
     $_GET['list'] = 1;
   }
-  $paginationUrl = "users";
+  $paginationUrl = "users.php";
   //--
 ?>
 

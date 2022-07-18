@@ -72,10 +72,10 @@
   <div class="divcenter">
     <form name="register" method="post" action="auth">
         <p><b>Введите логин:</b><br>
-        <input name="loginEnter" type="text" size="40" required>
+        <input name="loginEnter" type="text" size="35" required>
         </p>
         <p><b>Введите пароль:</b><br>
-        <input name="passwordEnter" type="password" size="40" required>
+        <input name="passwordEnter" type="password" size="35" required>
         </p>
         <input type="submit" class="btn btn-outline-success" value="Войти">
         <a href="register" class="btn btn-outline-warning">Регистрация</a>

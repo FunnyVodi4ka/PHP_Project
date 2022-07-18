@@ -70,7 +70,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
   if ($_GET['list'] < 1){
     $_GET['list'] = 1;
   }
-  $paginationUrl = "users";
+  $paginationUrl = "";
   //--
 
   //Вывод сообщения
