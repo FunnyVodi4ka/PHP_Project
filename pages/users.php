@@ -26,7 +26,7 @@
   if ($_GET['list'] < 1){
     $_GET['list'] = 1;
   }
-  $paginationUrl = "users.php";
+  $paginationUrl = "users";
   //--
 ?>
 
@@ -36,14 +36,14 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>Авторизация</title>    
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-  <link rel="stylesheet" href="styles/style.css">
+  <link rel="stylesheet" href="css/style.css">
  </head>
  <body>
  <a class="btn btn-primary" href="LogOut" onclick="return  confirm('Вы точно хотите выйти?')">Выход</a>
  <a class="btn btn-primary" href="PageUserAccount">В личный кабинет</a>
  <h2>Список пользователей</h2>
  <?php
-  require_once('pagination.php');
+  require_once('../assets/pagination.php');
   require_once('ConnectionValidation.php');
   $stmt = Connection()->query('SELECT IdUser, Login, Password, Email, Phone, Role, AvatarImage FROM Users 
   INNER JOIN Roles ON Users.IdRole = Roles.IdRole 
