@@ -1,68 +1,18 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Welcome to CRUD</title>    
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="../css/style.css">
+ </head>
+ <body>
 <?php
-
 require_once $_SERVER['DOCUMENT_ROOT'].'/routes/startroutes.php';
 
 $routes = require_once($_SERVER['DOCUMENT_ROOT'].'/routes/routes.php');
 
 startRoute($routes);
-
-/*
-require('../assets/Router.php');
-Router::route('/users', function(){
-  include '../pages/users.php';
-  die();
-});
-Router::route('/register', function(){
-  include '../pages/register.php';
-  die();
-});
-Router::route('/auth', function(){
-  include '../pages/auth.php';
-  die();
-});
-Router::route('/PageUserAccountEdit', function(){
-  include '../pages/PageUserAccountEdit.php';
-  die();
-});
-Router::route('/PageUserAccount', function(){
-  include '../pages/PageUserAccount.php';
-  die();
-});
-Router::route('/PageCreateUser', function(){
-  include '../pages/PageCreateUser.php';
-  die();
-});
-Router::route('/PageEditUser', function(){
-  include '../pages/PageEditUser.php';
-  die();
-});
-Router::route('/PageAdminCheckUser', function(){
-  include '../pages/PageAdminCheckUser.php';
-  die();
-});
-Router::route('/PageCreateCourse', function(){
-  include '../pages/PageCreateCourse.php';
-  die();
-});
-Router::route('/PageEditCourse', function(){
-  include '../pages/PageEditCourse.php';
-  die();
-});
-Router::route('/PageAdminCheckCourse', function(){
-  include '../pages/PageAdminCheckCourse.php';
-  die();
-});
-Router::route('/PageTableUsers', function(){
-  include '../pages/PageTableUsers.php';
-  die();
-});
-Router::route('/PageTableCourses', function(){
-  include '../pages/PageTableCourses.php';
-  die();
-});
-Router::route('/LogOut', function(){
-  include '../assets/LogOut.php';
-  die();
-});
-Router::execute($_SERVER['REQUEST_URI']);
-*/
+?>
+ </body>
+</html>
