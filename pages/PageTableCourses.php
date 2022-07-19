@@ -20,7 +20,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
   if(!isset($_GET['list'])) {
     $_GET['list'] = 1;
   }
-  $usersCountResult = Connection()->query("SELECT count(*) FROM Users WHERE DeleteAt IS NULL");
+  $usersCountResult = Connection()->query("SELECT count(*) FROM Courses WHERE DeleteAt IS NULL");
   $usersCount = $usersCountResult->fetch();
 
   if ($_GET['list'] > $usersCount['count(*)'] / $PageCount){

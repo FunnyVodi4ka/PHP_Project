@@ -1,5 +1,5 @@
 <?php
-$target_dir = "userImages/";
+$target_dir = "../userImages/";
 $parts = pathinfo($_FILES['imageUserEditer']['name']);
 $target_file = $target_dir . basename(mt_rand().$_FILES["imageUserEditer"]["name"]);
 $uploadOk = 1;
