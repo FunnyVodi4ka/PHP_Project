@@ -1,3 +1,33 @@
+<?php
+session_start();
+//Пагинация
+  if(isset($_GET['?PageRows']) && ($_GET['?PageRows'] == 10 || 
+  $_GET['?PageRows'] == 25 || $_GET['?PageRows'] == 50)){
+    $_SESSION['PageRows'] = $_GET['?PageRows'];
+  }
+
+  if(empty($_SESSION['PageRows'])){
+    $PageCount = 10;
+  } else{
+    $PageCount = $_SESSION['PageRows'];
+  }
+
+  if(isset($_GET['?list'])){
+    $_GET['list'] = $_GET['?list'];
+  }
+
+  if(!isset($_GET['list'])) {
+    $_GET['list'] = 1;
+  }
+
+  if ($_GET['list'] > $usersCount['count(*)'] / $PageCount){
+    $_GET['list'] = ceil($usersCount['count(*)'] / $PageCount);
+  }
+
+  if ($_GET['list'] < 1){
+    $_GET['list'] = 1;
+  }
+  ?>
 <nav>
   <ul class="pagination justify-content-center">
   <li class="page-item">

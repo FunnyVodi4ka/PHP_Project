@@ -6,32 +6,9 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
 <?php
   require_once('../config/ConnectionToDB.php');
   require_once('../assets/ValidationForCourse.php');
-  //Пагинация
-  if(isset($_GET['PageRows'])){
-    $_SESSION['PageRows'] = $_GET['PageRows'];
-  }
-
-  if(empty($_SESSION['PageRows'])){
-    $PageCount = 10;
-  } else{
-    $PageCount = $_SESSION['PageRows'];
-  }
-
-  if(!isset($_GET['list'])) {
-    $_GET['list'] = 1;
-  }
   $usersCountResult = Connection()->query("SELECT count(*) FROM Courses WHERE DeleteAt IS NULL");
   $usersCount = $usersCountResult->fetch();
-
-  if ($_GET['list'] > $usersCount['count(*)'] / $PageCount){
-    $_GET['list'] = ceil($usersCount['count(*)'] / $PageCount);
-  }
-
-  if ($_GET['list'] < 1){
-    $_GET['list'] = 1;
-  }
-  $paginationUrl = "PageTableCourse";
-  //--
+  $paginationUrl = "PageTableCourses";
 
   //Вывод сообщения
   function alertMessage($message) {

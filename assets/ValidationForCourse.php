@@ -52,7 +52,13 @@
     }
     function CheckContent($content){
         if(strlen($content) <= 255){
-            return true;
+            if (preg_match("^[а-яёА-ЯЁa-zA-Z0-9_-]{5,255}$", $content)) {
+                return true;
+            }
+            else{
+                echo "<p>Ошибка: Разрешены только цифры, русские и латинские буквы, а также стандартные знаки препинания!</p>";
+                return false;
+            }
         }
         else{
             echo "\n<p>Ошибка: Длина содержания курса должна быть 255 символов!</p>";

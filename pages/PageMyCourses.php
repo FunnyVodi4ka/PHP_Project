@@ -1,35 +1,10 @@
 <?php
   require_once('../config/ConnectionToDB.php');
-
-  session_start();
-  //Пагинация
-  if(isset($_GET['PageRows'])){
-    $_SESSION['PageRows'] = $_GET['PageRows'];
-  }
-
-  if(empty($_SESSION['PageRows'])){
-    $PageCount = 10;
-  } else{
-    $PageCount = $_SESSION['PageRows'];
-  }
-
-  if(!isset($_GET['list'])) {
-    $_GET['list'] = 1;
-  }
   $usersCountResult = Connection()->prepare("SELECT count(*) FROM Courses WHERE IdAuthor = ? AND Courses.DeleteAt IS NULL");
   $id = (int)$_SESSION['is_userid'];
   $usersCountResult->execute([$id]);
   $usersCount = $usersCountResult->fetch();
-
-  if ($_GET['list'] > $usersCount['count(*)'] / $PageCount){
-    $_GET['list'] = ceil($usersCount['count(*)'] / $PageCount);
-  }
-
-  if ($_GET['list'] < 1){
-    $_GET['list'] = 1;
-  }
   $paginationUrl = "PageMyCourses";
-  //--
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
