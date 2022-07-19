@@ -3,6 +3,9 @@ session_start();
 if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
 
 <?php
+  unset($_SESSION['customLogin']);
+  unset($_SESSION['customEmail']);
+  unset($_SESSION['customPhone']);
   if(isset($_POST['loginCreater']) && isset($_POST['passwordCreater']) && 
   isset($_POST['emailCreater']) && isset($_POST['phoneCreater']) && isset($_POST['roleCreater'])){
     $_SESSION['customLogin'] = $_POST['loginCreater'];
@@ -44,7 +47,10 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
                     $query = "INSERT INTO Users (Login, Password, Email, Phone, IdRole) 
                     VALUES ('$now_login', '$hashPassword', '$now_email', '$now_phone', $code_role)";
                     if($connection->query($query)){
-                        echo "Данные успешно добавлены!";
+                      unset($_SESSION['customLogin']);
+                      unset($_SESSION['customEmail']);
+                      unset($_SESSION['customPhone']);
+                      echo "Данные успешно добавлены!";
                     } else{
                         echo "Ошибка: " . $connection->error;
                     }
@@ -55,11 +61,6 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
     else{
         echo "Ошибка доступа, повторите попытку позже!";
     }
-    unset($_POST['loginCreater']);
-    unset($_POST['passwordCreater']);
-    unset($_POST['emailCreater']);
-    unset($_POST['phoneCreater']);
-    unset($_POST['roleCreater']);
   }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
@@ -71,7 +72,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
   <link rel="stylesheet" href="css/style.css">
  </head>
  <body>
-  <p><a href="/" class="btn btn-primary">Назад</a></p>
+  <p><a href="PageTableUsers" class="btn btn-primary">Назад</a></p>
 <div class="divcenter">
         <h2>Добавление пользователя в БД</h2>
       <form name="register" method="post" action="PageCreateUser">

@@ -14,7 +14,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1 && !empty($_POST["idCourse
   <link rel="stylesheet" href="css/style.css">
  </head>
  <body>
-    <b><a href="/" class="btn btn-primary">Назад</a></b>
+    <b><a href="PageTableCourses" class="btn btn-primary">Назад</a></b>
     <?php
         session_start();
         $courseId = $_POST["idCourseForCheck"];

@@ -123,10 +123,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
 
         echo "<td><form method='post' action='PageEditUser'>
         <input type='number' name='iduser' value=".$row["IdUser"]." readonly hidden>
-        <input type='text' name='login' value=".$row["Login"]." readonly hidden>
-        <input type='text' name='email' value=".$row["Email"]." readonly hidden>
-        <input type='text' name='phone' value=".$row["Phone"]." readonly hidden>
-        <input type='text' name='role' value=".$row["Role"]." readonly hidden>
+        
         <input type='submit' class='btn btn-outline-warning' value='Редактировать'></form></td>";
 
         echo "<td><form method='post' action='/' onsubmit='deleteName(this);return false;'>

@@ -13,7 +13,9 @@
   function alertMessage($message) {
     echo "<script type='text/javascript'>alert('$message');</script>";
   }
-
+  unset($_SESSION['customLogin']);
+  unset($_SESSION['customEmail']);
+  unset($_SESSION['customPhone']);
   if(isset($_POST['loginRegister']) && isset($_POST['passwordRegister']) && 
   isset($_POST['emailRegister']) && isset($_POST['phoneRegister'])){
     session_start();
@@ -40,6 +42,7 @@
             $query = "INSERT INTO Users (Login, Password, Email, Phone, IdRole) 
             VALUES ('$now_login', '$hashPassword', '$now_email', '$now_phone', 2)";
             if($connection->query($query)){
+              $_POST = [];
                 alertMessage("Регистрация прошла успешно!");
                 header("Refresh:0; url=auth");
                 die();
@@ -51,10 +54,6 @@
     else{
         echo "Пароли не совподают, попробуйте снова!";
     }
-    unset($_POST['loginRegister']);
-    unset($_POST['passwordRegister']);
-    unset($_POST['emailRegister']);
-    unset($_POST['phoneRegister']);
   }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">

@@ -3,6 +3,9 @@ session_start();
 if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
 
 <?php
+    unset($_SESSION['customCourse']);
+    unset($_SESSION['customAuthor']);
+    unset($_SESSION['customContent']);
   if(isset($_POST['CreateFormCourse']) && isset($_POST['CreateFormAuthor']) && 
   isset($_POST['CreateFormContent'])){
     $_SESSION['customCourse'] = $_POST['CreateFormCourse'];
@@ -26,6 +29,10 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
             $query = "INSERT INTO Courses (Course, IdAuthor, Content) 
             VALUES ('$now_course', '$now_author', '$now_content')";
             if($connection->query($query)){
+                unset($_SESSION['customCourse']);
+                unset($_SESSION['customAuthor']);
+                unset($_SESSION['customContent']);
+                $_POST = [];
                 echo "Данные успешно добавлены!";
             } else{
                 echo "Ошибка: " . $connection->error;
@@ -35,9 +42,6 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
     else{
         echo "Ошибка доступа, повторите попытку позже!";
     }
-    unset($_POST['CreateFormCourse']);
-    unset($_POST['CreateFormAuthor']);
-    unset($_POST['CreateFormContent']);
   }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
