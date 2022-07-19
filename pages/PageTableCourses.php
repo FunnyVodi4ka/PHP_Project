@@ -80,7 +80,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
     <div class="exit">
       <b>
         <a class="btn btn-primary" href="LogOut" onclick="return  confirm('Вы точно хотите выйти?')">Выход</a>
-        <a class="btn btn-primary" href="/">Назад</a>
+        <a class="btn btn-primary" href="PageAdminPanel">Назад</a>
       </b>
       <b>Добрый день, Администратор!</b>
     </div>

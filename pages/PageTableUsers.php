@@ -86,7 +86,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
     <div class="exit">
       <b>
         <a class="btn btn-primary" href="LogOut" onclick="return  confirm('Вы точно хотите выйти?')">Выход</a>
-        <a class="btn btn-primary" href="/">Назад</a>
+        <a class="btn btn-primary" href="PageAdminPanel">Назад</a>
       </b>
       <b>Добрый день, Администратор!</b>
     </div>
@@ -126,7 +126,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
         
         <input type='submit' class='btn btn-outline-warning' value='Редактировать'></form></td>";
 
-        echo "<td><form method='post' action='/' onsubmit='deleteName(this);return false;'>
+        echo "<td><form method='post' action='' onsubmit='deleteName(this);return false;'>
         <input type='number' name='idUserForDelete' value=".$row["IdUser"]." readonly hidden>
         <input type='submit' class='btn btn-outline-danger' value='Удалить'></form></td>";
         echo "</tr>";

@@ -1,7 +1,7 @@
 <?php
   session_start();
   if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1){
-    header("Refresh:0; url=/");
+    header("Refresh:0; url=PageAdminPanel");
     die();
   }
   elseif($_SESSION["is_auth"] && $_SESSION["is_role"] == 2){
