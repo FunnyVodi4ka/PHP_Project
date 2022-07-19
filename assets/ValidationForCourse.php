@@ -19,7 +19,13 @@
     }
     function CheckCourse($name){
         if(!empty($name) && strlen($name) >= 5 && strlen($name) <= 255){
-            return true;
+            if (preg_match("^[а-яёА-ЯЁa-zA-Z0-9_-]{5,255}$", $name)) {
+                return true;
+            }
+            else{
+                echo "<p>Ошибка: Разрешены только цифры, русские и латинские буквы, а также стандартные знаки препинания!</p>";
+                return false;
+            }
         }
         else{
             echo "\n<p>Ошибка: Длина названия курса должна быть от 5 до 255 символов!</p>";

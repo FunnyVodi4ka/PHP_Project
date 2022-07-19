@@ -31,20 +31,16 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1 && !empty($_POST['idCourse
     require_once('../assets/ValidationForCourse.php');
     
     if($_SESSION["is_role"] == 1 && $_SESSION['is_auth'] == true){
-        $connection = new mysqli("localhost", "root", "Password_12345", "CrudDatabase");
-        if($connection->connect_error){
-            die("Ошибка: " . $connection->connect_error);
-        }
     
     $now_idcourse = (int)$_POST['idCourseForEdit'];
-    $now_course = $connection->real_escape_string($_POST["EditFormCourse"]);
-    $now_author = $connection->real_escape_string((int)$_POST["EditFormAuthor"]);
-    $now_content = $connection->real_escape_string($_POST["EditFormContent"]);
+    $now_course = $_POST["EditFormCourse"];
+    $now_author = (int)$_POST["EditFormAuthor"];
+    $now_content = $_POST["EditFormContent"];
         
     if(CheckIdCourse($now_idcourse) && CheckCourse($now_course) && CheckAuthor($now_author) && CheckContent($now_content)){
-            $query = "UPDATE Courses SET Course = '$now_course', IdAuthor = $now_author, 
-            Content = '$now_content' WHERE IdCourse = $now_idcourse";
-            if($connection->query($query)){
+        $stmt = Connection()->prepare("UPDATE Courses SET Course = ?, IdAuthor = ?, 
+            Content = ? WHERE IdCourse = ?");
+            if($stmt->execute([$now_course, $now_author, $now_content, $now_idcourse])){
                 alertMessage("Данные успешно изменены!");
                 $_POST = [];
                 unset($_SESSION['customCourse']);
@@ -69,7 +65,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1 && !empty($_POST['idCourse
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
   <title>CRUD</title>    
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="../css/style.css">
  </head>
  <body>
     <p><a href="PageTableCourses" class="btn btn-primary">Назад</a></p>

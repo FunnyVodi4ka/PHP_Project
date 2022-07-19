@@ -16,7 +16,7 @@
   if(!isset($_GET['list'])) {
     $_GET['list'] = 1;
   }
-  $usersCountResult = Connection()->prepare("SELECT count(*) FROM Courses WHERE IdAuthor = ? AND DeleteAt IS NULL");
+  $usersCountResult = Connection()->prepare("SELECT count(*) FROM Courses WHERE IdAuthor = ? AND Courses.DeleteAt IS NULL");
   $id = (int)$_SESSION['is_userid'];
   $usersCountResult->execute([$id]);
   $usersCount = $usersCountResult->fetch();
@@ -38,7 +38,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>Мои курсы</title>    
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="../css/style.css">
  </head>
  <body>
  <a class="btn btn-primary" href="LogOut" onclick="return  confirm('Вы точно хотите выйти?')">Выход</a>
@@ -48,7 +48,7 @@
   require_once('../assets/pagination.php');
   $stmt = Connection()->prepare('SELECT * FROM Courses
   INNER JOIN Users ON Courses.IdAuthor = Users.IdUser 
-  WHERE IdUser = ? LIMIT '.(($_GET['list']-1)*$PageCount).','.$PageCount.';');
+  WHERE IdUser = ? AND Courses.DeleteAt IS NULL LIMIT '.(($_GET['list']-1)*$PageCount).','.$PageCount.';');
   $id = (int)$_SESSION['is_userid'];
   $stmt->execute([$id]);
   echo "<table class='table table-striped'><tr><th>Id</th><th>Course</th><th>Author</th>
