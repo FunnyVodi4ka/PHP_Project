@@ -36,6 +36,14 @@ Router::route('/PageAdminCheckUser', function(){
   include '../pages/PageAdminCheckUser.php';
   die();
 });
+Router::route('/PageTableUsers', function(){
+  include '../pages/PageTableUsers.php';
+  die();
+});
+Router::route('/PageTableCourses', function(){
+  include '../pages/PageTableCourses.php';
+  die();
+});
 Router::execute($_SERVER['REQUEST_URI']);
 
 session_start();
@@ -43,8 +51,8 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
 ?>
 
 <?php
-  require_once('ConnectionValidation.php');
-
+  require_once('../config/ConnectionToDB.php');
+  require_once('../assets/ValidationForUsers.php');
   //Пагинация
   if(isset($_GET['PageRows'])){
     $_SESSION['PageRows'] = $_GET['PageRows'];
@@ -128,54 +136,11 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
       </b>
       <b>Добрый день, Администратор!</b>
     </div>
-    <h2>Список пользователей</h2>
-
-    <?php 
-      require_once('../assets/pagination.php');
-    ?>
-    <a href="PageCreateUser" class='btn btn-outline-success'>Создать запись</a>
-    <?php
-      $stmt = Connection()->query('SELECT IdUser, Login, Password, Email, Phone, Role, AvatarImage FROM Users 
-      INNER JOIN Roles ON Users.IdRole = Roles.IdRole 
-      WHERE DeleteAt IS NULL ORDER BY IdUser DESC LIMIT '.(($_GET['list']-1)*$PageCount).','.$PageCount.';');
-
-      echo "<table class='table table-striped'><tr><th></th><th>Photo</th><th>Id</th><th>Login</th>
-      <th>Email</th><th>Phone</th><th>Role</th><th></th><th></th></tr>";
-      while ($row = $stmt->fetch())
-      {
-        echo "<tr>";
-        echo "<td><form method='post' action='PageAdminCheckUser'>
-        <input type='number' name='idUserForCheck' value=".$row["IdUser"]." readonly hidden>
-        <input type='submit' class='btn btn-outline-secondary' value='Просмотр'></form></td>";
-
-        if(!empty($row["AvatarImage"]) && file_exists($row["AvatarImage"])){
-          echo "<td><img src='".$row["AvatarImage"]."' alt='Loading...' width='40' height='40'></td>";
-        }
-        else{
-          echo "<td><img src='userImages/standartPhoto.png' alt='Loading...' width='40' height='40'></td>";
-        } 
-        echo "<td>" . $row["IdUser"] . "</td>";
-        echo "<td>" . $row["Login"] . "</td>";
-        echo "<td>" . $row["Email"] . "</td>";
-        echo "<td>" . $row["Phone"] . "</td>";
-        echo "<td>" . $row["Role"] . "</td>";
-
-        echo "<td><form method='post' action='PageEditUser'>
-        <input type='number' name='iduser' value=".$row["IdUser"]." readonly hidden>
-        <input type='text' name='login' value=".$row["Login"]." readonly hidden>
-        <input type='text' name='email' value=".$row["Email"]." readonly hidden>
-        <input type='text' name='phone' value=".$row["Phone"]." readonly hidden>
-        <input type='text' name='role' value=".$row["Role"]." readonly hidden>
-        <input type='submit' class='btn btn-outline-warning' value='Редактировать'></form></td>";
-
-        echo "<td><form method='post' action='/' onsubmit='deleteName(this);return false;'>
-        <input type='number' name='idUserForDelete' value=".$row["IdUser"]." readonly hidden>
-        <input type='submit' class='btn btn-outline-danger' value='Удалить'></form></td>";
-        echo "</tr>";
-      }
-      echo "</table>";
-    ?>
-      </div>
+    <div class="divcenter">
+      <h2>Активные таблицы</h2>
+      <p><a class="btn btn-info" href="PageTableUsers">Таблица "Пользователи"</a></p>
+      <p><a class="btn btn-info" href="PageTableCourses">Таблица "Курсы"</a></p>
+    </div>
  </body>
 </html>
 <?php else: 

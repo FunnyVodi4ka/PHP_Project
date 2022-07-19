@@ -3,7 +3,8 @@ session_start();
 if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 2): ?>
 
 <?php
-    require_once('ConnectionValidation.php');
+    require_once('../config/ConnectionToDB.php');
+    require_once('../assets/ValidationForUsers.php');
 
     //Вывод сообщения
   function alertMessage($message) {
@@ -30,7 +31,6 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 2): ?>
         $_SESSION['customEmail'] = $_POST['emailRegister'];
         $_SESSION['customPhone'] = $_POST['phoneRegister'];
 
-        require_once('ConnectionValidation.php');
         $connection = new mysqli("localhost", "root", "Password_12345", "CrudDatabase");
         if($connection->connect_error){
             die("Ошибка: " . $connection->connect_error);

@@ -13,7 +13,8 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
     $_SESSION['customLogin'] = $_POST['loginRegister'];
     $_SESSION['customEmail'] = $_POST['emailRegister'];
     $_SESSION['customPhone'] = $_POST['phoneRegister'];
-    require_once('ConnectionValidation.php');
+    require_once('../config/ConnectionToDB.php');
+    require_once('../assets/ValidationForUsers.php');
     if($_SESSION["is_role"] == 1 && $_SESSION['is_auth'] == true){
         $connection = new mysqli("localhost", "root", "Password_12345", "CrudDatabase");
         if($connection->connect_error){

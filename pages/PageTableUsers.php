@@ -1,9 +1,11 @@
 <?php
-    session_start();
-    if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): 
-      require_once('../config/ConnectionToDB.php');
-      require_once('../assets/ValidationForUsers.php');
+session_start();
+if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): 
+?>
 
+<?php
+  require_once('../config/ConnectionToDB.php');
+  require_once('../assets/ValidationForUsers.php');
   //Пагинация
   if(isset($_GET['PageRows'])){
     $_SESSION['PageRows'] = $_GET['PageRows'];
@@ -69,7 +71,7 @@
 <html>
  <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>CRUD</title>    
+  <title>CRUD Users</title>    
   <script>
    function deleteName(f) {
     if (confirm("Вы уверены, что хотите удалить запись?")){
@@ -84,6 +86,7 @@
     <div class="exit">
       <b>
         <a class="btn btn-primary" href="LogOut" onclick="return  confirm('Вы точно хотите выйти?')">Выход</a>
+        <a class="btn btn-primary" href="/">Назад</a>
       </b>
       <b>Добрый день, Администратор!</b>
     </div>

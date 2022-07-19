@@ -1,5 +1,6 @@
 <?php
-  require_once('ConnectionValidation.php');
+  require_once('../config/ConnectionToDB.php');
+  require_once('../assets/ValidationForUsers.php');
 
   session_start();
   //Пагинация
@@ -44,7 +45,6 @@
  <h2>Список пользователей</h2>
  <?php
   require_once('../assets/pagination.php');
-  require_once('ConnectionValidation.php');
   $stmt = Connection()->query('SELECT IdUser, Login, Password, Email, Phone, Role, AvatarImage FROM Users 
   INNER JOIN Roles ON Users.IdRole = Roles.IdRole 
   WHERE DeleteAt IS NULL ORDER BY IdUser DESC LIMIT '.(($_GET['list']-1)*$PageCount).','.$PageCount.';');

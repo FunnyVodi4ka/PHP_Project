@@ -3,7 +3,8 @@ session_start();
 if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1 && !empty($_POST["idUserForCheck"])): 
 ?>
 <?php
-    require_once('ConnectionValidation.php');
+    require_once('../config/ConnectionToDB.php');
+    require_once('../assets/ValidationForUsers.php');
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>

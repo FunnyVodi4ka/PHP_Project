@@ -9,7 +9,8 @@
     die();
   }
 
-  require_once('ConnectionValidation.php');
+  require_once('../config/ConnectionToDB.php');
+      require_once('../assets/ValidationForUsers.php');
 
   if(isset($_POST['loginEnter']) && isset($_POST['passwordEnter'])){
     session_start();

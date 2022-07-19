@@ -36,7 +36,8 @@ if(isset($_POST["imageUserEditer"])) {
   else {
     if (move_uploaded_file($_FILES["imageUserEditer"]["tmp_name"], $target_file)) {
       echo "<p>Файл ". htmlspecialchars( basename( $_FILES["imageUserEditer"]["name"])). " был загружен.</p>";
-      require_once('ConnectionValidation.php');
+      require_once('../config/ConnectionToDB.php');
+      require_once('ValidationForUsers.php');
         
       $stmt = Connection()->prepare('SELECT AvatarImage FROM Users WHERE IdUser = ?');
       $stmt->execute([$now_iduser]);

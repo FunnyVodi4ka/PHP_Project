@@ -20,7 +20,8 @@
     $_SESSION['customLogin'] = $_POST['loginRegister'];
     $_SESSION['customEmail'] = $_POST['emailRegister'];
     $_SESSION['customPhone'] = $_POST['phoneRegister'];
-    require_once('ConnectionValidation.php');
+    require_once('../config/ConnectionToDB.php');
+    require_once('../assets/ValidationForUsers.php');
 
     if($_POST["passwordRegister"] == $_POST["passwordSecondRegister"]){
         $connection = new mysqli("localhost", "root", "Password_12345", "CrudDatabase");

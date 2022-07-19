@@ -2,7 +2,8 @@
 session_start();
 if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 2): ?>
 <?php
-    require_once('ConnectionValidation.php');
+    require_once('../config/ConnectionToDB.php');
+    require_once('../assets/ValidationForUsers.php');
   
     if(isset($_GET['PageRows'])){
       $_SESSION['PageRows'] = $_GET['PageRows'];
