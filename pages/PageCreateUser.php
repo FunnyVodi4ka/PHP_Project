@@ -5,9 +5,9 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
 <?php
   if(isset($_POST['loginCreater']) && isset($_POST['passwordCreater']) && 
   isset($_POST['emailCreater']) && isset($_POST['phoneCreater']) && isset($_POST['roleCreater'])){
-    $_SESSION['customLogin'] = $_POST['loginRegister'];
-    $_SESSION['customEmail'] = $_POST['emailRegister'];
-    $_SESSION['customPhone'] = $_POST['phoneRegister'];
+    $_SESSION['customLogin'] = $_POST['loginCreater'];
+    $_SESSION['customEmail'] = $_POST['emailCreater'];
+    $_SESSION['customPhone'] = $_POST['phoneCreater'];
     require_once('../config/ConnectionToDB.php');
     require_once('../assets/ValidationForUsers.php');
     #session_start();
