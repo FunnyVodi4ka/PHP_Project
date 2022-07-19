@@ -4,7 +4,6 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1 && !empty($_POST["idUserFo
 ?>
 <?php
     require_once('../config/ConnectionToDB.php');
-    require_once('../assets/ValidationForUsers.php');
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
@@ -19,7 +18,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1 && !empty($_POST["idUserFo
     <?php
         session_start();
         $userId = $_POST["idUserForCheck"];
-        echo "<h2>Аккаунт клиента с Id:".$userId."</h2>";
+        echo "<h2>Аккаунт клиента с Id: ".$userId."</h2>";
 
         $stmt = Connection()->prepare('SELECT Login, Email, Phone, Role, AvatarImage FROM Users 
         INNER JOIN Roles ON Users.IdRole = Roles.IdRole WHERE IdUser = ?');

@@ -30,7 +30,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
   if ($_GET['list'] < 1){
     $_GET['list'] = 1;
   }
-  $paginationUrl = "";
+  $paginationUrl = "PageTableUsers";
   //--
 
   //Вывод сообщения
@@ -91,7 +91,6 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
       <b>Добрый день, Администратор!</b>
     </div>
     <h2>Список пользователей</h2>
-
     <?php 
       require_once('../assets/pagination.php');
     ?>
