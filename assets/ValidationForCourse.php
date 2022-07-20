@@ -1,14 +1,14 @@
 <?php
     function CheckIdCourse($id){
         if(!empty($id)){
-            $stmt = Connection()->prepare('SELECT * FROM Courses WHERE IdCourse = ? AND DeleteAt IS NULL');
+            $stmt = Connection()->prepare('SELECT * FROM Courses WHERE IdCourse = ?');
             $stmt->execute([$id]);
             $count = $stmt->rowCount();
             if($count == 1){
                 return true;
             }
             else{
-                echo "<p>Ошибка: Такого курса нет или он удалён!</p>";
+                echo "<p>Ошибка: Такого курса нет!</p>";
                 return false;
             }
         }

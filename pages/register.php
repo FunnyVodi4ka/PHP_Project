@@ -35,12 +35,13 @@
         $now_password = $connection->real_escape_string($_POST["passwordRegister"]);
         $now_email = $connection->real_escape_string($_POST["emailRegister"]);
         $now_phone = $connection->real_escape_string($_POST["phoneRegister"]);  
+        $standardIdRole = 2;
 
         if(CheckLogin($now_login, $id) && CheckPassword($now_password) && CheckEmail($now_email) 
         && CheckPhone($now_phone)){
             $hashPassword = password_hash($now_password, PASSWORD_DEFAULT);
             $query = "INSERT INTO Users (Login, Password, Email, Phone, IdRole) 
-            VALUES ('$now_login', '$hashPassword', '$now_email', '$now_phone', 2)";
+            VALUES ('$now_login', '$hashPassword', '$now_email', '$now_phone', $standardIdRole)";
             if($connection->query($query)){
               $_POST = [];
                 alertMessage("Регистрация прошла успешно!");

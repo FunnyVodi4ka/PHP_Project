@@ -48,7 +48,7 @@ return [
     "PageAdminPanel" => [
         "filename" => "pages/PageAdminPanel"
     ],
-    "PageMyCourses" => [
-        "filename" => "pages/PageMyCourses"
+    "courses" => [
+        "filename" => "pages/courses"
     ],
 ];

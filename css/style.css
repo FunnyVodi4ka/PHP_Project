@@ -92,3 +92,7 @@ button{
 .accountbox{
   margin: 15px;
 }
+
+.deletedRow{
+  background-color: rgb(253, 196, 186);
+}

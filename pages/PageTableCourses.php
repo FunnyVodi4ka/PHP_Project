@@ -15,7 +15,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
     echo "<script type='text/javascript'>alert('$message');</script>";
   }
 
-  //Удаление курсв
+  //Удаление курсов
   if(isset($_POST['idCourseForDelete'])){
     if($_SESSION["is_role"] == 1 && $_SESSION['is_auth'] == true){
         $now_idcourse = (int)$_POST['idCourseForDelete'];
@@ -36,6 +36,27 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
     die();
   }
   //--
+  //Восстановление курсов
+  if(isset($_POST['idCourseForRecover'])){
+    if($_SESSION["is_role"] == 1 && $_SESSION['is_auth'] == true){
+        $now_idcourse = (int)$_POST['idCourseForRecover'];
+        if(CheckIdCourse($now_idcourse)){
+            $stmt = Connection()->prepare('UPDATE Courses SET DeleteAt = NULL WHERE IdCourse = ?;');
+            $stmt->execute([$now_idcourse]);
+            alertMessage("Данные успешно восстановлены!");
+        }
+        else{
+            alertMessage("\nОшибка: Данные не восстановлены!");
+        }
+    }
+    else{
+      alertMessage("Ошибка доступа, повторите попытку позже!");
+    }
+    unset($_POST['idCourseForRecover']);
+    header("Refresh:0");
+    die();
+  }
+  //--
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
@@ -46,6 +67,11 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
   <script>
    function deleteName(f) {
     if (confirm("Вы уверены, что хотите удалить запись?")){
+      f.submit();
+    }
+   }
+   function recoverName(f) {
+    if (confirm("Вы уверены, что хотите восстановить запись?")){
       f.submit();
     }
    }
@@ -67,13 +93,18 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
     ?>
     <a href="PageCreateCourse" class='btn btn-outline-success'>Создать запись</a>
     <?php
-      $stmt = Connection()->query('SELECT IdCourse, Course, IdAuthor, Content FROM Courses 
-      WHERE DeleteAt IS NULL ORDER BY IdCourse DESC LIMIT '.(($_GET['list']-1)*$PageCount).','.$PageCount.';');
+      $stmt = Connection()->query('SELECT IdCourse, Course, IdAuthor, Content, DeleteAt FROM Courses 
+      ORDER BY IdCourse DESC LIMIT '.(($_GET['list']-1)*$PageCount).','.$PageCount.';');
     echo "<table class='table table-striped'><tr><th></th><th>Id</th><th>Course</th>
-    <th>Author</th><th>Content</th><th></th><th></th></tr>";
+    <th>Author</th><th>Content</th><th>DeleteAt</th><th></th><th></th></tr>";
     while ($row = $stmt->fetch())
     {
-        echo "<tr>";
+        if(!empty($row['DeleteAt'])){
+          echo "<tr class='deletedRow'>";
+        }
+        else{
+          echo "<tr>";
+        }
         echo "<td><form method='post' action='PageAdminCheckCourse'>
         <input type='number' name='idCourseForCheck' value=".$row["IdCourse"]." readonly hidden>
         <input type='submit' class='btn btn-outline-secondary' value='Просмотр'></form></td>";
@@ -82,14 +113,22 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
         echo "<td>" . $row["Course"] . "</td>";
         echo "<td>" . $row["IdAuthor"] . "</td>";
         echo "<td>" . $row["Content"] . "</td>";
+        echo "<td>" . $row["DeleteAt"] . "</td>";
 
-        echo "<td><form method='post' action='PageEditCourse'>
-        <input type='number' name='idCourseForEdit' value=".$row["IdCourse"]." readonly hidden>
-        <input type='submit' class='btn btn-outline-warning' value='Редактировать'></form></td>";
+        if(!empty($row['DeleteAt'])){
+          echo "<td colspan='2'><form method='post' action='' onsubmit='recoverName(this);return false;'>
+          <input type='number' name='idCourseForRecover' value=".$row["IdCourse"]." readonly hidden>
+          <input type='submit' class='btn btn-outline-secondary' value='Восстановить'></form></td>";
+        }
+        else{
+          echo "<td><form method='post' action='PageEditCourse'>
+          <input type='number' name='idCourseForEdit' value=".$row["IdCourse"]." readonly hidden>
+          <input type='submit' class='btn btn-outline-warning' value='Редактировать'></form></td>";
 
-        echo "<td><form method='post' action='' onsubmit='deleteName(this);return false;'>
-        <input type='number' name='idCourseForDelete' value=".$row["IdCourse"]." readonly hidden>
-        <input type='submit' class='btn btn-outline-danger' value='Удалить'></form></td>";
+          echo "<td><form method='post' action='' onsubmit='deleteName(this);return false;'>
+          <input type='number' name='idCourseForDelete' value=".$row["IdCourse"]." readonly hidden>
+          <input type='submit' class='btn btn-outline-danger' value='Удалить'></form></td>";
+        }
         echo "</tr>";
       }
       echo "</table>";
