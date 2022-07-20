@@ -1,6 +1,6 @@
 <?php 
 session_start();
-if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1 && !empty($_POST["idCourseForCheck"])): 
+if ($_SESSION["is_auth"] && !empty($_POST["idCourseForCheck"])): 
 ?>
 <?php
     require_once('../config/ConnectionToDB.php');
@@ -14,8 +14,13 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1 && !empty($_POST["idCourse
   <link rel="stylesheet" href="../css/style.css">
  </head>
  <body>
-    <b><a href="PageTableCourses" class="btn btn-primary">Назад</a></b>
     <?php
+        if($_SESSION["is_role"] == 1){
+            echo '<b><a href="PageTableCourses" class="btn btn-primary">Назад</a></b>';
+        }
+        else{
+            echo '<b><a href="courses" class="btn btn-primary">Назад</a></b>';
+        }
         session_start();
         $courseId = $_POST["idCourseForCheck"];
         echo "<h2>Данные о курсе с Id: ".$courseId."</h2>";

@@ -33,8 +33,8 @@ return [
     "PageEditCourse" => [
         "filename" => "pages/PageEditCourse"
     ],
-    "PageAdminCheckCourse" => [
-        "filename" => "pages/PageAdminCheckCourse"
+    "PageCheckCourse" => [
+        "filename" => "pages/PageCheckCourse"
     ],
     "PageTableUsers" => [
         "filename" => "pages/PageTableUsers"

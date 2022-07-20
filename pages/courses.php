@@ -26,11 +26,14 @@
   WHERE IdUser = ? AND Courses.DeleteAt IS NULL LIMIT '.(($_GET['list']-1)*$PageCount).','.$PageCount.';');
   $id = (int)$_SESSION['is_userid'];
   $stmt->execute([$id]);
-  echo "<table class='table table-striped'><tr><th>Id</th><th>Course</th><th>Author</th>
+  echo "<table class='table table-striped'><tr><th></th><th>Id</th><th>Course</th><th>Author</th>
   <th>Content</th></tr>";
   while ($row = $stmt->fetch())
   {
   echo "<tr>";
+  echo "<td><form method='post' action='PageCheckCourse'>
+        <input type='number' name='idCourseForCheck' value=".$row["IdCourse"]." readonly hidden>
+        <input type='submit' class='btn btn-outline-secondary' value='Просмотр'></form></td>";
   echo "<td>" . $row["IdCourse"] . "</td>";
   echo "<td>" . $row["Course"] . "</td>";
   echo "<td>" . $row["Login"] . "</td>";

@@ -96,7 +96,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
       $stmt = Connection()->query('SELECT IdCourse, Course, IdAuthor, Content, DeleteAt FROM Courses 
       ORDER BY IdCourse DESC LIMIT '.(($_GET['list']-1)*$PageCount).','.$PageCount.';');
     echo "<table class='table table-striped'><tr><th></th><th>Id</th><th>Course</th>
-    <th>Author</th><th>Content</th><th>DeleteAt</th><th></th><th></th></tr>";
+    <th>Author</th><th>DeleteAt</th><th></th><th></th></tr>";
     while ($row = $stmt->fetch())
     {
         if(!empty($row['DeleteAt'])){
@@ -105,14 +105,13 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1):
         else{
           echo "<tr>";
         }
-        echo "<td><form method='post' action='PageAdminCheckCourse'>
+        echo "<td><form method='post' action='PageCheckCourse'>
         <input type='number' name='idCourseForCheck' value=".$row["IdCourse"]." readonly hidden>
         <input type='submit' class='btn btn-outline-secondary' value='Просмотр'></form></td>";
 
         echo "<td>" . $row["IdCourse"] . "</td>";
         echo "<td>" . $row["Course"] . "</td>";
         echo "<td>" . $row["IdAuthor"] . "</td>";
-        echo "<td>" . $row["Content"] . "</td>";
         echo "<td>" . $row["DeleteAt"] . "</td>";
 
         if(!empty($row['DeleteAt'])){
