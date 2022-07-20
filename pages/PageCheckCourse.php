@@ -32,7 +32,8 @@ if ($_SESSION["is_auth"] && !empty($_POST["idCourseForCheck"])):
         {
         echo "<p><b>Название курса:</b> ".$row["Course"]."</p>";
         echo "<p><b>Автор:</b> ".$row["Login"]."</p>";
-        echo "<p><b>Содержание:</b></p><p>".$row["Content"]."</p>";
+        $nowContentData = json_decode($row["Content"]);
+        echo "<p><b>Содержание:</b></p><p>".$nowContentData."</p>";
         }
     ?>
 </body>

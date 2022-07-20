@@ -11,31 +11,26 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
     $_SESSION['customCourse'] = $_POST['CreateFormCourse'];
     $_SESSION['customAuthor'] = $_POST['CreateFormAuthor'];
     $_SESSION['customContent'] = $_POST['CreateFormContent'];
-
     require_once('../config/ConnectionToDB.php');
     require_once('../assets/ValidationForCourse.php');
 
     if($_SESSION["is_role"] == 1 && $_SESSION['is_auth'] == true){
-        $connection = new mysqli("localhost", "root", "Password_12345", "CrudDatabase");
-        if($connection->connect_error){
-            die("Ошибка: " . $connection->connect_error);
-        }
-
-        $now_course = $connection->real_escape_string($_POST["CreateFormCourse"]);
-        $now_author = $connection->real_escape_string($_POST["CreateFormAuthor"]);
-        $now_content = $connection->real_escape_string($_POST["CreateFormContent"]);
-
+        
+        $now_course = $_POST["CreateFormCourse"];
+        $now_author = (int)$_POST["CreateFormAuthor"];
+        $now_content = $_POST["CreateFormContent"];
         if(CheckCourse($now_course) && CheckAuthor($now_author) && CheckContent($now_content)){
-            $query = "INSERT INTO Courses (Course, IdAuthor, Content) 
-            VALUES ('$now_course', '$now_author', '$now_content')";
-            if($connection->query($query)){
+            $stmt = Connection()->prepare("INSERT INTO Courses (Course, IdAuthor, Content) 
+            VALUES (?, ?, ?)");
+            $nowContentData = json_encode($now_content);
+            if($stmt->execute([$now_course, $now_author, $nowContentData])){
                 unset($_SESSION['customCourse']);
                 unset($_SESSION['customAuthor']);
                 unset($_SESSION['customContent']);
                 $_POST = [];
                 echo "Данные успешно добавлены!";
             } else{
-                echo "Ошибка: " . $connection->error;
+                echo "Ошибка: Повторите попытку позже!";
             }
         }
     }

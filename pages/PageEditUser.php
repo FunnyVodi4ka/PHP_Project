@@ -31,17 +31,12 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1 && !empty($_POST['iduser']
     $_SESSION['customPhone'] = $_POST['phoneEditer'];
     require_once('../assets/ValidationForUsers.php');
     if($_SESSION["is_role"] == 1 && $_SESSION['is_auth'] == true){
-        $connection = new mysqli("localhost", "root", "Password_12345", "CrudDatabase");
-        if($connection->connect_error){
-            die("Ошибка: " . $connection->connect_error);
-        }
-        
         $now_iduser = (int)$_POST['iduser'];
-        $now_login = $connection->real_escape_string($_POST["loginEditer"]);
-        $now_password = $connection->real_escape_string($_POST["passwordEditer"]);
-        $now_email = $connection->real_escape_string($_POST["emailEditer"]);
-        $now_phone = $connection->real_escape_string($_POST["phoneEditer"]);
-        $now_role = $connection->real_escape_string($_POST["roleEditer"]);    
+        $now_login = $_POST["loginEditer"];
+        $now_password = $_POST["passwordEditer"];
+        $now_email = $_POST["emailEditer"];
+        $now_phone = $_POST["phoneEditer"];
+        $now_role = $_POST["roleEditer"];    
         
         if(empty($now_password)){
           if(CheckIdUser($now_iduser) && CheckLogin($now_login, $now_iduser) && CheckEmail($now_email) 
@@ -54,15 +49,15 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1 && !empty($_POST['iduser']
               if($_POST['iduser'] == $_SESSION['is_userid']){
                 $code_role = 1;
               }
-              $query = "UPDATE Users SET Login = '$now_login', Email = '$now_email', 
-              Phone = '$now_phone', IdRole = $code_role WHERE IdUser = $now_iduser";
-              if($connection->query($query)){
+              $stmt = Connection()->prepare("UPDATE Users SET Login = ?, Email = ?, 
+              Phone = ?, IdRole = ? WHERE IdUser = ?");
+              if($stmt->execute([$now_login, $now_email, $now_phone, $code_role, $now_iduser])){
                   alertMessage("Данные успешно изменены!");
                   $_POST = Array();
                   header("Refresh:0; url=PageTableUsers");
                   die();
               } else{
-                  echo "Ошибка: " . $connection->error;
+                  echo "Ошибка: Повторите попытку позже!";
               }
           }
         }
@@ -77,9 +72,9 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1 && !empty($_POST['iduser']
               if($_POST['iduser'] == $_SESSION['is_userid']){
                 $code_role = 1;
               }
-              $query = "UPDATE Users SET Login = '$now_login', Password = '$hashPassword', Email = '$now_email', 
-              Phone = '$now_phone', IdRole = $code_role WHERE IdUser = $now_iduser";
-              if($connection->query($query)){
+              $stmt = Connection()->prepare("UPDATE Users SET Login = ?, Password = ?, Email = ?, 
+              Phone = ?, IdRole = ? WHERE IdUser = ?");
+              if($stmt->execute([$now_login, $hashPassword, $now_email, $now_phone, $code_role, $now_iduser])){
                   alertMessage("Данные успешно изменены!");
                   $_POST = [];
                   unset($_SESSION['customLogin']);
@@ -88,7 +83,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1 && !empty($_POST['iduser']
                   header("Refresh:0; url=PageTableUsers");
                   die();
               } else{
-                  echo "Ошибка: " . $connection->error;
+                  echo "Ошибка: Повторите попытку позже!";
               }
           }
         }

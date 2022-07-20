@@ -26,29 +26,25 @@
     require_once('../assets/ValidationForUsers.php');
 
     if($_POST["passwordRegister"] == $_POST["passwordSecondRegister"]){
-        $connection = new mysqli("localhost", "root", "Password_12345", "CrudDatabase");
-        if($connection->connect_error){
-            die("Ошибка: " . $connection->connect_error);
-        }
         $id = 0;
-        $now_login = $connection->real_escape_string($_POST["loginRegister"]);
-        $now_password = $connection->real_escape_string($_POST["passwordRegister"]);
-        $now_email = $connection->real_escape_string($_POST["emailRegister"]);
-        $now_phone = $connection->real_escape_string($_POST["phoneRegister"]);  
+        $now_login = $_POST["loginRegister"];
+        $now_password = $_POST["passwordRegister"];
+        $now_email = $_POST["emailRegister"];
+        $now_phone = $_POST["phoneRegister"];  
         $standardIdRole = 2;
 
         if(CheckLogin($now_login, $id) && CheckPassword($now_password) && CheckEmail($now_email) 
         && CheckPhone($now_phone)){
             $hashPassword = password_hash($now_password, PASSWORD_DEFAULT);
-            $query = "INSERT INTO Users (Login, Password, Email, Phone, IdRole) 
-            VALUES ('$now_login', '$hashPassword', '$now_email', '$now_phone', $standardIdRole)";
-            if($connection->query($query)){
+            $stmt = Connection()->prepare("INSERT INTO Users (Login, Password, Email, Phone, IdRole) 
+            VALUES (?, ?, ?, ?, ?)");
+            if($stmt->execute([$now_login, $hashPassword, $now_email, $now_phone, $standardIdRole])){
               $_POST = [];
                 alertMessage("Регистрация прошла успешно!");
                 header("Refresh:0; url=auth");
                 die();
             } else{
-                echo "Ошибка: ".$connection->error;
+                echo "Ошибка: Повторите попытку позже!";
             }
         }
     }

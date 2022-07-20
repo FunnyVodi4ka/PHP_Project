@@ -17,9 +17,8 @@ function startRoute(array $routes)
         die;
     } else {
         $path = $_SERVER['DOCUMENT_ROOT'] . '/' . $routeParams['filename'] . '.php';
-
         if (!file_exists($path)) {
-        echo '404';
+            echo '404';
             die;
         } else {
             require $path;

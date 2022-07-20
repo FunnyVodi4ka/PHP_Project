@@ -13,7 +13,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1 && !empty($_POST['idCourse
     {
         $_POST['course'] = $row['Course'];
         $_POST['author'] = $row['IdAuthor'];
-        $_POST['content'] = $row['Content'];
+        $_POST['content'] = json_decode($row['Content']);
     }
 
   //Вывод сообщения
@@ -36,11 +36,12 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1 && !empty($_POST['idCourse
     $now_course = $_POST["EditFormCourse"];
     $now_author = (int)$_POST["EditFormAuthor"];
     $now_content = $_POST["EditFormContent"];
-        
+    $nowContentData = json_encode($now_content);
+    
     if(CheckIdCourse($now_idcourse) && CheckCourse($now_course) && CheckAuthor($now_author) && CheckContent($now_content)){
         $stmt = Connection()->prepare("UPDATE Courses SET Course = ?, IdAuthor = ?, 
             Content = ? WHERE IdCourse = ?");
-            if($stmt->execute([$now_course, $now_author, $now_content, $now_idcourse])){
+            if($stmt->execute([$now_course, $now_author, $nowContentData, $now_idcourse])){
                 alertMessage("Данные успешно изменены!");
                 $_POST = [];
                 unset($_SESSION['customCourse']);
@@ -50,7 +51,7 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1 && !empty($_POST['idCourse
                 die();
             } 
             else{
-                echo "Ошибка: " . $connection->error;
+                echo "Ошибка: Повторите попытку позже!";
             }
         }
     }

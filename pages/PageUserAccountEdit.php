@@ -31,22 +31,17 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 2): ?>
         $_SESSION['customEmail'] = $_POST['emailRegister'];
         $_SESSION['customPhone'] = $_POST['phoneRegister'];
 
-        $connection = new mysqli("localhost", "root", "Password_12345", "CrudDatabase");
-        if($connection->connect_error){
-            die("Ошибка: " . $connection->connect_error);
-        }
-
         $now_iduser = $userId;
-        $now_login = $connection->real_escape_string($_POST["loginUserEditer"]);
-        $now_password = $connection->real_escape_string($_POST["passwordUserEditer"]);
-        $now_email = $connection->real_escape_string($_POST["emailUserEditer"]);
-        $now_phone = $connection->real_escape_string($_POST["phoneUserEditer"]);
+        $now_login = $_POST["loginUserEditer"];
+        $now_password = $_POST["passwordUserEditer"];
+        $now_email = $_POST["emailUserEditer"];
+        $now_phone = $_POST["phoneUserEditer"];
 
         if(empty($now_password)){
             if(CheckIdUser($now_iduser) && CheckLogin($now_login, $now_iduser) && CheckEmail($now_email)
             && CheckPhone($now_phone)){
-                $query = "UPDATE Users SET Login = '$now_login', Email = '$now_email', 
-                Phone = '$now_phone' WHERE IdUser = $now_iduser";
+                $stmt = Connection()->prepare("UPDATE Users SET Login = ?, Email = ?, 
+                Phone = ? WHERE IdUser = ?");
                 if(isset($_FILES['imageUserEditer'])){
                     require_once("../assets/imageUpload.php");
                 }
@@ -54,14 +49,14 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 2): ?>
                     echo "Ошибка при обновлении данных!";
                 }
                 else{
-                    if($connection->query($query)){
+                    if($stmt->execute([$now_login, $now_email, $now_phone, $now_iduser])){
                         alertMessage("Данные успешно изменены!");
                         $_POST = Array();
                         header("Refresh:0; url=PageUserAccount");
                         die();
                     } 
                     else{
-                        echo "Ошибка: " . $connection->error;
+                        echo "Ошибка: Повторите попытку позже!";
                     }
                 }
             }
@@ -70,8 +65,8 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 2): ?>
             if(CheckIdUser($now_iduser) && CheckLogin($now_login, $now_iduser) && CheckPassword($now_password) && CheckEmail($now_email) 
         && CheckPhone($now_phone)){
             $hashPassword = password_hash($now_password, PASSWORD_DEFAULT);
-            $query = "UPDATE Users SET Login = '$now_login', Password = '$hashPassword', Email = '$now_email', 
-            Phone = '$now_phone' WHERE IdUser = $now_iduser";
+            $stmt = Connection()->prepare("UPDATE Users SET Login = ?, Password = ?, Email = ?, 
+            Phone = ? WHERE IdUser = ?");
             if(isset($_FILES['imageUserEditer'])){
                 require_once("../assets/imageUpload.php");
             }
@@ -79,14 +74,14 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 2): ?>
                 echo "Ошибка при обновлении данных!";
             }
             else{
-                if($connection->query($query)){
+                if($stmt->execute([$now_login, $hashPassword, $now_email, $now_phone, $now_iduser])){
                     alertMessage("Данные успешно изменены!");
                     $_POST = Array();
                     header("Refresh:0; url=PageUserAccount");
                     die();
                 } 
                 else{
-                    echo "Ошибка: " . $connection->error;
+                    echo "Ошибка: Повторите попытку позже!";
                 }
             }
         }
