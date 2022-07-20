@@ -94,5 +94,13 @@ button{
 }
 
 .deletedRow{
-  background-color: rgb(253, 196, 186);
+  background-color: rgb(253, 201, 192);
+}
+
+.statusTextDeleted{
+  color: red;
+}
+
+.statusTextActive{
+  color: green;
 }

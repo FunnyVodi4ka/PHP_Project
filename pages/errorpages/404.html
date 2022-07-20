@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>404</title>
+</head>
+<body>
+	<style>
+		@import url(https://fonts.googleapis.com/css?family=Oswald:400,700,300);
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+.flex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50% / 20%;
+  z-index: 10;
+  min-height: 100%;
+}
+
+.bg-outter {
+  position: fixed;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 50;
+}
+.bg-outter:before {
+  content: '';
+  border-radius: 50% / 20%;
+  width: calc(100% - 3rem);
+  height: calc(100% - 3rem);
+  position: fixed;
+  top: 1.5rem;
+  left: 1.5rem;
+  box-shadow: 0 100px 0 300px, 0 -100px 0 -300px;
+}
+
+.bg {
+  width: calc(100% - 3rem);
+  height: calc(100% - 3rem);
+  background-color: #C7DAC7;
+  animation: pulse-bg 5s linear infinite;
+  position: fixed;
+  top: 1.5rem;
+  left: 1.5rem;
+  z-index: 10;
+  border-radius: 50% / 20%;
+}
+
+.bg-lines {
+  background: repeating-linear-gradient(0deg, rgba(85, 85, 85, 0.25), rgba(85, 85, 85, 0.25) 4px, rgba(238, 238, 238, 0) 4px, rgba(238, 238, 238, 0) 5px);
+  width: calc(100% - 3rem);
+  height: calc(100% - 3rem);
+  position: fixed;
+  top: 1.5rem;
+  left: 1.5rem;
+  z-index: 50;
+  border-radius: 50% / 20%;
+}
+.bg-lines:after {
+  content: '';
+  box-shadow: inset 0 0 100px 30px #262626;
+  width: calc(100% - 3rem);
+  height: calc(100% - 3rem);
+  display: block;
+  position: fixed;
+  z-index: 50;
+  top: 1.5rem;
+  left: 1.5rem;
+  border-radius: 50% / 20%;
+  overflow: hidden;
+}
+
+.outside {
+  background: #C7DAC7;
+  border-radius: 100%;
+  width: 300px;
+  height: 300px;
+  border: 10px solid #262626;
+  animation: pulse-bg 5s linear infinite;
+}
+
+.outter {
+  background: #C7DAC7;
+  height: 260px;
+  width: 260px;
+  border-radius: 100%;
+  position: relative;
+  overflow: hidden;
+  margin: 10px;
+  animation: rotate 5s linear infinite, pulse-bg 5s linear infinite;
+}
+
+.middle {
+  position: absolute;
+  top: 105px;
+  right: 105px;
+  background: #262626;
+  height: 50px;
+  width: 50px;
+  border-radius: 100%;
+  border: 10px solid #C7DAC7;
+  z-index: 500;
+  animation: pulse-bd 5s linear infinite;
+}
+
+.triangle {
+  width: 0;
+  height: 0;
+  border-left: 86.6666666667px solid transparent;
+  border-right: 86.6666666667px solid transparent;
+  border-top: 150px solid #262626;
+  position: absolute;
+}
+.triangle.top {
+  top: 0px;
+  right: 45px;
+}
+.triangle.left {
+  top: 88px;
+  left: -10px;
+  transform: rotate(240deg);
+}
+.triangle.right {
+  top: 88px;
+  right: -10px;
+  transform: rotate(120deg);
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes pulse-bg {
+  0% {
+    background-color: #C7DAC7;
+  }
+  10% {
+    background-color: #b0cbb0;
+  }
+  20% {
+    background-color: #C7DAC7;
+  }
+  30% {
+    background-color: #99bc99;
+  }
+  40% {
+    background-color: #C7DAC7;
+  }
+  50% {
+    background-color: #b8d0b8;
+  }
+  60% {
+    background-color: #C7DAC7;
+  }
+  70% {
+    background-color: #a8c6a8;
+  }
+  80% {
+    background-color: #C7DAC7;
+  }
+  90% {
+    background-color: #b0cbb0;
+  }
+  100% {
+    background-color: #C7DAC7;
+  }
+}
+@keyframes pulse-bd {
+  0% {
+    border-color: #C7DAC7;
+  }
+  10% {
+    border-color: #b0cbb0;
+  }
+  20% {
+    border-color: #C7DAC7;
+  }
+  30% {
+    border-color: #99bc99;
+  }
+  40% {
+    border-color: #C7DAC7;
+  }
+  50% {
+    border-color: #b8d0b8;
+  }
+  60% {
+    border-color: #C7DAC7;
+  }
+  70% {
+    border-color: #a8c6a8;
+  }
+  80% {
+    border-color: #C7DAC7;
+  }
+  90% {
+    border-color: #b0cbb0;
+  }
+  100% {
+    border-color: #C7DAC7;
+  }
+}
+@keyframes pulse-c {
+  0% {
+    color: #C7DAC7;
+  }
+  10% {
+    color: #b0cbb0;
+  }
+  20% {
+    color: #C7DAC7;
+  }
+  30% {
+    color: #99bc99;
+  }
+  40% {
+    color: #C7DAC7;
+  }
+  50% {
+    color: #b8d0b8;
+  }
+  60% {
+    color: #C7DAC7;
+  }
+  70% {
+    color: #a8c6a8;
+  }
+  80% {
+    color: #C7DAC7;
+  }
+  90% {
+    color: #b0cbb0;
+  }
+  100% {
+    color: #C7DAC7;
+  }
+}
+.raditation {
+  flex: 0 0 auto;
+  margin: 0 auto;
+  z-index: 15;
+}
+
+.heading {
+  flex: 0 0 auto;
+  clear: both;
+  width: 100%;
+  text-align: center;
+  margin: 3rem 0 3rem;
+  flex-direction: row;
+  z-index: 15;
+}
+.heading.top {
+  margin: 1rem 0 2rem;
+}
+
+.box {
+  border: 5px solid #262626;
+  width: auto;
+  display: inline-block;
+  border-radius: 10px;
+  transform: skew(-15deg);
+}
+
+h1, h2 {
+  font-family: 'Oswald';
+  text-align: center;
+  width: 100%;
+  display: inline-block;
+  padding: .5rem 1rem;
+  font-weight: 700;
+  font-size: 2.5em;
+  margin: 0;
+}
+
+h2 {
+  background: #262626;
+  color: #C7DAC7;
+  animation: pulse-c 5s linear infinite;
+}
+
+.button {
+  position: fixed;
+  bottom: .5rem;
+  left: .5rem;
+  z-index: 500;
+  cursor: pointer;
+  color: #C7DAC7;
+  -webkit-appearance: none !important;
+}
+.button.pause {
+  display: none;
+}
+
+@media screen and (min-width: 400px) {
+  body {
+    align-items: center;
+    justify-content: center;
+  }
+
+  h1, h2 {
+    width: auto;
+  }
+}
+
+	</style>
+	<div class="bg-outter"></div>
+<div class="bg"></div>
+<div class="bg-lines"></div>
+<div class="flex">
+	<div class="heading top">
+		<h1>Oops! THIS PAGE NOT FOUND</h1>
+	</div>
+	<div class="raditation">
+		<div class="outside">
+			<div class="outter">
+				<div class="middle"></div>
+				<div class="triangle top"></div>
+				<div class="triangle left"></div>
+				<div class="triangle right"></div>
+			</div>
+		</div>
+	</div>
+	<div class="heading">
+		<div class="box">
+			<h1>PHP</h1>
+			<h2>ERROR 404</h2>
+		</div>
+	</div>
+</div>
+
+<audio loop id="myAudio" src="http://unrealnavigation.com/assets/fallout.mp3"></audio>
+
+<span class="button play" type="button"><i class="fa fa-play"></i></span>
+<span class="button pause" type="button"><i class="fa fa-pause"></i></span> 
+
+<script>
+	$(function() {
+	var x = $("#myAudio")[0]; 
+
+function playAudio() { 
+    x.play();
+	$('.play').hide();
+	$('.pause').show();
+} 
+
+function pauseAudio() { 
+    x.pause(); 
+	$('.play').show();	
+	$('.pause').hide();	
+} 
+
+	$('.play').on('click', function(){
+		playAudio();
+	});
+	
+	$('.pause').on('click', function(){
+		pauseAudio();
+	});
+
+});
+</script>
+
+</body>
+</html>
