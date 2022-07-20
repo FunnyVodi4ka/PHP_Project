@@ -19,11 +19,11 @@
     }
     function CheckCourse($course){
         if(!empty($course) && strlen($course) >= 5 && strlen($course) <= 255){
-            if (preg_match("/^[а-яёА-ЯЁa-zA-Z0-9!_-]{5,255}$/i", $course)) {
+            if (preg_match("/^[a-zA-Z0-9\!\.\,\s*_-]{5,255}$/i", $course)) {
                 return true;
             }
             else{
-                echo "<p>Ошибка: В названии разрешены только цифры, русские и латинские буквы, а также стандартные знаки препинания!</p>";
+                echo "<p>Ошибка: В названии разрешены только цифры и латинские буквы, а также стандартные знаки препинания!</p>";
                 return false;
             }
         }
@@ -52,7 +52,7 @@
     }
     function CheckContent($content){
         if(strlen($content) <= 255){
-            if (preg_match("/^[а-яёА-ЯЁa-zA-Z0-9_-]{5,255}$/i", $content)) {
+            if (preg_match("/^[a-zA-Z0-9\!\.\,\s*_-]{5,255}$/i", $content)) {
                 return true;
             }
             else{

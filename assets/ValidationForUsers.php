@@ -1,7 +1,7 @@
 <?php
     function CheckLogin($login, $id){
         if(!empty($login) && strlen($login) >= 5 && strlen($login) <= 50){
-            if (preg_match("/^[a-z0-9-_]{5,50}$/i", $login)) {
+            if (preg_match("/^[a-zA-Z0-9\!\.\,\s*_-]{5,50}$/i", $login)) {
                 $stmt = Connection()->prepare('SELECT * FROM Users WHERE Login = ? AND IdUser != ?');
                 $stmt->execute([$login, $id]);
                 $count = $stmt->rowCount();
@@ -25,7 +25,7 @@
     }
     function CheckPassword($password){
         if(!empty($password) && strlen($password) >= 6 && strlen($password) <= 50){
-            if (preg_match("/^[a-z0-9-_]{5,50}$/i", $password)) {
+            if (preg_match("/^[a-zA-Z0-9-_]{5,50}$/i", $password)) {
                 return true;
             }
             else {
