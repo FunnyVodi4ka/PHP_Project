@@ -19,7 +19,7 @@
     }
     function CheckCourse($course){
         if(!empty($course) && strlen($course) >= 5 && strlen($course) <= 255){
-            if (preg_match("/^[a-zA-Z0-9\!\.\,\s*_-]{5,255}$/i", $course)) {
+            if (preg_match("/^[a-zA-Z0-9\!\.\,\[\]\=\<\>\?\s*_-]{5,255}$/i", $course)) {
                 return true;
             }
             else{
@@ -52,7 +52,7 @@
     }
     function CheckContent($content){
         if(strlen($content) <= 255){
-            if (preg_match("/^[a-zA-Z0-9\!\.\,\s*_-]{5,255}$/i", $content)) {
+            if (preg_match("/^[a-zA-Z0-9\!\.\,\[\]\=\<\>]?\s*_-]{5,255}$/i", $content)) {
                 return true;
             }
             else{
