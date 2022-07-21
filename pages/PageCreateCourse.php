@@ -45,10 +45,10 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1): ?>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>CRUD</title>    
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../../css/style.css">
  </head>
  <body>
-  <p><a href="PageTableCourses" class="btn btn-primary">Назад</a></p>
+  <p><a href="http://localhost/PageTableCourses" class="btn btn-primary">Назад</a></p>
 <div class="divcenter">
         <h2>Добавление курса в БД</h2>
         <form method="post" action="">

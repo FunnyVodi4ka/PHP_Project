@@ -1,4 +1,13 @@
-<?php 
+<?php
+if(empty($_POST["idCourseForCheck"])){
+    $uri = $_SERVER['REQUEST_URI'];
+    $parseUri = explode('/', $uri);
+    $_POST["idCourseForCheck"] = (int)$parseUri[2];
+    if(count($parseUri) == 4 && $parseUri[1] == 'users' && $parseUri[3] == 'view') {
+        $_POST["idCourseForCheck"] = (int)$parseUri[2];
+    }
+}
+
 session_start();
 if ($_SESSION["is_auth"] && !empty($_POST["idCourseForCheck"])): 
 ?>
@@ -11,15 +20,15 @@ if ($_SESSION["is_auth"] && !empty($_POST["idCourseForCheck"])):
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>Данные о курсе</title>    
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../../css/style.css">
  </head>
  <body>
     <?php
         if($_SESSION["is_role"] == 1){
-            echo '<b><a href="PageTableCourses" class="btn btn-primary">Назад</a></b>';
+            echo '<b><a href="http://localhost/PageTableCourses" class="btn btn-primary">Назад</a></b>';
         }
         else{
-            echo '<b><a href="courses" class="btn btn-primary">Назад</a></b>';
+            echo '<b><a href="http://localhost/courses" class="btn btn-primary">Назад</a></b>';
         }
         session_start();
         $courseId = $_POST["idCourseForCheck"];
@@ -46,6 +55,8 @@ if ($_SESSION["is_auth"] && !empty($_POST["idCourseForCheck"])):
 </body>
 </html>
 <?php else: 
+    var_dump($_POST);
+    die('dfg');
     header("Refresh:0; url=auth");
     die();
 endif; ?>

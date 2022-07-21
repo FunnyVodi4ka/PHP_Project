@@ -6,6 +6,15 @@ return [
     "users" => [
         "filename" => "pages/users"
     ],
+    "users/(\d+)/view" => [
+        "filename" => "pages/PageAdminCheckUser"
+    ],
+    "users/(\d+)/edit" => [
+        "filename" => "pages/PageEditUser"
+    ],
+    "users/create" => [
+        "filename" => "pages/PageCreateUser"
+    ],
     "auth" => [
         "filename" => "pages/auth"
     ],
@@ -51,7 +60,13 @@ return [
     "courses" => [
         "filename" => "pages/courses"
     ],
-    /*"users/(\d+)/view" => [
-        "filename" => "pages/PageAdminCheckUser"
-    ],работает, как передать id user на страницу*/
+    "courses/(\d+)/view" => [
+        "filename" => "pages/PageCheckCourse"
+    ],
+    "courses/(\d+)/edit" => [
+        "filename" => "pages/PageEditCourse"
+    ],
+    "courses/create" => [
+        "filename" => "pages/PageCreateCourse"
+    ],
 ];
