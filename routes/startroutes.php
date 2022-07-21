@@ -13,13 +13,12 @@ function startRoute(array $routes)
     }
 
     if (!matchRoute($correctRoutes, $routeParams, $uri)) {
-        #echo '404';
         require '../pages/errorpages/404.html';
         die;
     } else {
         $path = $_SERVER['DOCUMENT_ROOT'] . '/' . $routeParams['filename'] . '.php';
         if (!file_exists($path)) {
-            echo '404';
+            require '../pages/errorpages/404.html';
             die;
         } else {
             require $path;

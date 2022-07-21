@@ -104,3 +104,7 @@ button{
 .statusTextActive{
   color: green;
 }
+
+.btn-info{
+  width: 340px;
+}

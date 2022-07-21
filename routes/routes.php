@@ -51,4 +51,7 @@ return [
     "courses" => [
         "filename" => "pages/courses"
     ],
+    /*"users/(\d+)/view" => [
+        "filename" => "pages/PageAdminCheckUser"
+    ],работает, как передать id user на страницу*/
 ];

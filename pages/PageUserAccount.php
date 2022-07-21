@@ -67,12 +67,12 @@ if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 2): ?>
       ?>
       <a class="btn btn-warning" href="PageUserAccountEdit">Изменить данные</a>
     </div>
-    <h2>Ваш доступ позволяет:</h2>
+    <h2>Актуальная информация:</h2>
     <div class="divcenter">
-    <a class="btn btn-primary" href="users">Просмотреть список пользователей</a>
+    <a class="btn btn-info" href="users">Просмотреть список пользователей</a>
     </div>
     <div class="divcenter">
-    <a class="btn btn-primary" href="courses">Просмотреть список моих курсов</a>
+    <a class="btn btn-info" href="courses">Просмотреть список моих курсов</a>
     </div>
  </body>
 </html>
