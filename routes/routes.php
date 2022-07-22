@@ -1,5 +1,6 @@
 <?php 
 return [
+    /*
     "" => [
         "filename" => "pages/auth"
     ],
@@ -71,5 +72,22 @@ return [
     ],
     "testview" => [
         "filename" => "app/Courses/Controllers/CourseController"
+    ],
+    */
+    "courses" => [ //preg match
+        "controller" => "Course",
+        "action" => "ShowAllCourses"
+    ],
+    "courses/(\d+)/view" => [
+        "controller" => "Course",
+        "action" => "ShowSelectedCourse"
+    ],
+    "courses/(\d+)/delete" => [
+        "controller" => "Course",
+        "action" => "DeleteCourse"
+    ],
+    "courses/(\d+)/recover" => [
+        "controller" => "Course",
+        "action" => "RecoverCourse"
     ],
 ];
