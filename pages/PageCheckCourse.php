@@ -3,7 +3,7 @@ if(empty($_POST["idCourseForCheck"])){
     $uri = $_SERVER['REQUEST_URI'];
     $parseUri = explode('/', $uri);
     $_POST["idCourseForCheck"] = (int)$parseUri[2];
-    if(count($parseUri) == 4 && $parseUri[1] == 'users' && $parseUri[3] == 'view') {
+    if(count($parseUri) == 4 && $parseUri[1] == 'courses' && $parseUri[3] == 'view') {
         $_POST["idCourseForCheck"] = (int)$parseUri[2];
     }
 }
@@ -55,8 +55,6 @@ if ($_SESSION["is_auth"] && !empty($_POST["idCourseForCheck"])):
 </body>
 </html>
 <?php else: 
-    var_dump($_POST);
-    die('dfg');
     header("Refresh:0; url=auth");
     die();
 endif; ?>

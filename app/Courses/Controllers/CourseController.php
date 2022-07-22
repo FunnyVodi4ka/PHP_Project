@@ -1,13 +1,19 @@
 <?php
-require ("/var/www/html/app/Courses/Models/CourseModel.php");
-require ("/var/www/html/app/Courses/Views/CourseView.php");
-class CourseControl{
-    public function ShowAllCourses(){
-        $model = new Course;
-        $data = $model->getAllCourses();
+require ("../app/Courses/Models/CourseModel.php");
+require ("../app/Courses/Views/CourseView.php");
+
+class CourseController
+{
+    private $model;
+    private $view;
+    
+    public function ShowAllCourses()
+    {
+        $model = new CourseModel;
         $view = new CourseView;
+        $data = $model->getAllCourses();
         $view->printTableCourses($data);
     }
 }
-$course = new CourseControl;
+$course = new CourseController;
 $course->ShowAllCourses();

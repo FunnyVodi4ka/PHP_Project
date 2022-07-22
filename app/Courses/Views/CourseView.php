@@ -5,7 +5,7 @@ class CourseView{
     {
         if(!empty($row['DeleteAt'])){
           echo "<tr class='deletedRow'>";
-        }
+        } 
         else{
           echo "<tr>";
         }
