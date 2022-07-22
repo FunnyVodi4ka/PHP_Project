@@ -1,20 +1,11 @@
 <?php
+require_once("/var/www/html/config/ConnectionToDB.php");
+
 class Course{
-    private $courseId;
-    private $courseName;
-    private $courseIdAuthor;
-    private $courseContent;
-    private $courseDeleteAt;
+  public function getAllCourses(){
+    $stmt = Connection()->query('SELECT IdCourse, Course, IdAuthor, Content, DeleteAt FROM Courses 
+    ORDER BY IdCourse DESC LIMIT 10;');
 
-    function setCourseData($courseId, $courseName, $courseIdAuthor, $courseContent, $courseDeleteAt){
-		$this->courseId = $courseId;
-        $this->courseName = $courseName;
-        $this->courseIdAuthor = $courseIdAuthor;
-        $this->courseContent = $courseContent;
-        $this->courseDeleteAt = $courseDeleteAt;
-	}
-
-    function getCourseData(){
-		return $this;
-	}
+    return $stmt;
+  }
 }

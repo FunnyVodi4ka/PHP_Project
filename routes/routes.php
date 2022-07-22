@@ -69,4 +69,8 @@ return [
     "courses/create" => [
         "filename" => "pages/PageCreateCourse"
     ],
+
+    "testview" => [
+        "filename" => "app/Courses/Controllers/CourseController"
+    ],
 ];

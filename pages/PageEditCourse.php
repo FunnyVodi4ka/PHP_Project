@@ -3,7 +3,7 @@ if(empty($_POST["idCourseForEdit"])){
   $uri = $_SERVER['REQUEST_URI'];
   $parseUri = explode('/', $uri);
   $_POST["idCourseForEdit"] = (int)$parseUri[2];
-  if(count($parseUri) == 4 && $parseUri[1] == 'users' && $parseUri[3] == 'edit') {
+  if(count($parseUri) == 4 && $parseUri[1] == 'course' && $parseUri[3] == 'edit') {
       $_POST["idCourseForEdit"] = (int)$parseUri[2];
   }
 }
