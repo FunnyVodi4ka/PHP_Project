@@ -22,6 +22,9 @@ H1 {
     font-size: 2
     6px;
   }
+  .table {
+    vertical-align: middle;
+  }
 
   .divcenter{
     text-align: center;

@@ -9,9 +9,7 @@ class CourseView{
         else{
           echo "<tr>";
         }
-        echo "<td><form method='post' action='PageCheckCourse'>
-        <input type='number' name='idCourseForCheck' value=".$row["IdCourse"]." readonly hidden>
-        <input type='submit' class='btn btn-outline-secondary' value='Просмотр'></form></td>";
+        echo "<td><a class='btn btn-outline-secondary' href='http://localhost/courses/".$row["IdCourse"]."/view'>Просмотр</a></td>";
 
         echo "<td>" . $row["IdCourse"] . "</td>";
         echo "<td>" . $row["Course"] . "</td>";
@@ -19,18 +17,12 @@ class CourseView{
         echo "<td>" . $row["DeleteAt"] . "</td>";
 
         if(!empty($row['DeleteAt'])){
-          echo "<td colspan='2'><form method='post' action='' onsubmit='recoverName(this);return false;'>
-          <input type='number' name='idCourseForRecover' value=".$row["IdCourse"]." readonly hidden>
-          <input type='submit' class='btn btn-outline-secondary' value='Восстановить'></form></td>";
+          echo "<td colspan='2'><a class='btn btn-outline-secondary' href='http://localhost/courses/".$row["IdCourse"]."/recover'>Восстановить</a></td>";
         }
         else{
-          echo "<td><form method='post' action='PageEditCourse'>
-          <input type='number' name='idCourseForEdit' value=".$row["IdCourse"]." readonly hidden>
-          <input type='submit' class='btn btn-outline-warning' value='Редактировать'></form></td>";
+          echo "<td><a class='btn btn-outline-warning' href='http://localhost/courses/".$row["IdCourse"]."/edit'>Редактировать</a></td>";
 
-          echo "<td><form method='post' action='' onsubmit='deleteName(this);return false;'>
-          <input type='number' name='idCourseForDelete' value=".$row["IdCourse"]." readonly hidden>
-          <input type='submit' class='btn btn-outline-danger' value='Удалить'></form></td>";
+          echo "<td><a class='btn btn-outline-danger' href='http://localhost/courses/".$row["IdCourse"]."/delete'>Удалить</a></td>";
         }
         echo "</tr>";
       }

@@ -12,7 +12,8 @@ class CourseModel
 
   public function getSelectedCourse($courseId)
   {
-    $stmt = Connection()->prepare('SELECT * FROM Courses WHERE IdCourse = ?;');
+    $stmt = Connection()->prepare('SELECT * FROM Courses 
+    INNER JOIN Users ON Courses.IdAuthor = Users.IdUser WHERE IdCourse = ?;');
     $stmt->execute([$courseId]);
     
     return $stmt;

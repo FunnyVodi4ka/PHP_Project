@@ -55,5 +55,6 @@ class CourseController
 
         $data = $model->getAllCourses();
         $view->printTableCourses($data);
+        
     }
 }
