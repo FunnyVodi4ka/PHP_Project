@@ -1,0 +1,122 @@
+* {
+    font-size: 18px;
+}
+
+H1 {
+    color: black;
+    font-size: 200%;
+    font-family: Arial, Verdana, sans-serif;
+    text-align: center;
+}
+
+h2 {
+    color: black;
+    font-size: 2  00%;
+    font-family: Arial, Verdana, sans-serif;
+    text-align: center;
+}
+
+table {
+    table-layout: auto;
+    width: 100%;
+    border-collapse: collapse;
+    border: 3px solid black;
+    text-align: center;
+    font-size: 2
+    6px;
+}
+
+.table {
+    vertical-align: middle;
+}
+
+.divcenter {
+    text-align: center;
+    margin: auto;
+}
+
+.divcenter div {
+    margin: 30px;
+}
+
+.loading {
+    font-weight: bold;
+    display: inline-block;
+    font-family: monospace;
+    font-size: 30px;
+    clip-path: inset(0 3ch 0 0);
+    animation: l 1s steps(4) infinite;
+    text-align: center;
+    margin: auto;
+}
+
+@keyframes l {
+    to {
+        clip-path: inset(0 -1ch 0 0);
+    }
+}
+
+.exit {
+    font-size: 30px;
+    margin: 20px;
+}
+
+.line {
+    margin: auto;
+    text-align: center;
+    font-size: 50px;
+}
+
+.text-field__input:focus {
+    color: #212529;
+    background-color: #fff;
+    border-color: #bdbdbd;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(158, 158, 158, 0.25);
+}
+
+a {
+    margin: 5px;
+}
+
+button {
+    margin: 3px;
+}
+
+.form-select-sm {
+    width: auto;
+    height: 42px;
+    margin: 5px;
+}
+
+.profile__img {
+    transition: .4s;
+}
+
+.profile__img:hover {
+    transform: scale(1.1);
+}
+
+.accountbox {
+    margin: 15px;
+}
+
+.deletedRow {
+    background-color: rgb(253, 201, 192);
+}
+
+.statusTextDeleted {
+    color: red;
+}
+
+.statusTextActive {
+    color: green;
+}
+
+.btn-info {
+    width: 340px;
+}
+
+div {
+    margin: 15px;
+}

@@ -1,8 +1,8 @@
 <?php
-require $_SERVER['DOCUMENT_ROOT'].'/app/Core/Router.php';
+require_once ($_SERVER['DOCUMENT_ROOT'].'/config/links.php');
 
-$allRoutes = require $_SERVER['DOCUMENT_ROOT'].'/routes/routes.php';
+require $linkToRouter;
+$allRoutes = require $linkToRoutes;
 
-$route = new Router($_SERVER['REQUEST_URI']);
-
-$route->startRoute($allRoutes);
+$router = new Router($_SERVER['REQUEST_URI']);
+$router->startRoute($allRoutes);

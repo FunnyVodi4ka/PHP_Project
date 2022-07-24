@@ -1,15 +1,14 @@
 <?php
+
 class Router
 {
     private $uri;
     private $correctRoutes = [];
     private $routeParams = [];
 
-
     function __construct($uri)
     {
         $uri = parse_url(trim($_SERVER['REQUEST_URI'], '/'), PHP_URL_PATH);
-
         $this->uri = $uri;
     }
 
@@ -21,14 +20,15 @@ class Router
             $route = '~^' . $route . '$~';
             $this->correctRoutes[$route] = $params;
         }
-    
+
         if (!$this->matchRoute($this->correctRoutes, $this->uri)) {
-            require $_SERVER['DOCUMENT_ROOT'].'/pages/errorpages/404.html';
+            require_once ($_SERVER['DOCUMENT_ROOT'].'/app/Errors/Error404.php');
+            //не подключается документ с ссылками
             die;
         } else {
             $controllerPath = $_SERVER['DOCUMENT_ROOT'].'/app/' . $this->routeParams['controller'] . 's/Controllers/'.$this->routeParams['controller'] . 'Controller.php';
             require $controllerPath;
-            
+
             $controllerName = $this->routeParams['controller'].'Controller';
             $controller = new $controllerName();
 
@@ -39,7 +39,7 @@ class Router
             } else {
                 $controller->$actionName();
             }
-            
+
             die;
         }
     }
