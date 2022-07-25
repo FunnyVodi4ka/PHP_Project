@@ -30,5 +30,16 @@
         <input type="reset" class="btn btn-outline-danger" value="Очистить">
     </form>
 </div>
+<?php
+if(!empty($_SESSION['errorArray'])) {
+    echo "<div class='divcenter'>";
+    echo "<div class='errorbox'>";
+    foreach ($_SESSION['errorArray'] as $row) {
+        echo "<p>" . $row . "</p>";
+    }
+    echo "</div>";
+    echo "</div>";
+}
+?>
 </body>
 </html>

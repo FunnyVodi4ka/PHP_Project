@@ -3,8 +3,11 @@ require_once ($_SERVER['DOCUMENT_ROOT'].'/app/Users/Models/UserModel.php');
 
 class ValidationForUsers
 {
-    public function alertMessage($message) {
-        echo "<script type='text/javascript'>alert('$message');</script>";
+    public $errorArray = [];
+
+    public function OutputErrors()
+    {
+        return $this->errorArray;
     }
 
     public function CheckUserId($id)
@@ -14,7 +17,7 @@ class ValidationForUsers
         if($count > 0){
             return true;
         } else {
-            $this->alertMessage("Ошибка: Некорректный id!");
+            array_push($this->errorArray, "Ошибка: Некорректный id!");
             return false;
         }
     }
@@ -22,20 +25,20 @@ class ValidationForUsers
     public function CheckUserLogin($login, $id)
     {
         if(empty($login)) {
-            $this->alertMessage("Ошибка: Некорректный логин!");
+            array_push($this->errorArray, "Ошибка: Некорректный логин!");
             return false;
         } else {
             if (preg_match("/^[a-zA-Z0-9\!\.\,\s*_-]{5,50}$/i", $login)) {
                 $model = new UserModel();
                 $count = $model->SearchUserLogin($login, $id);
                 if($count > 0) {
-                    $this->alertMessage("Ошибка: Пользователь с таким логином уже есть!");
+                    array_push($this->errorArray, "Ошибка: Пользователь с таким логином уже есть!");
                     return false;
                 } else {
                     return true;
                 }
             } else {
-                $this->alertMessage("Ошибка: Логин не может быть меньше 5 и больше 50 сиволом, разрешены только латинские буквы и цифры!");
+                array_push($this->errorArray, "Ошибка: Логин не может быть меньше 5 и больше 50 сиволом, разрешены только латинские буквы и цифры!");
                 return false;
             }
         }
@@ -48,12 +51,12 @@ class ValidationForUsers
                 return true;
             }
             else {
-                $this->alertMessage("Ошибка: Пароль не может быть меньше 6 и длинее 50 символов, а также может содержать только латинские буквы и цифры!");
+                array_push($this->errorArray, "Ошибка: Пароль не может быть меньше 6 и длинее 50 символов, а также может содержать только латинские буквы и цифры!");
                 return false;
             }
         }
         else{
-            $this->alertMessage("Ошибка: Некорректный пароль!");
+            array_push($this->errorArray, "Ошибка: Некорректный пароль!");
             return false;
         }
     }
@@ -65,12 +68,12 @@ class ValidationForUsers
                 return true;
             }
             else {
-                $this->alertMessage("Ошибка: Формат ввода email не верен!");
+                array_push($this->errorArray, "Ошибка: Формат ввода email не верен!");
                 return false;
             }
         }
         else{
-            $this->alertMessage("Ошибка: Длина почты не может быть меньше 5 и не больше 150 символов!");
+            array_push($this->errorArray, "Ошибка: Длина почты не может быть меньше 5 и не больше 150 символов!");
             return false;
         }
     }
@@ -81,11 +84,11 @@ class ValidationForUsers
             if (preg_match("/^8[0-9]{10}$/i", $phone)) {
                 return true;
             } else {
-                $this->alertMessage("Формат номера не соответсвует стандартам Российской Федерации!");
+                array_push($this->errorArray, "Формат номера не соответсвует стандартам Российской Федерации!");
                 return false;
             }
         } else {
-            $this->alertMessage("Ошибка: Некорректный номер телефона, номер телефона должен состоять из 11 цифр и начинаться с 8!");
+            array_push($this->errorArray, "Ошибка: Некорректный номер телефона, номер телефона должен состоять из 11 цифр и начинаться с 8!");
             return false;
         }
     }
@@ -95,7 +98,7 @@ class ValidationForUsers
         if(!empty($role) && ($role == "Администратор" || $role == "Клиент")){
             return true;
         } else {
-            $this->alertMessage("Ошибка: Некорректная роль!");
+            array_push($this->errorArray, "Ошибка: Некорректная роль!");
             return false;
         }
     }

@@ -7,8 +7,10 @@
     <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body>
-<b><a href="http://localhost/LogOut" class="btn btn-primary" onclick="return  confirm('Вы точно хотите выйти?')">Выход</a></b>
-<b>Добрый день, Клиент!</b>
+<div>
+    <b><a href="http://localhost/LogOut" class="btn btn-primary" onclick="return  confirm('Вы точно хотите выйти?')">Выход</a></b>
+    <b>Добрый день, Клиент!</b>
+</div>
 <h2>Ваши данные:</h2>
 <div class="accountbox">
     <?php

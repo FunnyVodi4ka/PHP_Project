@@ -4,8 +4,23 @@ require_once ($_SERVER['DOCUMENT_ROOT'].'/app/Users/Validation/ValidationForUser
 
 class UserController
 {
+    //public $errorArray = [];
+
     public function alertMessage($message) {
         echo "<script type='text/javascript'>alert('$message');</script>";
+    }
+
+    public function __construct()
+    {
+        $this->CheckSession();
+    }
+
+    public function CheckSession()
+    {
+        session_start();
+        if (!$_SESSION["is_auth"] && $_SESSION["is_role"] != 1) {
+            header("Refresh:0; url=http://localhost/auth"); die;
+        }
     }
 
     public function GetIdFromURL(){
@@ -26,6 +41,8 @@ class UserController
 
     public function ShowAllUsers()
     {
+        $this->ClearCustomData();
+        unset($_SESSION['errorArray']);
         $model = new UserModel();
         $stmt = $model->GetAllUsers();
         require_once ($_SERVER['DOCUMENT_ROOT'].'/app/Users/Views/AllUsersView.php');
@@ -76,6 +93,8 @@ class UserController
         $phoneResult = $validation->CheckUserPhone($phone);
         $roleResult = $validation->CheckUserRole($role);
 
+        $_SESSION['errorArray'] = $validation->OutputErrors();
+
         if($idResult && $loginResult && $passwordResult && $emailResult && $phoneResult && $roleResult){
             return true;
         } else {
@@ -85,15 +104,20 @@ class UserController
 
     public function TryCreateUser()
     {
+        unset($_SESSION['errorArray']);
         if($_POST['passwordCreater'] == $_POST["passwordSecondCreater"]) {
             if (isset($_POST['loginCreater']) && isset($_POST['passwordCreater']) &&
                 isset($_POST['emailCreater']) && isset($_POST['phoneCreater']) && isset($_POST['roleCreater'])) {
-                if(!$this->CheckDataValidation(0, $_POST['loginCreater'], $_POST['passwordCreater'], $_POST['emailCreater'], $_POST['phoneCreater'], $_POST['roleCreater'])){
+                $this->SaveCustomData($_POST['loginCreater'], $_POST['emailCreater'], $_POST['phoneCreater']);
+                $idAccessForCreate = $this->GetIdFromSession(); //
+                if(!$this->CheckDataValidation($idAccessForCreate, $_POST['loginCreater'], $_POST['passwordCreater'], $_POST['emailCreater'], $_POST['phoneCreater'])){
                     header("Refresh:0; url=http://localhost/users/create"); die;
                 } else {
                     $model = new UserModel();
                     $result = $model->CreateUser($_POST['loginCreater'], $_POST['passwordCreater'], $_POST['emailCreater'], $_POST['phoneCreater'], $_POST['roleCreater']);
                     if ($result) {
+                        $this->ClearCustomData();
+                        unset($_SESSION['errorArray']);
                         $this->alertMessage("Пользователь успешно создан!");
                         header("Refresh:0; url=http://localhost/users/create");
                         die;
@@ -130,6 +154,7 @@ class UserController
 
     public function TryEditUser()
     {
+        unset($_SESSION['errorArray']);
         $iduser = (int)$_POST['idUserForEdit'];
         $login = $_POST["loginEditer"];
         $password = $_POST["passwordEditer"];
@@ -137,14 +162,17 @@ class UserController
         $phone = $_POST["phoneEditer"];
         $role = $_POST["roleEditer"];
 
+        $this->SaveCustomData($login, $email, $phone);
         if(empty($password)){
             if($this->CheckDataValidation( $iduser, $login, "wasdwasd", $email, $phone, $role)){
                 if($_POST['idUserForEdit'] == $this->GetIdFromSession()){
                     $role = "Администратор";
                 }
                 $model = new UserModel();
-                $result = $model->UpdateCourseWithoutPassword($login, $email, $phone, $role, $iduser);
+                $result = $model->UpdateUserWithoutPassword($login, $email, $phone, $role, $iduser);
                 if($result) {
+                    $this->ClearCustomData();
+                    unset($_SESSION['errorArray']);
                     $this->alertMessage("Пользователь успешно изменён!");
                     header("Refresh:0; url=http://localhost/users"); die;
                 } else {
@@ -154,15 +182,16 @@ class UserController
             } else {
                 header("Refresh:0; url=http://localhost/users/".$_POST['idUserForEdit']."/edit"); die;
             }
-        }
-        else{
+        } else {
             if($this->CheckDataValidation( $iduser, $login, $password, $email, $phone, $role)){
                 if($_POST['idUserForEdit'] == $this->GetIdFromSession()){
                     $role = "Администратор";
                 }
                 $model = new UserModel();
-                $result = $model->UpdateCourseWithPassword($login, $password, $email, $phone, $role, $iduser);
+                $result = $model->UpdateUserWithPassword($login, $password, $email, $phone, $role, $iduser);
                 if($result) {
+                    $this->ClearCustomData();
+                    unset($_SESSION['errorArray']);
                     $this->alertMessage("Пользователь успешно изменён!");
                     header("Refresh:0; url=http://localhost/users"); die;
                 } else {
@@ -173,5 +202,20 @@ class UserController
                 header("Refresh:0; url=http://localhost/users/".$_POST['idUserForEdit']."/edit"); die;
             }
         }
+    }
+
+    public function SaveCustomData(string $login, string $email, string $phone)
+    {
+        session_start();
+        $_SESSION['customLogin'] = $login;
+        $_SESSION['customEmail'] = $email;
+        $_SESSION['customPhone'] = $phone;
+    }
+
+    public function ClearCustomData()
+    {
+        unset($_SESSION['customLogin']);
+        unset($_SESSION['customEmail']);
+        unset($_SESSION['customPhone']);
     }
 }

@@ -40,4 +40,27 @@ class UserAccountModel
 
         return $stmt;
     }
+
+    public function UpdateUserWithPassword(string $login, string $password, string $email, string $phone, string $iduser)
+    {
+        $hashPassword = password_hash($password, PASSWORD_DEFAULT);
+        $stmt = Connection()->prepare("UPDATE users SET login = ?, password = ?, email = ?, 
+        phone = ? WHERE user_id = ?");
+        if ($stmt->execute([$login, $hashPassword, $email, $phone, $iduser])) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function UpdateUserWithoutPassword(string $login, string $email, string $phone, int $iduser)
+    {
+        $stmt = Connection()->prepare("UPDATE users SET login = ?, email = ?, 
+        phone = ? WHERE user_id = ?");
+        if($stmt->execute([$login, $email, $phone, $iduser])){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

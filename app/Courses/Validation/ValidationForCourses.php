@@ -3,8 +3,11 @@ require_once ($_SERVER['DOCUMENT_ROOT'].'/app/Courses/Models/CourseModel.php');
 
 class ValidationForCourses
 {
-    public function alertMessage($message) {
-        echo "<script type='text/javascript'>alert('$message');</script>";
+    public $errorArray = [];
+
+    public function OutputErrors()
+    {
+        return $this->errorArray;
     }
 
     public function CheckCourseId($id)
@@ -14,7 +17,7 @@ class ValidationForCourses
         if($count > 0){
             return true;
         } else {
-            $this->alertMessage("Ошибка: Некорректный id!");
+            array_push($this->errorArray, "Ошибка: Некорректный id!");
             return false;
         }
     }
@@ -25,11 +28,11 @@ class ValidationForCourses
             if (preg_match("/^[a-zA-Z0-9\!\.\,\[\]\=\<\>\?\s*_-]{5,255}$/i", $name)) {
                 return true;
             } else {
-                $this->alertMessage("Ошибка: В названии разрешены только цифры и латинские буквы, а также стандартные знаки препинания!");
+                array_push($this->errorArray, "Ошибка: В названии разрешены только цифры и латинские буквы, а также стандартные знаки препинания!");
                 return false;
             }
         } else {
-            $this->alertMessage("Ошибка: Длина названия курса должна быть от 5 до 255 символов!");
+            array_push($this->errorArray, "Ошибка: Длина названия курса должна быть от 5 до 255 символов!");
             return false;
         }
     }
@@ -38,7 +41,7 @@ class ValidationForCourses
         $model = new CourseModel();
         $count = $model->SearchAuthor($id);
         if($count == 0) {
-            $this->alertMessage("Ошибка: Такого пользователя не существует!");
+            array_push($this->errorArray, "Ошибка: Такого пользователя не существует!");
             return false;
         } else {
             return true;
@@ -50,11 +53,11 @@ class ValidationForCourses
             if (preg_match("/^[a-zA-Z0-9\!\.\,\[\]\=\<\>\?\s*_-]{5,255}$/i", $content)) {
                 return true;
             } else {
-                $this->alertMessage("Ошибка: В содержании разрешены только цифры и латинские буквы!");
+                array_push($this->errorArray, "Ошибка: В содержании разрешены только цифры и латинские буквы!");
                 return false;
             }
         } else {
-            $this->alertMessage("Ошибка: Длина содержания курса должна быть 255 символов!");
+            array_push($this->errorArray, "Ошибка: Длина содержания курса должна быть 255 символов!");
             return false;
         }
     }

@@ -30,7 +30,15 @@ class AuthorizationController
     public function ShowAuthorization()
     {
         $this->CheckSession();
+        $this->DestroySession();
         require $_SERVER['DOCUMENT_ROOT'] . '/app/Authorizations/Views/AuthorizationView.php';
+    }
+
+    public function DestroySession()
+    {
+        session_start();
+        session_destroy();
+        return true;
     }
     public function TryAuthorization()
     {

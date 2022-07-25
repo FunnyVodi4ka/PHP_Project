@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body>
-<p><a href="http://localhost/myprofile" class="btn btn-primary">Назад</a></p>
+<div>
+    <p><a href="http://localhost/myprofile" class="btn btn-primary">Назад</a></p>
+</div>
 <div class="divcenter">
     <?php
     while ($row = $stmt->fetch())
@@ -19,7 +21,7 @@
     }
     ?>
     <h2>Настройки аккаунта</h2>
-    <form name="editrecord" method="post" action="http://localhost/myprofile/tryedit" enctype="multipart/form-data">
+    <form method="post" action="http://localhost/myprofile/tryedit" enctype="multipart/form-data">
         <p><b>Ваш Id:</b>
             <input name="iduserUserEditer" type="text" <?php echo "value=".(int)$_SESSION['is_userid']; ?> readonly>
         </p>
@@ -41,6 +43,16 @@
         <input type="reset" class="btn btn-info" value="Очистить"></p>
     </form>
 </div>
-<div>
+<?php
+if(!empty($_SESSION['errorArray'])) {
+    echo "<div class='divcenter'>";
+    echo "<div class='errorbox'>";
+    foreach ($_SESSION['errorArray'] as $row) {
+        echo "<p>" . $row . "</p>";
+    }
+    echo "</div>";
+    echo "</div>";
+}
+?>
 </body>
 </html>

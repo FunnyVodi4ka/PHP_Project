@@ -36,6 +36,8 @@ class RegistrationController
         $emailResult = $validation->CheckUserEmail($_POST['emailRegister']);
         $phoneResult = $validation->CheckUserPhone($_POST['phoneRegister']);
 
+        $_SESSION['errorArray'] = $validation->OutputErrors();
+
         if($loginResult && $passwordResult && $emailResult && $phoneResult){
             return true;
         } else {
@@ -45,7 +47,10 @@ class RegistrationController
 
     public function TryRegistration()
     {
+        unset($_SESSION['errorArray']);
+
         $this->CheckSession();
+        $this->SaveCustomData($_POST['loginRegister'], $_POST['emailRegister'], $_POST['phoneRegister']);
         if($_POST['passwordRegister'] == $_POST["passwordSecondRegister"]) {
             if (isset($_POST['loginRegister']) && isset($_POST['passwordRegister']) &&
                 isset($_POST['emailRegister']) && isset($_POST['phoneRegister'])) {
@@ -55,6 +60,8 @@ class RegistrationController
                     $model = new RegistrationModel();
                     $result = $model->CreateUser($_POST['loginRegister'], $_POST['passwordRegister'], $_POST['emailRegister'], isset($_POST['phoneRegister']));
                     if ($result) {
+                        $this->ClearCustomData();
+                        unset($_SESSION['errorArray']);
                         $this->alertMessage("Регистрация прошла успешно!");
                         header("Refresh:0; url=http://localhost/auth");
                         die;
@@ -72,5 +79,20 @@ class RegistrationController
             $this->alertMessage("Ошибка: Пароли не совподают, попробуйте снова!");
             header("Refresh:0; url=http://localhost/register"); die;
         }
+    }
+
+    public function SaveCustomData(string $login, string $email, string $phone)
+    {
+        session_start();
+        $_SESSION['customLogin'] = $login;
+        $_SESSION['customEmail'] = $email;
+        $_SESSION['customPhone'] = $phone;
+    }
+
+    public function ClearCustomData()
+    {
+        unset($_SESSION['customLogin']);
+        unset($_SESSION['customEmail']);
+        unset($_SESSION['customPhone']);
     }
 }

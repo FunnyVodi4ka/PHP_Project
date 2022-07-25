@@ -1,16 +1,33 @@
 <?php
 require_once ($_SERVER['DOCUMENT_ROOT'].'/app/UserAccounts/Models/UserAccountModel.php');
+require_once ($_SERVER['DOCUMENT_ROOT'].'/app/Users/Validation/ValidationForUsers.php');
 
 class UserAccountController
 {
+    function alertMessage($message) {
+        echo "<script type='text/javascript'>alert('$message');</script>";
+    }
+
+    public function __construct()
+    {
+        $this->CheckSession();
+    }
+
+    public function CheckSession()
+    {
+        session_start();
+        if (!$_SESSION["is_auth"]) {
+            header("Refresh:0; url=http://localhost/auth"); die;
+        }
+    }
+
     public function GetIdFromURL(){
         $uri = $_SERVER['REQUEST_URI'];
         $parseUri = explode('/', $uri);
-        if(count($parseUri) == 4) { //строгое сравнение
+        if(count($parseUri) == 4) {
             return (int)$parseUri[2];
         }
-        //return
-        //name метод
+        return 0;
     }
 
     public function GetUserIdFromSession()
@@ -22,7 +39,7 @@ class UserAccountController
 
     public function ShowUserAccount()
     {
-        $id = (int)$this->GetUserIdFromSession();
+        $id = $this->GetUserIdFromSession();
         $model = new UserAccountModel();
         $stmt = $model->GetUserData($id);
         require_once ($_SERVER['DOCUMENT_ROOT'].'/app/UserAccounts/Views/UserAccountView.php');
@@ -45,10 +62,91 @@ class UserAccountController
 
     public function ShowEditProfile()
     {
-        $id = (int)$this->GetUserIdFromSession();
+        $id = $this->GetUserIdFromSession();
         $model = new UserAccountModel();
         $stmt = $model->GetUserData($id);
         require_once ($_SERVER['DOCUMENT_ROOT'].'/app/UserAccounts/Views/UserAccountEditView.php');
+    }
+
+    public function TryEditProfile()
+    {
+        unset($_SESSION['errorArray']);
+        $iduser = (int)$_POST['iduserUserEditer'];
+        $login = $_POST["loginUserEditer"];
+        $password = $_POST["passwordUserEditer"];
+        $email = $_POST["emailUserEditer"];
+        $phone = $_POST["phoneUserEditer"];
+        //$image = $_POST["imageUserEditer"];
+
+        $this->SaveCustomData($login, $email, $phone);
+        if(empty($password)){
+            if($this->CheckDataValidation( $iduser, $login, "wasdwasd", $email, $phone)){
+                $model = new UserAccountModel();
+                $result = $model->UpdateUserWithoutPassword($login, $email, $phone, $iduser);
+                //imageUplodad
+                if($result) {
+                    $this->ClearCustomData();
+                    unset($_SESSION['errorArray']);
+                    $this->alertMessage("Данные успешно изменены!");
+                    header("Refresh:0; url=http://localhost/myprofile"); die;
+                } else {
+                    $this->alertMessage("Ошибка: Не удалось изменить пользователя, повторите попытку позже!");
+                    header("Refresh:0; url=http://localhost/myprofile/edit"); die;
+                }
+            } else {
+                header("Refresh:0; url=http://localhost/myprofile/edit"); die;
+            }
+        } else {
+            if($this->CheckDataValidation( $iduser, $login, $password, $email, $phone)){
+                $model = new UserAccountModel();
+                $result = $model->UpdateUserWithPassword($login, $password, $email, $phone, $iduser);
+                //imageUplodad
+                if($result) {
+                    $this->ClearCustomData();
+                    unset($_SESSION['errorArray']);
+                    $this->alertMessage("Данные успешно изменены!");
+                    header("Refresh:0; url=http://localhost/myprofile"); die;
+                } else {
+                    $this->alertMessage("Ошибка: Не удалось изменить пользователя, повторите попытку позже!");
+                    header("Refresh:0; url=http://localhost/myprofile/edit"); die;
+                }
+            } else {
+                header("Refresh:0; url=http://localhost/myprofile/edit"); die;
+            }
+        }
+    }
+
+    public function CheckDataValidation(int $id, string $login, string $password, string $email, string $phone)
+    {
+        $validation = new ValidationForUsers();
+        $idResult = $validation->CheckUserId($id);
+        $loginResult = $validation->CheckUserLogin($login, $id);
+        $passwordResult = $validation->CheckUserPassword($password);
+        $emailResult = $validation->CheckUserEmail($email);
+        $phoneResult = $validation->CheckUserPhone($phone);
+
+        $_SESSION['errorArray'] = $validation->OutputErrors();
+
+        if($idResult && $loginResult && $passwordResult && $emailResult && $phoneResult){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function SaveCustomData(string $login, string $email, string $phone)
+    {
+        session_start();
+        $_SESSION['customLogin'] = $login;
+        $_SESSION['customEmail'] = $email;
+        $_SESSION['customPhone'] = $phone;
+    }
+
+    public function ClearCustomData()
+    {
+        unset($_SESSION['customLogin']);
+        unset($_SESSION['customEmail']);
+        unset($_SESSION['customPhone']);
     }
 
     public function ShowSelectedCourse()

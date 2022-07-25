@@ -67,7 +67,7 @@ class UserModel
         }
     }
 
-    public function UpdateCourseWithPassword(string $login, string $password, string $email, string $phone, string $role, string $iduser)
+    public function UpdateUserWithPassword(string $login, string $password, string $email, string $phone, string $role, string $iduser)
     {
         if ($role == "Администратор") {
             $idrole = 1;
@@ -86,7 +86,7 @@ class UserModel
         }
     }
 
-    public function UpdateCourseWithoutPassword(string $login, string $email, string $phone, string $role, int $iduser)
+    public function UpdateUserWithoutPassword(string $login, string $email, string $phone, string $role, int $iduser)
     {
         if($role == "Администратор") {
             $idrole = 1;
