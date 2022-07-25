@@ -1,6 +1,8 @@
 <?php
 require_once ($_SERVER['DOCUMENT_ROOT'].'/app/UserAccounts/Models/UserAccountModel.php');
 require_once ($_SERVER['DOCUMENT_ROOT'].'/app/Users/Validation/ValidationForUsers.php');
+require_once ($_SERVER['DOCUMENT_ROOT'].'/app/UserAccounts/Services/imageUpload.php');
+require_once ($_SERVER['DOCUMENT_ROOT'].'/app/Core/Helpers/Pagination.php');
 
 class UserAccountController
 {
@@ -39,6 +41,8 @@ class UserAccountController
 
     public function ShowUserAccount()
     {
+        $this->ClearCustomData();
+        unset($_SESSION['errorArray']);
         $id = $this->GetUserIdFromSession();
         $model = new UserAccountModel();
         $stmt = $model->GetUserData($id);
@@ -56,7 +60,15 @@ class UserAccountController
     public function ShowListUsers()
     {
         $model = new UserAccountModel();
-        $stmt = $model->GetAllUsers();
+
+        $recordCount = $model->CounterAllUsers();
+        $paginationUrl = "listusers";
+
+        $pag = new Pagination();
+        $PageCount = $pag->CalculatePagParams($recordCount);
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/app/Core/Helpers/PaginationView.php');
+        $stmt = $model->GetAllUsers($_GET['list'], $PageCount);
+
         require_once ($_SERVER['DOCUMENT_ROOT'].'/app/UserAccounts/Views/ListUsersView.php');
     }
 
@@ -76,14 +88,18 @@ class UserAccountController
         $password = $_POST["passwordUserEditer"];
         $email = $_POST["emailUserEditer"];
         $phone = $_POST["phoneUserEditer"];
-        //$image = $_POST["imageUserEditer"];
 
         $this->SaveCustomData($login, $email, $phone);
         if(empty($password)){
             if($this->CheckDataValidation( $iduser, $login, "wasdwasd", $email, $phone)){
                 $model = new UserAccountModel();
                 $result = $model->UpdateUserWithoutPassword($login, $email, $phone, $iduser);
-                //imageUplodad
+
+                if(isset($_FILES['imageUserEditer'])) {
+                    $uploader = new ImageUpload();
+                    $uploader->Upload($iduser);
+                }
+
                 if($result) {
                     $this->ClearCustomData();
                     unset($_SESSION['errorArray']);
@@ -100,7 +116,12 @@ class UserAccountController
             if($this->CheckDataValidation( $iduser, $login, $password, $email, $phone)){
                 $model = new UserAccountModel();
                 $result = $model->UpdateUserWithPassword($login, $password, $email, $phone, $iduser);
-                //imageUplodad
+
+                if(isset($_FILES['imageUserEditer'])) {
+                    $uploader = new ImageUpload();
+                    $uploader->Upload($iduser);
+                }
+
                 if($result) {
                     $this->ClearCustomData();
                     unset($_SESSION['errorArray']);

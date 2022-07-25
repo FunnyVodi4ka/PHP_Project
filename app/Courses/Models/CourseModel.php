@@ -3,6 +3,13 @@ require_once ($_SERVER['DOCUMENT_ROOT'].'/config/database.php');
 
 class CourseModel
 {
+    public function CounterAllCourses()
+    {
+        $stmt = Connection()->query("SELECT * FROM courses");
+        $count = $stmt->rowCount();
+        return $count;
+    }
+
     public function SearchCourseId($id)
     {
         $stmt = Connection()->prepare('SELECT * FROM courses WHERE course_id = ?');
@@ -11,9 +18,9 @@ class CourseModel
         return $count;
     }
 
-    public function GetAllCourses(){
+    public function GetAllCourses(int $list, int $PageCount){
         $stmt = Connection()->query('SELECT * FROM courses 
-    ORDER BY course_id DESC LIMIT 10;');
+        ORDER BY course_id DESC LIMIT '.(($list-1)*$PageCount).','.$PageCount.';');
 
         return $stmt;
     }

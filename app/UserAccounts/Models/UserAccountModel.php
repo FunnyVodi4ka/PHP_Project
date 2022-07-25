@@ -4,6 +4,13 @@ require_once ($_SERVER['DOCUMENT_ROOT'].'/config/database.php');
 
 class UserAccountModel
 {
+    public function CounterAllUsers()
+    {
+        $stmt = Connection()->query("SELECT * FROM users");
+        $count = $stmt->rowCount();
+        return $count;
+    }
+
     public function GetUserData(int $id)
     {
         $stmt = Connection()->prepare('SELECT login, email, phone, role_name, avatar_image FROM users
@@ -13,11 +20,11 @@ class UserAccountModel
         return $stmt;
     }
 
-    public function GetAllUsers()
+    public function GetAllUsers($list, $PageCount)
     {
         $stmt = Connection()->query('SELECT * FROM users 
         INNER JOIN roles ON users.role_id = roles.role_id 
-        WHERE deleted_at IS NULL ORDER BY user_id DESC LIMIT 10');
+        WHERE deleted_at IS NULL ORDER BY user_id DESC LIMIT '.(($list-1)*$PageCount).','.$PageCount.';');
 
         return $stmt;
     }

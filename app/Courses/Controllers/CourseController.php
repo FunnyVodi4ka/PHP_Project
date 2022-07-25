@@ -1,6 +1,7 @@
 <?php
 require_once ($_SERVER['DOCUMENT_ROOT'].'/app/Courses/Models/CourseModel.php');
 require_once ($_SERVER['DOCUMENT_ROOT'].'/app/Courses/Validation/ValidationForCourses.php');
+require_once ($_SERVER['DOCUMENT_ROOT'].'/app/Core/Helpers/Pagination.php');
 
 class CourseController
 {
@@ -42,7 +43,15 @@ class CourseController
         unset($_SESSION['errorArray']);
         $this->ClearCustomData();
         $model = new CourseModel();
-        $stmt = $model->GetAllCourses();
+
+        $recordCount = $model->CounterAllCourses();
+        $paginationUrl = "courses";
+
+        $pag = new Pagination();
+        $PageCount = $pag->CalculatePagParams($recordCount);
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/app/Core/Helpers/PaginationView.php');
+        $stmt = $model->GetAllCourses($_GET['list'], $PageCount);
+
         require_once ($_SERVER['DOCUMENT_ROOT'].'/app/Courses/Views/AllCoursesView.php');
     }
 
@@ -77,21 +86,15 @@ class CourseController
 
     public function CheckDataValidation(int $id, string $name, int $author, string $content)
     {
-        //die("123");
         $validation = new ValidationForCourses();
-        //die("13");
         $idResult = $validation->CheckCourseId($id);
         $nameResult = $validation->CheckCourseName($name);
         $authorResult = $validation->CheckAuthor($author);
         $contentResult = $validation->CheckContent($content);
-        //die("3");
         $_SESSION['errorArray'] = $validation->OutputErrors();
-        //die("123");
         if($idResult && $nameResult && $authorResult && $contentResult){
-            //die("444");
             return true;
         } else {
-            //die("333");
             return false;
         }
     }
@@ -149,11 +152,8 @@ class CourseController
         $content = $_POST['EditFormContent'];
 
         $this->SaveCustomData($courseName, $idauthor, $content);
-        //die("123");
         if (isset($_POST['idCourseForEdit']) && isset($_POST['EditFormCourse']) && isset($_POST['EditFormAuthor']) && isset($_POST['EditFormContent'])) {
-            //die("13");
             if(!$this->CheckDataValidation($idcourse, $courseName, $idauthor, $content)){
-                //die("234");
                 header("Refresh:0; url=http://localhost/courses/".$_POST['idCourseForEdit']."/edit"); die;
             } else {
                 $model = new CourseModel();
@@ -170,7 +170,6 @@ class CourseController
                     die;
                 }
             }
-            //==die("3");
         } else {
             $this->alertMessage("Ошибка: Все поля должны быть заполнены!");
             header("Refresh:0; url=http://localhost/courses/".$_POST['idCourseForEdit']."/edit"); die;

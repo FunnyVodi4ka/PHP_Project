@@ -1,6 +1,7 @@
 <?php
 require_once ($_SERVER['DOCUMENT_ROOT'].'/app/Users/Models/UserModel.php');
 require_once ($_SERVER['DOCUMENT_ROOT'].'/app/Users/Validation/ValidationForUsers.php');
+require_once ($_SERVER['DOCUMENT_ROOT'].'/app/Core/Helpers/Pagination.php');
 
 class UserController
 {
@@ -44,7 +45,15 @@ class UserController
         $this->ClearCustomData();
         unset($_SESSION['errorArray']);
         $model = new UserModel();
-        $stmt = $model->GetAllUsers();
+
+        $recordCount = $model->CounterAllUsers();
+        $paginationUrl = "users";
+
+        $pag = new Pagination();
+        $PageCount = $pag->CalculatePagParams($recordCount);
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/app/Core/Helpers/PaginationView.php');
+        $stmt = $model->GetAllUsers($_GET['list'], $PageCount);
+
         require_once ($_SERVER['DOCUMENT_ROOT'].'/app/Users/Views/AllUsersView.php');
     }
 
