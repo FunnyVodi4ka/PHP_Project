@@ -18,8 +18,11 @@ class UserAccountController
     public function CheckSession()
     {
         session_start();
-        if (!$_SESSION["is_auth"]) {
+        if ($_SESSION["is_auth"]) {
+            return true;
+        } else {
             header("Refresh:0; url=http://localhost/auth"); die;
+            return false;
         }
     }
 
@@ -51,7 +54,7 @@ class UserAccountController
 
     public function ShowMyCourses()
     {
-        $id = (int)$this->GetUserIdFromSession();
+        $id = $this->GetUserIdFromSession();
         $model = new UserAccountModel();
         $stmt = $model->GetUserCourses($id);
         require_once ($_SERVER['DOCUMENT_ROOT'].'/app/UserAccounts/Views/UserCoursesView.php');

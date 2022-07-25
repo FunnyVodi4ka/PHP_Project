@@ -19,8 +19,11 @@ class UserController
     public function CheckSession()
     {
         session_start();
-        if (!$_SESSION["is_auth"] && $_SESSION["is_role"] != 1) {
+        if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1) {
+            return true;
+        } else {
             header("Refresh:0; url=http://localhost/auth"); die;
+            return false;
         }
     }
 
@@ -42,6 +45,7 @@ class UserController
 
     public function ShowAllUsers()
     {
+        $this->CheckSession();
         $this->ClearCustomData();
         unset($_SESSION['errorArray']);
         $model = new UserModel();
