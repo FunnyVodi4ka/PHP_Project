@@ -11,35 +11,43 @@
     <b><a href="http://localhost/LogOut" class="btn btn-primary" onclick="return  confirm('Вы точно хотите выйти?')">Выход</a></b>
     <b>Добрый день, Клиент!</b>
 </div>
-<h2>Ваши данные:</h2>
-<div class="accountbox">
-    <?php
-    while ($row = $stmt->fetch())
-    {
-        echo "<p><b>Ваш логин:</b> ".$row["login"]."</p>";
-        echo "<p><b>Ваша почта:</b> ".$row["email"]."</p>";
-        echo "<p><b>Ваш телефон:</b> ".$row["phone"]."</p>";
-        echo "<p><b>Ваша роль:</b> ".$row["role_name"]."</p>";
-        echo "<p><b>Ваша фотография:</b> "."</p>";
-        if(!empty($row["avatar_image"]) && file_exists($_SERVER['DOCUMENT_ROOT'].$row["avatar_image"])){
-            echo "<p><img class='profile__img' src='".$row["avatar_image"]."' alt='Loading...' width='200' height='200'></p>";
-        }
-        else{
-            echo "<p><img class='profile__img' src='/public/userImages/standartPhoto.png' alt='Loading...' width='200' height='200'></p>";
-        }
-    }
-    ?>
-    <a class="btn btn-warning" href="http://localhost/myprofile/update">Изменить данные</a>
-</div>
-<h2>Актуальная информация:</h2>
 <div class="divcenter">
-    <a class="btn btn-info" href="http://localhost/listusers">Просмотреть список пользователей</a>
+<div class="accountMain">
+    <div class="accountMaindiv">
+        <h2>Ваш профиль</h2>
+        <div class="accountbox">
+            <?php
+            while ($row = $stmt->fetch())
+            {
+                echo "<p><b>Ваш логин:</b> ".$row["login"]."</p>";
+                echo "<p><b>Ваша почта:</b> ".$row["email"]."</p>";
+                echo "<p><b>Ваш телефон:</b> ".$row["phone"]."</p>";
+                echo "<p><b>Ваша роль:</b> ".$row["role_name"]."</p>";
+                echo "<p><b>Ваша фотография:</b> "."</p>";
+                if(!empty($row["avatar_image"]) && file_exists($_SERVER['DOCUMENT_ROOT'].$row["avatar_image"])){
+                    echo "<p><img class='profile__img' src='".$row["avatar_image"]."' alt='Loading...' width='200' height='200'></p>";
+                }
+                else{
+                    echo "<p><img class='profile__img' src='/public/userImages/standartPhoto.png' alt='Loading...' width='200' height='200'></p>";
+                }
+            }
+            ?>
+            <a class="btn btn-warning" href="http://localhost/myprofile/update">Изменить данные</a>
+        </div>
+    </div>
+    <div class="accountMaindiv">
+        <h2>Актуальная информация</h2>
+        <div class="divcenter">
+            <a class="btn btn-info" href="http://localhost/listusers">Просмотреть список пользователей</a>
+        </div>
+        <div class="divcenter">
+            <a class="btn btn-info" href="http://localhost/listcourses">Просмотреть список курсов</a>
+        </div>
+        <div class="divcenter">
+            <a class="btn btn-info" href="http://localhost/courses">Просмотреть список моих курсов</a>
+        </div>
+    </div>
 </div>
-<div class="divcenter">
-    <a class="btn btn-info" href="http://localhost/listcourses">Просмотреть список курсов</a>
-</div>
-<div class="divcenter">
-    <a class="btn btn-info" href="http://localhost/courses">Просмотреть список моих курсов</a>
 </div>
 </body>
 </html>

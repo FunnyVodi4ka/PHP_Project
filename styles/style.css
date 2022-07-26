@@ -11,7 +11,7 @@ H1 {
 
 h2 {
     color: black;
-    font-size: 2  00%;
+    font-size: 200%;
     font-family: Arial, Verdana, sans-serif;
     text-align: center;
 }
@@ -22,8 +22,7 @@ table {
     border-collapse: collapse;
     border: 3px solid black;
     text-align: center;
-    font-size: 2
-    6px;
+    font-size: 26px;
 }
 
 .table {
@@ -35,9 +34,9 @@ table {
     margin: auto;
 }
 
-.divcenter div {
-    margin: 30px;
-}
+/*.divcenter div {*/
+/*    margin: 30px;*/
+/*}*/
 
 .loading {
     font-weight: bold;
@@ -134,4 +133,19 @@ div {
 img {
     vertical-align: middle;
     border-radius: 50%;
+}
+
+.accountMain {
+    display: inline-block;
+    padding: 25px 55px 25px 55px;
+    text-align: center;
+    margin: auto;
+    border: solid 1px gray;
+    border-radius: 25px;
+}
+
+.accountMaindiv {
+    /*display: inline-block;*/
+    text-align: center;
+    margin: auto;
 }
