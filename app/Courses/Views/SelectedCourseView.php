@@ -11,11 +11,11 @@
 <?php
 //session_start();
 //if($_SESSION["is_role"] == 1) {
-//    echo '<b><a href="http://localhost/courses" class="btn btn-primary">Назад</a></b>';
+//    echo '<b><a href="http://localhost/courses/catalog" class="btn btn-primary">Назад</a></b>';
 //} else {
-//    echo '<b><a href="http://localhost/mycourses" class="btn btn-primary">Назад</a></b>';
+//    echo '<b><a href="http://localhost/courses" class="btn btn-primary">Назад</a></b>';
 //}
-echo '<b><a href="http://localhost/courses" class="btn btn-primary">Назад</a></b>';
+echo '<b><a href="http://localhost/courses/catalog" class="btn btn-primary">Назад</a></b>';
 while ($row = $stmt->fetch())
 {
     echo "<h2>Данные о курсе с Id: ".$row["course_id"]."</h2>";

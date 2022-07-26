@@ -7,10 +7,10 @@
     <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body>
-<p><a href="http://localhost/courses" class="btn btn-primary">Назад</a></p>
+<p><a href="http://localhost/courses/catalog" class="btn btn-primary">Назад</a></p>
 <div class="divcenter">
     <h2>Изменение курса в БД</h2>
-    <form method="post" action="http://localhost/courses/tryedit">
+    <form method="post" action="http://localhost/courses/catalog/tryupdate">
         <p><b>Id курса:</b>
             <input name="idCourseForEdit" type="text" <?php echo "value=".(int)$_POST['idCourseForEdit']; ?> readonly>
         </p>

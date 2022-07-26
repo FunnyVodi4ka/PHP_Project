@@ -6,7 +6,7 @@ require_once ($_SERVER['DOCUMENT_ROOT'].'/app/Core/Helpers/Pagination.php');
 
 class UserAccountController
 {
-    function alertMessage($message) {
+    public function alertMessage($message) {
         echo "<script type='text/javascript'>alert('$message');</script>";
     }
 
@@ -56,8 +56,31 @@ class UserAccountController
     {
         $id = $this->GetUserIdFromSession();
         $model = new UserAccountModel();
-        $stmt = $model->GetUserCourses($id);
+
+        $recordCount = $model->CounterMyCourses($id);
+        $paginationUrl = "courses";
+
+        $pag = new Pagination();
+        $PageCount = $pag->CalculatePagParams($recordCount);
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/app/Core/Helpers/PaginationView.php');
+        $stmt = $model->GetUserCourses($id, $_GET['list'], $PageCount);
+
         require_once ($_SERVER['DOCUMENT_ROOT'].'/app/UserAccounts/Views/UserCoursesView.php');
+    }
+
+    public function ShowListCourses()
+    {
+        $model = new UserAccountModel();
+
+        $recordCount = $model->CounterAllCourses();
+        $paginationUrl = "listcourses";
+
+        $pag = new Pagination();
+        $PageCount = $pag->CalculatePagParams($recordCount);
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/app/Core/Helpers/PaginationView.php');
+        $stmt = $model->GetAllCourses($_GET['list'], $PageCount);
+
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/app/UserAccounts/Views/ListCoursesView.php');
     }
 
     public function ShowListUsers()
@@ -110,10 +133,10 @@ class UserAccountController
                     header("Refresh:0; url=http://localhost/myprofile"); die;
                 } else {
                     $this->alertMessage("Ошибка: Не удалось изменить пользователя, повторите попытку позже!");
-                    header("Refresh:0; url=http://localhost/myprofile/edit"); die;
+                    header("Refresh:0; url=http://localhost/myprofile/update"); die;
                 }
             } else {
-                header("Refresh:0; url=http://localhost/myprofile/edit"); die;
+                header("Refresh:0; url=http://localhost/myprofile/update"); die;
             }
         } else {
             if($this->CheckDataValidation( $iduser, $login, $password, $email, $phone)){
@@ -132,10 +155,10 @@ class UserAccountController
                     header("Refresh:0; url=http://localhost/myprofile"); die;
                 } else {
                     $this->alertMessage("Ошибка: Не удалось изменить пользователя, повторите попытку позже!");
-                    header("Refresh:0; url=http://localhost/myprofile/edit"); die;
+                    header("Refresh:0; url=http://localhost/myprofile/update"); die;
                 }
             } else {
-                header("Refresh:0; url=http://localhost/myprofile/edit"); die;
+                header("Refresh:0; url=http://localhost/myprofile/update"); die;
             }
         }
     }
@@ -179,5 +202,29 @@ class UserAccountController
         $courseId = $this->GetIdFromURL();
         $stmt = $model->GetSelectedCourse($courseId);
         require ($_SERVER['DOCUMENT_ROOT'].'/app/UserAccounts/Views/SelectedCourseView.php');
+    }
+
+    public function DeleteMyCourse()
+    {
+        $model = new UserAccountModel();
+        $courseId = $this->GetIdFromURL();
+        $userId = $this->GetUserIdFromSession();
+        $result = $model->DeleteMyCourse($courseId, $userId);
+        if(!$result) {
+            $this->alertMessage("Вы не можете удалить чужой курс!");
+        }
+        header("Refresh:0; url=http://localhost/courses");
+    }
+
+    public function RecoverMyCourse()
+    {
+        $model = new UserAccountModel;
+        $courseId = $this->GetIdFromURL();
+        $userId = $this->GetUserIdFromSession();
+        $result = $model->RecoverMyCourse($courseId, $userId);
+        if(!$result) {
+            $this->alertMessage("Вы не можете удалить чужой курс!");
+        }
+        header("Refresh:0; url=http://localhost/courses");
     }
 }

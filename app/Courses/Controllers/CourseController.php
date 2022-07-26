@@ -28,8 +28,8 @@ class CourseController
     public function GetIdFromURL(){
         $uri = $_SERVER['REQUEST_URI'];
         $parseUri = explode('/', $uri);
-        if(count($parseUri) == 4) {
-            return (int)$parseUri[2];
+        if(count($parseUri) == 5) {
+            return (int)$parseUri[3];
         }
         return 0;
     }
@@ -48,7 +48,7 @@ class CourseController
         $model = new CourseModel();
 
         $recordCount = $model->CounterAllCourses();
-        $paginationUrl = "courses";
+        $paginationUrl = "courses/catalog";
 
         $pag = new Pagination();
         $PageCount = $pag->CalculatePagParams($recordCount);
@@ -71,7 +71,7 @@ class CourseController
         $model = new CourseModel;
         $courseId = $this->GetIdFromURL();
         $model->DeleteCourse($courseId);
-        header("Refresh:0; url=http://localhost/courses");
+        header("Refresh:0; url=http://localhost/courses/catalog");
     }
 
     public function RecoverCourse()
@@ -79,7 +79,7 @@ class CourseController
         $model = new CourseModel;
         $courseId = $this->GetIdFromURL();
         $model->RecoverCourse($courseId);
-        header("Refresh:0; url=http://localhost/courses");
+        header("Refresh:0; url=http://localhost/courses/catalog");
     }
 
     public function ShowCreateCourse()
@@ -109,7 +109,7 @@ class CourseController
             $this->SaveCustomData($_POST['CreateFormCourse'], $_POST['CreateFormAuthor'], $_POST['CreateFormContent']);
             $idAccessForCreate = $this->GetIdFromSession(); //
             if(!$this->CheckDataValidation($idAccessForCreate, $_POST['CreateFormCourse'], (int)$_POST['CreateFormAuthor'], $_POST['CreateFormContent'])){
-                header("Refresh:0; url=http://localhost/courses/create"); die;
+                header("Refresh:0; url=http://localhost/courses/catalog/create"); die;
             } else {
                 $model = new CourseModel();
                 $result = $model->CreateCourse($_POST['CreateFormCourse'], $_POST['CreateFormAuthor'], $_POST['CreateFormContent']);
@@ -117,21 +117,21 @@ class CourseController
                     $this->ClearCustomData();
                     unset($_SESSION['errorArray']);
                     $this->alertMessage("Курс успешно создан!");
-                    header("Refresh:0; url=http://localhost/courses/create");
+                    header("Refresh:0; url=http://localhost/courses/catalog/create");
                     die;
                 } else {
                     $this->alertMessage("Ошибка: Не удалось создать курс, повторите попытку позже!");
-                    header("Refresh:0; url=http://localhost/courses/create");
+                    header("Refresh:0; url=http://localhost/courses/catalog/create");
                     die;
                 }
             }
         } else {
             $this->alertMessage("Ошибка: Все поля должны быть заполнены!");
-            header("Refresh:0; url=http://localhost/courses/create"); die;
+            header("Refresh:0; url=http://localhost/courses/catalog/create"); die;
         }
     }
 
-    public function ShowEditCourse()
+    public function ShowUpdateCourse()
     {
         $_POST['idCourseForEdit'] = $this->GetIdFromURL();
         $model = new CourseModel();
@@ -145,7 +145,7 @@ class CourseController
         require ($_SERVER['DOCUMENT_ROOT'].'/app/Courses/Views/EditCourseView.php');
     }
 
-    public function TryEditCourse()
+    public function TryUpdateCourse()
     {
         unset($_SESSION['errorArray']);
 
@@ -157,7 +157,7 @@ class CourseController
         $this->SaveCustomData($courseName, $idauthor, $content);
         if (isset($_POST['idCourseForEdit']) && isset($_POST['EditFormCourse']) && isset($_POST['EditFormAuthor']) && isset($_POST['EditFormContent'])) {
             if(!$this->CheckDataValidation($idcourse, $courseName, $idauthor, $content)){
-                header("Refresh:0; url=http://localhost/courses/".$_POST['idCourseForEdit']."/edit"); die;
+                header("Refresh:0; url=http://localhost/courses/catalog/".$_POST['idCourseForEdit']."/update"); die;
             } else {
                 $model = new CourseModel();
                 $result = $model->UpdateCourse($_POST['EditFormCourse'], $_POST['EditFormAuthor'], $_POST['EditFormContent'], $_POST['idCourseForEdit']);
@@ -165,17 +165,17 @@ class CourseController
                     $this->ClearCustomData();
                     unset($_SESSION['errorArray']);
                     $this->alertMessage("Курс успешно изменён!");
-                    header("Refresh:0; url=http://localhost/courses");
+                    header("Refresh:0; url=http://localhost/courses/catalog");
                     die;
                 } else {
                     $this->alertMessage("Ошибка: Не удалось изменить курс, повторите попытку позже!");
-                    header("Refresh:0; url=http://localhost/courses/".$_POST['idCourseForEdit']."/edit");
+                    header("Refresh:0; url=http://localhost/courses/catalog/".$_POST['idCourseForEdit']."/update");
                     die;
                 }
             }
         } else {
             $this->alertMessage("Ошибка: Все поля должны быть заполнены!");
-            header("Refresh:0; url=http://localhost/courses/".$_POST['idCourseForEdit']."/edit"); die;
+            header("Refresh:0; url=http://localhost/courses/catalog/".$_POST['idCourseForEdit']."/update"); die;
         }
     }
 

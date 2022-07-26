@@ -21,7 +21,7 @@
     }
     ?>
     <h2>Настройки аккаунта</h2>
-    <form method="post" action="http://localhost/myprofile/tryedit" enctype="multipart/form-data">
+    <form method="post" action="http://localhost/myprofile/tryupdate" enctype="multipart/form-data">
         <p><b>Ваш Id:</b>
             <input name="iduserUserEditer" type="text" <?php echo "value=".(int)$_SESSION['is_userid']; ?> readonly>
         </p>

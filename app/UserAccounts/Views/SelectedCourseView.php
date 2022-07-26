@@ -8,7 +8,7 @@
 </head>
 <body>
 <?php
-echo '<b><a href="http://localhost/mycourses" class="btn btn-primary">Назад</a></b>';
+echo '<b><a href="javascript:history.back()" class="btn btn-primary">Назад</a></b>';
 while ($row = $stmt->fetch())
 {
     echo "<h2>Данные о курсе с Id: ".$row["course_id"]."</h2>";

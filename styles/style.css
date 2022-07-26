@@ -130,3 +130,8 @@ div {
     display: inline-block;
     border-radius: 25px;
 }
+
+img {
+    vertical-align: middle;
+    border-radius: 50%;
+}

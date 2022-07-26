@@ -7,10 +7,10 @@
     <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body>
-<p><a href="http://localhost/courses" class="btn btn-primary">Назад</a></p>
+<p><a href="http://localhost/courses/catalog" class="btn btn-primary">Назад</a></p>
 <div class="divcenter">
     <h2>Добавление курса в БД</h2>
-    <form method="post" action="http://localhost/courses/trycreate">
+    <form method="post" action="http://localhost/courses/catalog/trycreate">
         <p><b>Введите название:</b><br>
             <input name="CreateFormCourse" type="text" size="50" value="<?= $_SESSION['customCourse'] ?? '' ?>" required>
         </p>

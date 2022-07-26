@@ -150,7 +150,7 @@ class UserController
         }
     }
 
-    public function ShowEditUser()
+    public function ShowUpdateUser()
     {
         $_POST['idUserForEdit'] = $this->GetIdFromURL();
         $model = new UserModel();
@@ -165,7 +165,7 @@ class UserController
         require ($_SERVER['DOCUMENT_ROOT'].'/app/Users/Views/EditUserView.php');
     }
 
-    public function TryEditUser()
+    public function TryUpdateUser()
     {
         unset($_SESSION['errorArray']);
         $iduser = (int)$_POST['idUserForEdit'];
@@ -190,10 +190,10 @@ class UserController
                     header("Refresh:0; url=http://localhost/users"); die;
                 } else {
                     $this->alertMessage("Ошибка: Не удалось изменить пользователя, повторите попытку позже!");
-                    header("Refresh:0; url=http://localhost/users/".$_POST['idUserForEdit']."/edit"); die;
+                    header("Refresh:0; url=http://localhost/users/".$_POST['idUserForEdit']."/update"); die;
                 }
             } else {
-                header("Refresh:0; url=http://localhost/users/".$_POST['idUserForEdit']."/edit"); die;
+                header("Refresh:0; url=http://localhost/users/".$_POST['idUserForEdit']."/update"); die;
             }
         } else {
             if($this->CheckDataValidation( $iduser, $login, $password, $email, $phone, $role)){
@@ -209,10 +209,10 @@ class UserController
                     header("Refresh:0; url=http://localhost/users"); die;
                 } else {
                     $this->alertMessage("Ошибка: Не удалось изменить пользователя, повторите попытку позже!");
-                    header("Refresh:0; url=http://localhost/users/".$_POST['idUserForEdit']."/edit"); die;
+                    header("Refresh:0; url=http://localhost/users/".$_POST['idUserForEdit']."/update"); die;
                 }
             } else {
-                header("Refresh:0; url=http://localhost/users/".$_POST['idUserForEdit']."/edit"); die;
+                header("Refresh:0; url=http://localhost/users/".$_POST['idUserForEdit']."/update"); die;
             }
         }
     }

@@ -4,6 +4,28 @@ require_once ($_SERVER['DOCUMENT_ROOT'].'/config/database.php');
 
 class UserAccountModel
 {
+    public function CounterAllCourses()
+    {
+        $stmt = Connection()->query("SELECT * FROM courses");
+        $count = $stmt->rowCount();
+        return $count;
+    }
+
+    public function CounterMyCourses(int $id)
+    {
+        $stmt = Connection()->prepare("SELECT * FROM courses WHERE author_id = ?");
+        $stmt->execute([$id]);
+        $count = $stmt->rowCount();
+        return $count;
+    }
+
+    public function GetAllCourses(int $list, int $PageCount){
+        $stmt = Connection()->query('SELECT * FROM courses 
+        ORDER BY course_id DESC LIMIT '.(($list-1)*$PageCount).','.$PageCount.';');
+
+        return $stmt;
+    }
+
     public function CounterAllUsers()
     {
         $stmt = Connection()->query("SELECT * FROM users");
@@ -29,11 +51,11 @@ class UserAccountModel
         return $stmt;
     }
 
-    public function GetUserCourses(int $id)
+    public function GetUserCourses(int $id, $list, $PageCount)
     {
-        $stmt = Connection()->prepare('SELECT course_id, course_name, login FROM courses
+        $stmt = Connection()->prepare('SELECT course_id, course_name, login, courses.deleted_at FROM courses
         INNER JOIN users ON courses.author_id = users.user_id 
-        WHERE user_id = ? AND courses.deleted_at IS NULL ORDER BY course_id DESC LIMIT 10;');
+        WHERE author_id = ? ORDER BY course_id DESC LIMIT '.(($list-1)*$PageCount).','.$PageCount.';');
         $stmt->execute([$id]);
 
         return $stmt;
@@ -65,6 +87,32 @@ class UserAccountModel
         $stmt = Connection()->prepare("UPDATE users SET login = ?, email = ?, 
         phone = ? WHERE user_id = ?");
         if($stmt->execute([$login, $email, $phone, $iduser])){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function DeleteMyCourse($courseId, $userId)
+    {
+        $stmt = Connection()->prepare('SELECT * FROM courses WHERE course_id = ? AND author_id = ?;');
+        $stmt->execute([$courseId, $userId]);
+        if($stmt->rowCount() > 0) {
+            $stmt = Connection()->prepare('UPDATE courses SET deleted_at = NOW() WHERE course_id = ? AND author_id = ?;');
+            $stmt->execute([$courseId, $userId]);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function RecoverMyCourse($courseId, $userId)
+    {
+        $stmt = Connection()->prepare('SELECT * FROM courses WHERE course_id = ? AND author_id = ?;');
+        $stmt->execute([$courseId, $userId]);
+        if($stmt->rowCount() > 0) {
+            $stmt = Connection()->prepare('UPDATE courses SET deleted_at = NULL WHERE course_id = ? AND author_id = ?;');
+            $stmt->execute([$courseId, $userId]);
             return true;
         } else {
             return false;

@@ -29,14 +29,17 @@
         }
     }
     ?>
-    <a class="btn btn-warning" href="http://localhost/myprofile/edit">Изменить данные</a>
+    <a class="btn btn-warning" href="http://localhost/myprofile/update">Изменить данные</a>
 </div>
 <h2>Актуальная информация:</h2>
 <div class="divcenter">
     <a class="btn btn-info" href="http://localhost/listusers">Просмотреть список пользователей</a>
 </div>
 <div class="divcenter">
-    <a class="btn btn-info" href="http://localhost/mycourses">Просмотреть список моих курсов</a>
+    <a class="btn btn-info" href="http://localhost/listcourses">Просмотреть список курсов</a>
+</div>
+<div class="divcenter">
+    <a class="btn btn-info" href="http://localhost/courses">Просмотреть список моих курсов</a>
 </div>
 </body>
 </html>

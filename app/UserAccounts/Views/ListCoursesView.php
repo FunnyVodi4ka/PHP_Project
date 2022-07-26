@@ -19,15 +19,9 @@
     </script>
 </head>
 <body>
-<div class="exit">
-    <b>
-        <a class="btn btn-primary" href="http://localhost/LogOut" onclick="return  confirm('Вы точно хотите выйти?')">Выход</a>
-        <a class="btn btn-primary" href="http://localhost/adminpanel">Назад</a>
-    </b>
-    <b>Добрый день, Администратор!</b>
-</div>
-<h2>Список курсов</h2>
-<a href="http://localhost/courses/catalog/create" class='btn btn-outline-success'>Создать запись</a>
+<a class="btn btn-primary" href="http://localhost/LogOut" onclick="return  confirm('Вы точно хотите выйти?')">Выход</a>
+<a class="btn btn-primary" href="http://localhost/myprofile">В личный кабинет</a>
+<h2>Список всех курсов</h2>
 <table class='table table-striped'>
     <tr>
         <th></th>
@@ -35,8 +29,6 @@
         <th>Course</th>
         <th>Author</th>
         <th>Deleted At</th>
-        <th></th>
-        <th></th>
     </tr>
     <?php
     while ($row = $stmt->fetch())
@@ -44,26 +36,17 @@
         if(!empty($row['deleted_at'])){
             echo "<tr class='deletedRow'>";
         } else {
-        echo "<tr>";
+            echo "<tr>";
         }
-        echo "<td><a class='btn btn-outline-secondary' href='http://localhost/courses/catalog/".$row["course_id"]."/view'>Просмотр</a></td>";
+        echo "<td><a class='btn btn-outline-secondary' href='http://localhost/listcourses/".$row["course_id"]."/view'>Просмотр</a></td>";
 
         echo "<td>" . $row["course_id"] . "</td>";
         echo "<td>" . $row["course_name"] . "</td>";
         echo "<td>" . $row["author_id"] . "</td>";
         echo "<td>" . $row["deleted_at"] . "</td>";
-
-        if(!empty($row['deleted_at'])){
-        echo "<td colspan='2'><a class='btn btn-outline-secondary' href='http://localhost/courses/catalog/".$row["course_id"]."/recover ' onclick='recoverName(this);return false;'>Восстановить</a></td>";
-        }
-        else{
-        echo "<td><a class='btn btn-outline-warning' href='http://localhost/courses/catalog/".$row["course_id"]."/update'>Редактировать</a></td>";
-
-        echo "<td><a class='btn btn-outline-danger' href='http://localhost/courses/catalog/".$row["course_id"]."/delete' onclick='deleteName(this);return false;'>Удалить</a></td>";
-        }
         echo "</tr>";
     }
     ?>
-    </table>
+</table>
 </body>
 </html>

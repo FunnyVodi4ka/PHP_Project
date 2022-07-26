@@ -16,7 +16,7 @@
 <div class="divcenter">
     <h2>Активные таблицы</h2>
     <p><a class="btn btn-info" href="http://localhost/users">Таблица "Пользователи"</a></p>
-    <p><a class="btn btn-info" width="100 " href="http://localhost/courses">Таблица "Курсы"</a></p>
+    <p><a class="btn btn-info" width="100 " href="http://localhost/courses/catalog">Таблица "Курсы"</a></p>
 </div>
 </body>
 </html>

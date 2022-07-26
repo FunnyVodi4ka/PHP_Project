@@ -32,15 +32,15 @@ return [
         "controller" => "UserAccount",
         "action" => "ShowUserAccount"
     ],
-    "myprofile/edit" => [
+    "myprofile/update" => [
         "controller" => "UserAccount",
         "action" => "ShowEditProfile"
     ],
-    "myprofile/tryedit" => [
+    "myprofile/tryupdate" => [
         "controller" => "UserAccount",
         "action" => "TryEditProfile"
     ],
-    "mycourses" => [
+    "courses" => [
         "controller" => "UserAccount",
         "action" => "ShowMyCourses"
     ],
@@ -48,7 +48,24 @@ return [
     "controller" => "UserAccount",
     "action" => "ShowListUsers"
     ],
-    "mycourses/(\d+)/view" => [
+    "listcourses" => [
+        "controller" => "UserAccount",
+        "action" => "ShowListCourses"
+    ],
+    "courses/(\d+)/view" => [
+        "controller" => "UserAccount",
+        "action" => "ShowSelectedCourse"
+    ],
+    "courses/(\d+)/delete" => [
+        "controller" => "UserAccount",
+        "action" => "DeleteMyCourse"
+    ],
+    "courses/(\d+)/recover" => [
+        "controller" => "UserAccount",
+        "action" => "RecoverMyCourse"
+    ],
+    //update
+    "listcourses/(\d+)/view" => [
         "controller" => "UserAccount",
         "action" => "ShowSelectedCourse"
     ],
@@ -57,36 +74,36 @@ return [
         "controller" => "AdminPanel",
         "action" => "ShowAdminPanel"
     ],
-    //courses
-    "courses" => [
+    //courses/catalog
+    "courses/catalog" => [
         "controller" => "Course",
         "action" => "ShowAllCourses"
     ],
-    "courses/create" => [
+    "courses/catalog/create" => [
         "controller" => "Course",
         "action" => "ShowCreateCourse"
     ],
-    "courses/trycreate" => [
+    "courses/catalog/trycreate" => [
         "controller" => "Course",
         "action" => "TryCreateCourse"
     ],
-    "courses/(\d+)/edit" => [
+    "courses/catalog/(\d+)/update" => [
         "controller" => "Course",
-        "action" => "ShowEditCourse"
+        "action" => "ShowUpdateCourse"
     ],
-    "courses/tryedit" => [
+    "courses/catalog/tryupdate" => [
         "controller" => "Course",
-        "action" => "TryEditCourse"
+        "action" => "TryUpdateCourse"
     ],
-    "courses/(\d+)/view" => [
+    "courses/catalog/(\d+)/view" => [
         "controller" => "Course",
         "action" => "ShowSelectedCourse"
     ],
-    "courses/(\d+)/delete" => [
+    "courses/catalog/(\d+)/delete" => [
         "controller" => "Course",
         "action" => "DeleteCourse"
     ],
-    "courses/(\d+)/recover" => [
+    "courses/catalog/(\d+)/recover" => [
         "controller" => "Course",
         "action" => "RecoverCourse"
     ],
@@ -103,13 +120,13 @@ return [
         "controller" => "User",
         "action" => "TryCreateUser"
     ],
-    "users/(\d+)/edit" => [
+    "users/(\d+)/update" => [
         "controller" => "User",
-        "action" => "ShowEditUser"
+        "action" => "ShowUpdateUser"
     ],
-    "users/tryedit" => [
+    "users/tryupdate" => [
         "controller" => "User",
-        "action" => "TryEditUser"
+        "action" => "TryUpdateUser"
     ],
     "users/(\d+)/view" => [
         "controller" => "User",

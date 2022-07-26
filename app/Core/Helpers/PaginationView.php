@@ -26,13 +26,13 @@
             <a class="page-link" href="/<?= $paginationUrl?>?list=<?= $_GET['list'] ?>"><?= $_GET['list'] ?></a>
         </li>
 
-        <?php if(!($_GET['list']+1 > $recordCount / $PageCount)): ?>
+        <?php if(!($_GET['list']+1 > ceil($recordCount / $PageCount))): ?>
             <li class="page-item">
                 <a class="page-link" href="/<?= $paginationUrl?>?list=<?= $_GET['list']+1 ?>"><?= $_GET['list']+1 ?></a>
             </li>
         <?php endif ?>
 
-        <?php if(!($_GET['list']+2 > $recordCount / $PageCount)): ?>
+        <?php if(!($_GET['list']+2 > ceil($recordCount / $PageCount))): ?>
             <li class="page-item">
                 <a class="page-link" href="/<?= $paginationUrl?>?list=<?= $_GET['list']+2 ?>"><?= $_GET['list']+2 ?></a>
             </li>

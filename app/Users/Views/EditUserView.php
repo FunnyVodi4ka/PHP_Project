@@ -10,7 +10,7 @@
 <p><a href="http://localhost/users" class="btn btn-primary">Назад</a></p>
 <div class="divcenter">
     <h2>Изменение пользователя в БД</h2>
-    <form name="editrecord" method="post" action="http://localhost/users/tryedit">
+    <form name="editrecord" method="post" action="http://localhost/users/tryupdate">
         <p><b>Id пользователя:</b>
             <input name="idUserForEdit" type="text" <?php echo "value=".(int)$_POST['idUserForEdit']; ?> readonly>
         </p>
