@@ -34,10 +34,6 @@ table {
     margin: auto;
 }
 
-/*.divcenter div {*/
-/*    margin: 30px;*/
-/*}*/
-
 .loading {
     font-weight: bold;
     display: inline-block;
@@ -133,6 +129,7 @@ div {
 img {
     vertical-align: middle;
     border-radius: 50%;
+    border: solid 2px gray;
 }
 
 .accountMain {

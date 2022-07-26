@@ -18,10 +18,10 @@ while ($row = $stmt->fetch())
 {
     echo "<tr>";
     if(!empty($row["avatar_image"]) && file_exists($_SERVER['DOCUMENT_ROOT'].$row["avatar_image"])){
-        echo "<td><img src='".$row["avatar_image"]."' alt='Loading...' width='50' height='50'></td>";
+        echo "<td><img src='".$row["avatar_image"]."' alt='Loading...' width='55' height='55'></td>";
     }
     else{
-        echo "<td><img src='/public/userImages/standartPhoto.png' alt='Loading...' width='50' height='50'></td>";
+        echo "<td><img src='/public/userImages/standartPhoto.png' alt='Loading...' width='55' height='55'></td>";
     }
     echo "<td>" . $row["user_id"] . "</td>";
     echo "<td>" . $row["login"] . "</td>";

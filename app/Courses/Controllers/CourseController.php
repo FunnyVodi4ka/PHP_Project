@@ -90,7 +90,11 @@ class CourseController
     public function CheckDataValidation(int $id, string $name, int $author, string $content)
     {
         $validation = new ValidationForCourses();
-        $idResult = $validation->CheckCourseId($id);
+        if($id == -1){
+            $idResult = true;
+        } else {
+            $idResult = $validation->CheckCourseId($id);
+        }
         $nameResult = $validation->CheckCourseName($name);
         $authorResult = $validation->CheckAuthor($author);
         $contentResult = $validation->CheckContent($content);
@@ -107,7 +111,7 @@ class CourseController
         unset($_SESSION['errorArray']);
         if (isset($_POST['CreateFormCourse']) && isset($_POST['CreateFormAuthor']) && isset($_POST['CreateFormContent'])) {
             $this->SaveCustomData($_POST['CreateFormCourse'], $_POST['CreateFormAuthor'], $_POST['CreateFormContent']);
-            $idAccessForCreate = $this->GetIdFromSession(); //
+            $idAccessForCreate = -1; //
             if(!$this->CheckDataValidation($idAccessForCreate, $_POST['CreateFormCourse'], (int)$_POST['CreateFormAuthor'], $_POST['CreateFormContent'])){
                 header("Refresh:0; url=http://localhost/courses/catalog/create"); die;
             } else {

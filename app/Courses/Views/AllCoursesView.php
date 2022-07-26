@@ -7,12 +7,12 @@
     <link rel="stylesheet" href="/styles/style.css">
     <script>
         function deleteName(f) {
-            if (confirm("Вы уверены, что хотите удалить запись?")){
+            if (confirm("Вы уверены, что хотите удалить курс?")){
                 f.submit();
             }
         }
         function recoverName(f) {
-            if (confirm("Вы уверены, что хотите восстановить запись?")){
+            if (confirm("Вы уверены, что хотите восстановить курс?")){
                 f.submit();
             }
         }

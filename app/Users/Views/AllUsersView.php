@@ -5,12 +5,12 @@
     <title>List Users</title>
     <script>
         function deleteName(f) {
-            if (confirm("Вы уверены, что хотите удалить запись?")){
+            if (confirm("Вы уверены, что хотите удалить пользователя?")){
                 f.submit();
             }
         }
         function recoverName(f) {
-            if (confirm("Вы уверены, что хотите восстановить запись?")){
+            if (confirm("Вы уверены, что хотите восстановить пользователя?")){
                 f.submit();
             }
         }
@@ -42,10 +42,10 @@ while ($row = $stmt->fetch())
     echo "<td><a class='btn btn-outline-secondary' href='http://localhost/users/".$row["user_id"]."/view'>Просмотр</a></td>";
 
     if(!empty($row["avatar_image"]) && file_exists($_SERVER['DOCUMENT_ROOT'].$row["avatar_image"])){
-        echo "<td><img src='".$row["avatar_image"]."' alt='Loading...' width='50' height='50'></td>";
+        echo "<td><img src='".$row["avatar_image"]."' alt='Loading...' width='55' height='55'></td>";
     }
     else{
-        echo "<td><img src='/public/userImages/standartPhoto.png' alt='Loading...' width='50' height='50'></td>";
+        echo "<td><img src='/public/userImages/standartPhoto.png' alt='Loading...' width='55' height='55'></td>";
     }
     echo "<td>" . $row["user_id"] . "</td>";
     echo "<td>" . $row["login"] . "</td>";
