@@ -87,7 +87,7 @@ class CourseController
         require ($_SERVER['DOCUMENT_ROOT'].'/app/Courses/Views/CreateCourseView.php');
     }
 
-    public function CheckDataValidation(int $id, string $name, int $author, string $content)
+    public function CheckDataValidation(int $id, string $name, int $author)
     {
         $validation = new ValidationForCourses();
         if($id == -1){
@@ -97,9 +97,9 @@ class CourseController
         }
         $nameResult = $validation->CheckCourseName($name);
         $authorResult = $validation->CheckAuthor($author);
-        $contentResult = $validation->CheckContent($content);
+        //$contentResult = $validation->CheckContent($content);
         $_SESSION['errorArray'] = $validation->OutputErrors();
-        if($idResult && $nameResult && $authorResult && $contentResult){
+        if($idResult && $nameResult && $authorResult /*&& $contentResult*/){
             return true;
         } else {
             return false;
@@ -109,14 +109,14 @@ class CourseController
     public function TryCreateCourse()
     {
         unset($_SESSION['errorArray']);
-        if (isset($_POST['CreateFormCourse']) && isset($_POST['CreateFormAuthor']) && isset($_POST['CreateFormContent'])) {
-            $this->SaveCustomData($_POST['CreateFormCourse'], $_POST['CreateFormAuthor'], $_POST['CreateFormContent']);
+        if (isset($_POST['CreateFormCourse']) && isset($_POST['CreateFormAuthor'])) {
+            $this->SaveCustomData($_POST['CreateFormCourse'], $_POST['CreateFormAuthor']);
             $idAccessForCreate = -1; //
-            if(!$this->CheckDataValidation($idAccessForCreate, $_POST['CreateFormCourse'], (int)$_POST['CreateFormAuthor'], $_POST['CreateFormContent'])){
+            if(!$this->CheckDataValidation($idAccessForCreate, $_POST['CreateFormCourse'], (int)$_POST['CreateFormAuthor'])){
                 header("Refresh:0; url=http://localhost/courses/catalog/create"); die;
             } else {
                 $model = new CourseModel();
-                $result = $model->CreateCourse($_POST['CreateFormCourse'], $_POST['CreateFormAuthor'], $_POST['CreateFormContent']);
+                $result = $model->CreateCourse($_POST['CreateFormCourse'], $_POST['CreateFormAuthor']);
                 if ($result) {
                     $this->ClearCustomData();
                     unset($_SESSION['errorArray']);
@@ -139,14 +139,73 @@ class CourseController
     {
         $_POST['idCourseForEdit'] = $this->GetIdFromURL();
         $model = new CourseModel();
+
         $stmt = $model->GetSelectedCourse($_POST['idCourseForEdit']);
         while ($row = $stmt->fetch())
         {
             $_POST['course'] = $row['course_name'];
             $_POST['author'] = (int)$row['author_id'];
-            $_POST['content'] = json_decode($row['content']);
+            $_POST['content'] = json_decode($row['content'], JSON_FORCE_OBJECT);
+            $json = json_decode($row['content'], JSON_FORCE_OBJECT);
         }
+
+        if(isset($_POST["btnAddElement"])) {
+            $this->ContentAddElement($json);
+        }
+
+        if(isset($_POST['btnUpdateElement'])){
+            $this->ContentUpdateElement($json);
+        }
+
+        if(isset($_POST['btnDeleteElement'])) {
+            $this->ContentDeleteElement($json);
+        }
+
         require ($_SERVER['DOCUMENT_ROOT'].'/app/Courses/Views/EditCourseView.php');
+    }
+
+    public function ContentAddElement($json)
+    {
+        $model = new CourseModel();
+        $addarray = ["type" => $_POST["addType"], "content" => $_POST["addContent"]];
+        array_push($json, $addarray);
+
+        $json = array_values($json);
+        $json = json_encode($json, JSON_FORCE_OBJECT);
+        $model->WorkWithElement($json, $_POST['idCourseForEdit']);
+        unset($_POST["btnAddElement"]);
+        header("Refresh:0; url=http://localhost/courses/catalog/".$_POST['idCourseForEdit']."/update");
+        die;
+    }
+
+    public function ContentUpdateElement($json)
+    {
+        $model = new CourseModel();
+        $id = (int)$_POST['ElementId'];
+
+        $newElement = [["type" => $_POST['updateType'],"content" => $_POST['updateContent']]];
+        $json[$id] = $newElement[0];
+
+        $json = array_values($json);
+        $json = json_encode($json, JSON_FORCE_OBJECT);
+        $model->WorkWithElement($json, $_POST['idCourseForEdit']);
+        unset($_POST['btnUpdateElement']);
+        header("Refresh:0; url=http://localhost/courses/catalog/".$_POST['idCourseForEdit']."/update");
+        die;
+    }
+
+    public function ContentDeleteElement($json)
+    {
+        $model = new CourseModel();
+        $id = (int)$_POST['ElementId'];
+        unset($json[$id]);
+
+        $json = array_values($json);
+        $json = json_encode($json, JSON_FORCE_OBJECT);
+        $model->WorkWithElement($json, $_POST['idCourseForEdit']);
+        unset($_POST['btnDeleteElement']);
+        header("Refresh:0; url=http://localhost/courses/catalog/".$_POST['idCourseForEdit']."/update");
+        die;
     }
 
     public function TryUpdateCourse()
@@ -156,15 +215,14 @@ class CourseController
         $idcourse = $_POST['idCourseForEdit'];
         $courseName = $_POST['EditFormCourse'];
         $idauthor = $_POST['EditFormAuthor'];
-        $content = $_POST['EditFormContent'];
 
-        $this->SaveCustomData($courseName, $idauthor, $content);
-        if (isset($_POST['idCourseForEdit']) && isset($_POST['EditFormCourse']) && isset($_POST['EditFormAuthor']) && isset($_POST['EditFormContent'])) {
-            if(!$this->CheckDataValidation($idcourse, $courseName, $idauthor, $content)){
+        $this->SaveCustomData($courseName, $idauthor);
+        if (isset($_POST['idCourseForEdit']) && isset($_POST['EditFormCourse']) && isset($_POST['EditFormAuthor'])) {
+            if(!$this->CheckDataValidation($idcourse, $courseName, $idauthor)){
                 header("Refresh:0; url=http://localhost/courses/catalog/".$_POST['idCourseForEdit']."/update"); die;
             } else {
                 $model = new CourseModel();
-                $result = $model->UpdateCourse($_POST['EditFormCourse'], $_POST['EditFormAuthor'], $_POST['EditFormContent'], $_POST['idCourseForEdit']);
+                $result = $model->UpdateCourse($_POST['EditFormCourse'], $_POST['EditFormAuthor'], $_POST['idCourseForEdit']);
                 if ($result) {
                     $this->ClearCustomData();
                     unset($_SESSION['errorArray']);
@@ -183,12 +241,10 @@ class CourseController
         }
     }
 
-    public function SaveCustomData(string $courseName, $idauthor, string $content)
+    public function SaveCustomData(string $courseName, $idauthor)
     {
-        session_start();
         $_SESSION['customCourse'] = $courseName;
         $_SESSION['customAuthor'] = $idauthor;
-        $_SESSION['customContent'] = $content;
     }
 
     public function ClearCustomData()

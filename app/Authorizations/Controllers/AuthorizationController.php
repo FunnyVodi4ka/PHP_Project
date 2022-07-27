@@ -36,7 +36,6 @@ class AuthorizationController
 
     public function DestroySession()
     {
-        session_start();
         session_destroy();
         return true;
     }

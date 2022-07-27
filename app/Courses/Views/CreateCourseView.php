@@ -17,9 +17,6 @@
         <p><b>Введите Id автора:</b><br>
             <input name="CreateFormAuthor" type="number" value="<?= $_SESSION['customAuthor'] ?? '' ?>" required>
         </p>
-        <p><b>Содержание:</b><br>
-            <textarea rows="6" cols="54" name="CreateFormContent"><?= $_SESSION['customContent'] ?? '' ?></textarea>
-        </p>
         <input type="submit" class="btn btn-outline-success" value="Добавить курс">
         <input type="reset" class="btn btn-outline-danger" value="Очистить"></p>
     </form>

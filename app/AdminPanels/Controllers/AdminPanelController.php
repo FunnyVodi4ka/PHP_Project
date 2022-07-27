@@ -5,12 +5,12 @@ class AdminPanelController
 {
     public function __construct()
     {
+        session_start();
         $this->CheckSession();
     }
 
     public function CheckSession()
     {
-        session_start();
         if (!$_SESSION["is_auth"] && $_SESSION["is_role"] != 1) {
             header("Refresh:0; url=http://localhost/auth"); die;
         }
@@ -18,7 +18,6 @@ class AdminPanelController
 
     public function CheckAuthorization()
     {
-        session_start();
         if($_SESSION["is_auth"] && $_SESSION["is_role"] == 1){
             return true;
         } else {

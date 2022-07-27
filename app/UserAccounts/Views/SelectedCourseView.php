@@ -7,23 +7,39 @@
     <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body>
-<?php
-echo '<b><a href="javascript:history.back()" class="btn btn-primary">Назад</a></b>';
-while ($row = $stmt->fetch())
-{
-    echo "<h2>Данные о курсе с Id: ".$row["course_id"]."</h2>";
-    echo "<p><b>Статус курса: </b>";
-    if(empty($row["deleted_at"])){
-        echo "<b class='statusTextActive'>Active</b></p>";
+<div>
+    <?php
+    echo '<b><a href="http://localhost/courses" class="btn btn-primary">Назад</a></b>';
+    while ($row = $stmt->fetch())
+    {
+        echo "<h2>Данные о курсе с Id: ".$row["course_id"]."</h2>";
+        echo "<p><b>Статус курса: </b>";
+        if(empty($row["deleted_at"])){
+            echo "<b class='statusTextActive'>Active</b></p>";
+        }
+        else{
+            echo "<b class='statusTextDeleted'>Deleted</b></p>";
+        }
+        echo "<p><b>Название курса:</b> ".$row["course_name"]."</p>";
+        echo "<p><b>Автор:</b> ".$row["login"]."</p>";
+        $nowContentData = json_decode($row["content"], JSON_FORCE_OBJECT);
+        echo "<p><b>Содержание:</b></p>";
+        if(empty($nowContentData)) {
+            echo "<p>Нам очень жаль, но на данный момент курс пуст!</p>";
+        } else {
+            foreach ($nowContentData as $obj) {
+                echo "<div class='bigcontentbox'><div class='contentbox'>";
+                echo "<p><b>Type: </b>".$obj["type"]."</p>";
+                if($obj["type"] == "linkToVideo" || $obj["type"] == "linkToAudio") {
+                    echo "<p><b>Content: </b><a href='".$obj['content']."'>".$obj['content']."</a></p>";
+                } else {
+                    echo "<p><b>Content: </b>".$obj['content']."</p>";
+                }
+                echo "</div></div>";
+            }
+        }
     }
-    else{
-        echo "<b class='statusTextDeleted'>Deleted</b></p>";
-    }
-    echo "<p><b>Название курса:</b> ".$row["course_name"]."</p>";
-    echo "<p><b>Автор:</b> ".$row["login"]."</p>";
-    $nowContentData = json_decode($row["content"]);
-    echo "<p><b>Содержание:</b></p><p>".$nowContentData."</p>";
-}
-?>
+    ?>
+</div>
 </body>
 </html>

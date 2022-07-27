@@ -7,18 +7,15 @@
     <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body>
-<p><a href="http://localhost/courses/catalog" class="btn btn-primary">Назад</a></p>
+<p><a href="http://localhost/courses" class="btn btn-primary">Назад</a></p>
 <div class="divcenter">
     <h2>Изменение курса в БД</h2>
-    <form method="post" action="http://localhost/courses/catalog/tryupdate">
+    <form method="post" action="http://localhost/courses/tryupdate">
         <p><b>Id курса:</b>
             <input name="idCourseForEdit" type="text" <?php echo "value=".(int)$_POST['idCourseForEdit']; ?> readonly>
         </p>
         <p><b>Введите название:</b><br>
             <input name="EditFormCourse" type="text" size="50" value="<?= $_SESSION['customCourse'] ?? $_POST['course']?>" required>
-        </p>
-        <p><b>Введите Id автора:</b><br>
-            <input name="EditFormAuthor" type="number" value="<?= $_SESSION['customAuthor'] ?? $_POST['author']?>" required>
         </p>
         <input type="submit" class="btn btn-outline-warning" value="Изменить курс">
         <input type="reset" class="btn btn-outline-danger" value="Очистить"></p>
@@ -35,7 +32,7 @@
     }
     ?>
     <h2>Добавление нового элемента</h2>
-    <form method="post" action="http://localhost/courses/catalog/<?=$_POST['idCourseForEdit']?>/update">
+    <form method="post" action="http://localhost/courses/<?=$_POST['idCourseForEdit']?>/update">
         <p><b>Тип элемента:</b>
         <select name="addType" class="form-select" method="post">
             <option class="optionC" value="Article">Article</option>
@@ -51,7 +48,7 @@ echo "<div class='BigBox'>";
 $i = 0;
 foreach ($_POST['content'] as $obj) {
     echo "<div class='bigcontentbox'><div class='contentbox'>";
-    echo '<form method="post" action="http://localhost/courses/catalog/'.$_POST['idCourseForEdit'].'/update">';
+    echo '<form method="post" action="http://localhost/courses/'.$_POST['idCourseForEdit'].'/update">';
     echo '<input name="ElementId" type="number" size="5" value="'.$i.'" hidden>';
     echo '<p><select name="updateType" class="form-select">';
     if($obj["type"] == "Article")

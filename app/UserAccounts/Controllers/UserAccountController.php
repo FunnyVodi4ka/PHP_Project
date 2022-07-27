@@ -3,6 +3,7 @@ require_once ($_SERVER['DOCUMENT_ROOT'].'/app/UserAccounts/Models/UserAccountMod
 require_once ($_SERVER['DOCUMENT_ROOT'].'/app/Users/Validation/ValidationForUsers.php');
 require_once ($_SERVER['DOCUMENT_ROOT'].'/app/UserAccounts/Services/imageUpload.php');
 require_once ($_SERVER['DOCUMENT_ROOT'].'/app/Core/Helpers/Pagination.php');
+require_once ($_SERVER['DOCUMENT_ROOT'].'/app/Courses/Validation/ValidationForCourses.php');
 
 class UserAccountController
 {
@@ -37,7 +38,6 @@ class UserAccountController
 
     public function GetUserIdFromSession()
     {
-        session_start();
         $id = (int)$_SESSION["is_userid"];
         return $id;
     }
@@ -226,5 +226,129 @@ class UserAccountController
             $this->alertMessage("Вы не можете удалить чужой курс!");
         }
         header("Refresh:0; url=http://localhost/courses");
+    }
+
+    public function ShowUpdateMyCourse()
+    {
+        $_POST['idCourseForEdit'] = $this->GetIdFromURL();
+        $model = new UserAccountModel();
+        $userId = $this->GetUserIdFromSession();
+
+        $stmt = $model->GetSelectedCourse($_POST['idCourseForEdit']);
+        while ($row = $stmt->fetch())
+        {
+            $_POST['course'] = $row['course_name'];
+            $_POST['content'] = json_decode($row['content'], JSON_FORCE_OBJECT);
+            $json = json_decode($row['content'], JSON_FORCE_OBJECT);
+        }
+
+        if(isset($_POST["btnAddElement"])) {
+            $this->ContentAddElement($json, $userId);
+        }
+
+        if(isset($_POST['btnUpdateElement'])){
+            $this->ContentUpdateElement($json, $userId);
+        }
+
+        if(isset($_POST['btnDeleteElement'])) {
+            $this->ContentDeleteElement($json, $userId);
+        }
+
+        require ($_SERVER['DOCUMENT_ROOT'].'/app/UserAccounts/Views/EditMyCourseView.php');
+    }
+
+    public function ContentAddElement($json, int $userId)
+    {
+        $model = new UserAccountModel();
+        $addarray = ["type" => $_POST["addType"], "content" => $_POST["addContent"]];
+        array_push($json, $addarray);
+
+        $json = array_values($json);
+        $json = json_encode($json, JSON_FORCE_OBJECT);
+        $model->WorkWithMyElement($json, $_POST['idCourseForEdit'], $userId);
+        unset($_POST["btnAddElement"]);
+        header("Refresh:0; url=http://localhost/courses/".$_POST['idCourseForEdit']."/update");
+        die;
+    }
+
+    public function ContentUpdateElement($json, int $userId)
+    {
+        $model = new UserAccountModel();
+        $id = (int)$_POST['ElementId'];
+
+        $newElement = [["type" => $_POST['updateType'],"content" => $_POST['updateContent']]];
+        $json[$id] = $newElement[0];
+
+        $json = array_values($json);
+        $json = json_encode($json, JSON_FORCE_OBJECT);
+        $model->WorkWithMyElement($json, $_POST['idCourseForEdit'], $userId);
+        unset($_POST['btnUpdateElement']);
+        header("Refresh:0; url=http://localhost/courses/".$_POST['idCourseForEdit']."/update");
+        die;
+    }
+
+    public function ContentDeleteElement($json, int $userId)
+    {
+        $model = new UserAccountModel();
+        $id = (int)$_POST['ElementId'];
+        unset($json[$id]);
+
+        $json = array_values($json);
+        $json = json_encode($json, JSON_FORCE_OBJECT);
+        $model->WorkWithMyElement($json, $_POST['idCourseForEdit'], $userId);
+        unset($_POST['btnDeleteElement']);
+        header("Refresh:0; url=http://localhost/courses/".$_POST['idCourseForEdit']."/update");
+        die;
+    }
+
+    public function CheckCourseDataValidation(int $id, string $name, int $author)
+    {
+        $validation = new ValidationForCourses();
+        if($id == -1){
+            $idResult = true;
+        } else {
+            $idResult = $validation->CheckCourseId($id);
+        }
+        $nameResult = $validation->CheckCourseName($name);
+        $authorResult = $validation->CheckAuthor($author);
+        //$contentResult = $validation->CheckContent($content);
+        $_SESSION['errorArray'] = $validation->OutputErrors();
+        if($idResult && $nameResult && $authorResult /*&& $contentResult*/){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function TryUpdateMyCourse()
+    {
+        unset($_SESSION['errorArray']);
+        $userId = $this->GetUserIdFromSession();
+
+        $idcourse = $_POST['idCourseForEdit'];
+        $courseName = $_POST['EditFormCourse'];
+
+        if (isset($_POST['idCourseForEdit']) && isset($_POST['EditFormCourse'])) {
+            if(!$this->CheckCourseDataValidation($idcourse, $courseName, $userId)){
+                header("Refresh:0; url=http://localhost/courses/".$_POST['idCourseForEdit']."/update"); die;
+            } else {
+                $model = new UserAccountModel();
+                $result = $model->UpdateMyCourse($_POST['EditFormCourse'], $_POST['idCourseForEdit'], $userId);
+                if ($result) {
+                    $this->ClearCustomData();
+                    unset($_SESSION['errorArray']);
+                    $this->alertMessage("Курс успешно изменён!");
+                    header("Refresh:0; url=http://localhost/courses");
+                    die;
+                } else {
+                    $this->alertMessage("Ошибка: Не удалось изменить курс, повторите попытку позже!");
+                    header("Refresh:0; url=http://localhost/courses/".$_POST['idCourseForEdit']."/update");
+                    die;
+                }
+            }
+        } else {
+            $this->alertMessage("Ошибка: Все поля должны быть заполнены!");
+            header("Refresh:0; url=http://localhost/courses/".$_POST['idCourseForEdit']."/update"); die;
+        }
     }
 }

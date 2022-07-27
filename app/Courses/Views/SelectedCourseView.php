@@ -9,12 +9,6 @@
 <body>
 <div>
 <?php
-//session_start();
-//if($_SESSION["is_role"] == 1) {
-//    echo '<b><a href="http://localhost/courses/catalog" class="btn btn-primary">Назад</a></b>';
-//} else {
-//    echo '<b><a href="http://localhost/courses" class="btn btn-primary">Назад</a></b>';
-//}
 echo '<b><a href="http://localhost/courses/catalog" class="btn btn-primary">Назад</a></b>';
 while ($row = $stmt->fetch())
 {
@@ -28,33 +22,22 @@ while ($row = $stmt->fetch())
     }
     echo "<p><b>Название курса:</b> ".$row["course_name"]."</p>";
     echo "<p><b>Автор:</b> ".$row["login"]."</p>";
-    $nowContentData = json_decode($row["content"]);
+    $nowContentData = json_decode($row["content"], JSON_FORCE_OBJECT);
     echo "<p><b>Содержание:</b></p>";
     if(empty($nowContentData)) {
         echo "<p>Нам очень жаль, но на данный момент курс пуст!</p>";
     } else {
-        echo "<p>".$nowContentData."</p>";
+        foreach ($nowContentData as $obj) {
+            echo "<div class='bigcontentbox'><div class='contentbox'>";
+            echo "<p><b>Type: </b>".$obj["type"]."</p>";
+            if($obj["type"] == "linkToVideo" || $obj["type"] == "linkToAudio") {
+                echo "<p><b>Content: </b><a href='".$obj['content']."'>".$obj['content']."</a></p>";
+            } else {
+                echo "<p><b>Content: </b>".$obj['content']."</p>";
+            }
+            echo "</div></div>";
+        }
     }
-    //------
-    $jsonarr = [["type"=>"Article", "content"=>"textxtxtxt"], ["type"=>"linkToVideo", "content"=>"video"], ["type"=>"linkToAudo", "content"=>"audio "]];
-    $in = json_encode($jsonarr, JSON_FORCE_OBJECT);
-    echo "In json: <br>";
-    var_dump($in);
-    echo "<br>";
-    $out=json_decode($in, JSON_FORCE_OBJECT);
-    echo "Out json: <br>";
-    var_dump($out);
-    echo "<br>";
-    echo "<br>";
-    foreach ($out as $obj) {
-        echo "Type: ";
-        echo $obj["type"];
-        echo "<br>";
-        echo "Content: ";
-        echo $obj['content'];
-        echo "<br><br>";
-    }
-    //------
 }
 ?>
 </div>

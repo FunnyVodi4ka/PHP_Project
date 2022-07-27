@@ -13,12 +13,12 @@ class UserController
 
     public function __construct()
     {
+        session_start();
         $this->CheckSession();
     }
 
     public function CheckSession()
     {
-        session_start();
         if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1) {
             return true;
         } else {

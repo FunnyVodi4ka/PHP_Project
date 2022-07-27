@@ -118,4 +118,24 @@ class UserAccountModel
             return false;
         }
     }
+
+    public function UpdateMyCourse(string $name, int $courseId, int $authorId)
+    {
+        $stmt = Connection()->prepare("UPDATE courses SET course_name = ? WHERE course_id = ? AND author_id = ?");
+        if($stmt->execute([$name, $courseId, $authorId])){
+            return true;
+        } else{
+            return false;
+        }
+    }
+
+    public function WorkWithMyElement(string $json, int $id, int $authorId)
+    {
+        $stmt = Connection()->prepare("UPDATE courses SET content = ? WHERE course_id = ? AND author_id = ?");
+        if($stmt->execute([$json, $id, $authorId])){
+            return true;
+        } else{
+            return false;
+        }
+    }
 }

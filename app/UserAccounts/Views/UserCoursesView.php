@@ -29,6 +29,7 @@ echo "<table class='table table-striped'>
 <th>Id</th>
 <th>Course</th>
 <th>Author</th>
+<th>Deleted At</th>
 <th></th>
 <th></th>
 </tr>";
@@ -43,6 +44,7 @@ while ($row = $stmt->fetch())
     echo "<td>" . $row["course_id"] . "</td>";
     echo "<td>" . $row["course_name"] . "</td>";
     echo "<td>" . $row["login"] . "</td>";
+    echo "<td>" . $row["deleted_at"] . "</td>";
     if(!empty($row['deleted_at'])){
         echo "<td colspan='2'><a class='btn btn-outline-secondary' href='http://localhost/courses/".$row["course_id"]."/recover' onclick='recoverName(this);return false;'>Восстановить</a></td>";
     }

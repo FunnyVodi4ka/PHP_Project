@@ -57,24 +57,31 @@ class CourseModel
         return $count;
     }
 
-    public function CreateCourse(string $name, int $idauthor, string $content)
+    public function CreateCourse(string $name, int $idauthor)
     {
         $stmt = Connection()->prepare("INSERT INTO courses (course_name, author_id, content) 
-        VALUES (?, ?, ?)");
-        $ContentData = json_encode($content);
-        if($stmt->execute([$name, $idauthor, $ContentData])){
+        VALUES (?, ?, '{}')");
+        if($stmt->execute([$name, $idauthor])){
             return true;
         } else{
             return false;
         }
     }
 
-    public function UpdateCourse(string $name, int $idauthor, string $content, int $courseId)
+    public function UpdateCourse(string $name, int $idauthor, int $courseId)
     {
-        $stmt = Connection()->prepare("UPDATE courses SET course_name = ?, author_id = ?, 
-            content = ? WHERE course_id = ?");
-        $ContentData = json_encode($content);
-        if($stmt->execute([$name, $idauthor, $ContentData, $courseId])){
+        $stmt = Connection()->prepare("UPDATE courses SET course_name = ?, author_id = ? WHERE course_id = ?");
+        if($stmt->execute([$name, $idauthor, $courseId])){
+            return true;
+        } else{
+            return false;
+        }
+    }
+
+    public function WorkWithElement(string $json, int $id)
+    {
+        $stmt = Connection()->prepare("UPDATE courses SET content = ? WHERE course_id = ?");
+        if($stmt->execute([$json, $id])){
             return true;
         } else{
             return false;

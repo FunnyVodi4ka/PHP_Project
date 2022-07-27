@@ -56,6 +56,14 @@ return [
         "controller" => "UserAccount",
         "action" => "ShowSelectedCourse"
     ],
+    "courses/(\d+)/update" => [
+        "controller" => "UserAccount",
+        "action" => "ShowUpdateMyCourse"
+    ],
+    "courses/tryupdate" => [
+        "controller" => "UserAccount",
+        "action" => "TryUpdateMyCourse"
+    ],
     "courses/(\d+)/delete" => [
         "controller" => "UserAccount",
         "action" => "DeleteMyCourse"

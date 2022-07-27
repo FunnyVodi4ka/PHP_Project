@@ -14,6 +14,7 @@ h2 {
     font-size: 200%;
     font-family: Arial, Verdana, sans-serif;
     text-align: center;
+    margin-top: 55px;
 }
 
 table {
@@ -32,6 +33,11 @@ table {
 .divcenter {
     text-align: center;
     margin: auto;
+}
+
+.BigBox {
+    display: inline-block;
+    text-align: left;
 }
 
 .loading {
@@ -142,7 +148,30 @@ img {
 }
 
 .accountMaindiv {
-    /*display: inline-block;*/
     text-align: center;
     margin: auto;
+}
+
+.bigcontentbox {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    max-width: 650px;
+}
+
+.contentbox {
+    display: inline-block;
+    padding: 15px;
+    border: solid 1px gray;
+    border-radius: 25px;
+    width: 600px;
+}
+
+.form-select {
+    display: inline-block;
+    max-width: 350px;
+}
+
+.btn {
+    margin: 5px;
 }

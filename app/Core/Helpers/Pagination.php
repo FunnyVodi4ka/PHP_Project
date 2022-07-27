@@ -4,7 +4,7 @@ class Pagination
 {
     public function CalculatePagParams($recordCount)
     {
-        session_start();
+        //session_start();
         if (isset($_GET['?PageRows']) && ($_GET['?PageRows'] == 10 ||
                 $_GET['?PageRows'] == 25 || $_GET['?PageRows'] == 50)) {
             $_SESSION['PageRows'] = $_GET['?PageRows'];
