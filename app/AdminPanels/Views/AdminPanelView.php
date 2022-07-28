@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Welcome to CRUD</title>
+    <title>Панель управления</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/styles/style.css">
 </head>
@@ -10,6 +10,7 @@
 <div class="exit">
     <b>
         <a class="btn btn-primary" href="http://localhost/LogOut" onclick="return  confirm('Вы точно хотите выйти?')">Выход</a>
+        <a class="btn btn-primary" href="http://localhost/myprofile">В личный кабинет</a>
     </b>
     <b>Добрый день, Администратор!</b>
 </div>

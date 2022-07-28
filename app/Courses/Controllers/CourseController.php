@@ -116,7 +116,7 @@ class CourseController
                 header("Refresh:0; url=http://localhost/courses/catalog/create"); die;
             } else {
                 $model = new CourseModel();
-                $result = $model->CreateCourse($_POST['CreateFormCourse'], $_POST['CreateFormAuthor']);
+                $result = $model->CreateCourse(htmlspecialchars($_POST['CreateFormCourse'], ENT_QUOTES), $_POST['CreateFormAuthor']);
                 if ($result) {
                     $this->ClearCustomData();
                     unset($_SESSION['errorArray']);
@@ -167,7 +167,7 @@ class CourseController
     public function ContentAddElement($json)
     {
         $model = new CourseModel();
-        $addarray = ["type" => $_POST["addType"], "content" => $_POST["addContent"]];
+        $addarray = ["type" => htmlspecialchars($_POST["addType"], ENT_QUOTES), "content" => htmlspecialchars($_POST["addContent"], ENT_QUOTES)];
         array_push($json, $addarray);
 
         $json = array_values($json);
@@ -183,7 +183,7 @@ class CourseController
         $model = new CourseModel();
         $id = (int)$_POST['ElementId'];
 
-        $newElement = [["type" => $_POST['updateType'],"content" => $_POST['updateContent']]];
+        $newElement = [["type" => htmlspecialchars($_POST["addType"], ENT_QUOTES), "content" => htmlspecialchars($_POST["addContent"], ENT_QUOTES)]];
         $json[$id] = $newElement[0];
 
         $json = array_values($json);
@@ -222,7 +222,7 @@ class CourseController
                 header("Refresh:0; url=http://localhost/courses/catalog/".$_POST['idCourseForEdit']."/update"); die;
             } else {
                 $model = new CourseModel();
-                $result = $model->UpdateCourse($_POST['EditFormCourse'], $_POST['EditFormAuthor'], $_POST['idCourseForEdit']);
+                $result = $model->UpdateCourse(htmlspecialchars($_POST['EditFormCourse'], ENT_QUOTES), $_POST['EditFormAuthor'], $_POST['idCourseForEdit']);
                 if ($result) {
                     $this->ClearCustomData();
                     unset($_SESSION['errorArray']);

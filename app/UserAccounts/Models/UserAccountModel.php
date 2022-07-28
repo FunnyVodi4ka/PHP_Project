@@ -4,9 +4,18 @@ require_once ($_SERVER['DOCUMENT_ROOT'].'/config/database.php');
 
 class UserAccountModel
 {
+    public function GetSelectedUser($userId)
+    {
+        $stmt = Connection()->prepare('SELECT user_id, login, email, phone, role_name, avatar_image, deleted_at FROM users 
+        INNER JOIN roles ON users.role_id = roles.role_id WHERE user_id = ?');
+        $stmt->execute([$userId]);
+
+        return $stmt;
+    }
+
     public function CounterAllCourses()
     {
-        $stmt = Connection()->query("SELECT * FROM courses");
+        $stmt = Connection()->query("SELECT * FROM courses WHERE deleted_at IS NULL");
         $count = $stmt->rowCount();
         return $count;
     }
@@ -20,7 +29,7 @@ class UserAccountModel
     }
 
     public function GetAllCourses(int $list, int $PageCount){
-        $stmt = Connection()->query('SELECT * FROM courses 
+        $stmt = Connection()->query('SELECT * FROM courses WHERE deleted_at IS NULL 
         ORDER BY course_id DESC LIMIT '.(($list-1)*$PageCount).','.$PageCount.';');
 
         return $stmt;

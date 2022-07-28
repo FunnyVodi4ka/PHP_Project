@@ -49,17 +49,6 @@ class ValidationForCourses
     }
     public function CheckContent(string $content)
     {
-//        if(strlen($content) <= 255 && strlen($content) >= 5){
-//            if (preg_match("/^[a-zA-Z0-9\!\.\,\[\]\=\<\>\?\s*_-]{5,255}$/i", $content)) {
-//                return true;
-//            } else {
-//                array_push($this->errorArray, "Ошибка: В содержании разрешены только цифры и латинские буквы!");
-//                return false;
-//            }
-//        } else {
-//            array_push($this->errorArray, "Ошибка: Длина содержания курса должна быть 255 символов!");
-//            return false;
-//        }
         return true;
     }
 }

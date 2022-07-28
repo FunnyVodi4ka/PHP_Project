@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/styles/style.css">
 </head>
 <div>
-<b><a href="http://localhost/users" class="btn btn-primary">Назад</a></b>
+<b><a href="http://localhost/listusers" class="btn btn-primary">Назад</a></b>
 <?php
 while ($row = $stmt->fetch())
 {

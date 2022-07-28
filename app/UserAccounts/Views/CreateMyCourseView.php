@@ -7,15 +7,12 @@
     <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body>
-<p><a href="http://localhost/courses/catalog" class="btn btn-primary">Назад</a></p>
+<p><a href="http://localhost/courses" class="btn btn-primary">Назад</a></p>
 <div class="divcenter">
     <h2>Добавление курса в БД</h2>
-    <form method="post" action="http://localhost/courses/catalog/trycreate">
+    <form method="post" action="http://localhost/courses/trycreate">
         <p><b>Введите название курса:</b><br>
-            <input name="CreateFormCourse" type="text" size="50" value="<?= $_SESSION['customCourse'] ?? '' ?>" required>
-        </p>
-        <p><b>Введите Id автора:</b><br>
-            <input name="CreateFormAuthor" type="number" value="<?= $_SESSION['customAuthor'] ?? '' ?>" required>
+            <input name="CreateFormCourse" type="text" size="50" value="<?= $_SESSION['customCourseName'] ?? '' ?>" required>
         </p>
         <input type="submit" class="btn btn-outline-success" value="Добавить курс">
         <input type="reset" class="btn btn-outline-danger" value="Очистить"></p>

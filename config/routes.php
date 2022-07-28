@@ -44,9 +44,21 @@ return [
         "controller" => "UserAccount",
         "action" => "ShowMyCourses"
     ],
+    "courses/create" => [
+        "controller" => "UserAccount",
+        "action" => "ShowCreateMyCourse"
+    ],
+    "courses/trycreate" => [
+        "controller" => "UserAccount",
+        "action" => "TryCreateMyCourse"
+    ],
     "listusers" => [
     "controller" => "UserAccount",
     "action" => "ShowListUsers"
+    ],
+    "listusers/(\d+)/view" => [
+        "controller" => "UserAccount",
+        "action" => "ShowSelectedUser"
     ],
     "listcourses" => [
         "controller" => "UserAccount",

@@ -28,7 +28,7 @@ class ValidationForUsers
             array_push($this->errorArray, "Ошибка: Некорректный логин!");
             return false;
         } else {
-            if (preg_match("/^[a-zA-Z0-9\!\.\,\s*_-]{5,50}$/i", $login)) {
+            if (preg_match("/^[a-zA-Z0-9\s*_-]{5,50}$/i", $login)) {
                 $model = new UserModel();
                 $count = $model->SearchUserLogin($login, $id);
                 if($count > 0) {

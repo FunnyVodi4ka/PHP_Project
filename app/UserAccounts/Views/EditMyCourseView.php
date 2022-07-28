@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Edit Course</title>
+    <title>Редактирование курса</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="/styles/style.css">
 </head>
@@ -35,9 +35,9 @@
     <form method="post" action="http://localhost/courses/<?=$_POST['idCourseForEdit']?>/update">
         <p><b>Тип элемента:</b>
         <select name="addType" class="form-select" method="post">
-            <option class="optionC" value="Article">Article</option>
-            <option class="optionC" value="linkToVideo">linkToVideo</option>
-            <option class="optionC" value="linkToAudio">linkToAudio</option>
+            <option class="optionC" value="Article">Текст</option>
+            <option class="optionC" value="linkToVideo">Ссылка на видео</option>
+            <option class="optionC" value="linkToAudio">Ссылка на аудиофайл</option>
         </select>
         </p>
         <p><textarea rows="4" cols="45" name="addContent"></textarea></p>
@@ -52,17 +52,17 @@ foreach ($_POST['content'] as $obj) {
     echo '<input name="ElementId" type="number" size="5" value="'.$i.'" hidden>';
     echo '<p><select name="updateType" class="form-select">';
     if($obj["type"] == "Article")
-        echo '<option selected class="optionC" value="Article">Article</option>';
+        echo '<option selected class="optionC" value="Article">Текст</option>';
     else
-        echo '<option class="optionC" value="Article">Article</option>';
+        echo '<option class="optionC" value="Article">Текст</option>';
     if($obj["type"] == "linkToVideo")
-        echo '<option selected class="optionC" value="linkToVideo">linkToVideo</option>';
+        echo '<option selected class="optionC" value="linkToVideo">Ссылка на видео</option>';
     else
-        echo '<option class="optionC" value="linkToVideo">linkToVideo</option>';
-    if($obj["type"] == "linkToVideo")
-        echo '<option selected class="optionC" value="linkToVideo">linkToVideo</option>';
+        echo '<option class="optionC" value="linkToVideo">Ссылка на видео</option>';
+    if($obj["type"] == "linkToAudio")
+        echo '<option selected class="optionC" value="linkToAudio">Ссылка на аудиофайл</option>';
     else
-        echo '<option class="optionC" value="linkToVideo">linkToVideo</option>';
+        echo '<option class="optionC" value="linkToAudio">Ссылка на аудиофайл</option>';
     echo '</select></p>';
     echo '<p><textarea rows="4" cols="45" name="updateContent">'.$obj['content'].'</textarea></p>';
     echo '<input name="btnUpdateElement" type="submit" class="btn btn-outline-warning" value="Изменить элемент"/>';

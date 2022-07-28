@@ -15,10 +15,10 @@
         echo "<h2>Данные о курсе с Id: ".$row["course_id"]."</h2>";
         echo "<p><b>Статус курса: </b>";
         if(empty($row["deleted_at"])){
-            echo "<b class='statusTextActive'>Active</b></p>";
+            echo "<b class='statusTextActive'>АКТИВЕН</b></p>";
         }
         else{
-            echo "<b class='statusTextDeleted'>Deleted</b></p>";
+            echo "<b class='statusTextDeleted'>УДАЛЕНО</b></p>";
         }
         echo "<p><b>Название курса:</b> ".$row["course_name"]."</p>";
         echo "<p><b>Автор:</b> ".$row["login"]."</p>";
@@ -29,11 +29,20 @@
         } else {
             foreach ($nowContentData as $obj) {
                 echo "<div class='bigcontentbox'><div class='contentbox'>";
-                echo "<p><b>Type: </b>".$obj["type"]."</p>";
-                if($obj["type"] == "linkToVideo" || $obj["type"] == "linkToAudio") {
-                    echo "<p><b>Content: </b><a href='".$obj['content']."'>".$obj['content']."</a></p>";
+                echo "<p><b>Тип данных: </b>";
+                if($obj["type"] == "Article") {
+                    echo "Текст</p>";
+                } elseif($obj["type"] == "linkToVideo") {
+                    echo "Ссылка на видео</p>";
+                } elseif($obj["type"] == "linkToAudio") {
+                    echo "Ссылка на аудио</p>";
                 } else {
-                    echo "<p><b>Content: </b>".$obj['content']."</p>";
+                    echo "Разное</p>";
+                }
+                if($obj["type"] == "linkToVideo" || $obj["type"] == "linkToAudio") {
+                    echo "<p><b>Содержание: </b><a href='".$obj['content']."'>".$obj['content']."</a></p>";
+                } else {
+                    echo "<p><b>Содержание: </b>".$obj['content']."</p>";
                 }
                 echo "</div></div>";
             }

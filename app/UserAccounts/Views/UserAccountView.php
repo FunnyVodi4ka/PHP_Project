@@ -2,14 +2,18 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>My profile</title>
+    <title>Мой профиль</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body>
 <div>
     <b><a href="http://localhost/LogOut" class="btn btn-primary" onclick="return  confirm('Вы точно хотите выйти?')">Выход</a></b>
-    <b>Добрый день, Клиент!</b>
+    <?php
+    if($_SESSION["is_auth"] && $_SESSION["is_role"] == 1){
+        echo '<a class="btn btn-primary" href="http://localhost/adminpanel">Панель управления</a>';
+    }
+    ?>
 </div>
 <div class="divcenter">
 <div class="accountMain">

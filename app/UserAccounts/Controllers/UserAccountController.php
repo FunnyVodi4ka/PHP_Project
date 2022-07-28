@@ -54,6 +54,8 @@ class UserAccountController
 
     public function ShowMyCourses()
     {
+        $this->ClearCustomData();
+        unset($_SESSION['errorArray']);
         $id = $this->GetUserIdFromSession();
         $model = new UserAccountModel();
 
@@ -70,6 +72,8 @@ class UserAccountController
 
     public function ShowListCourses()
     {
+        $this->ClearCustomData();
+        unset($_SESSION['errorArray']);
         $model = new UserAccountModel();
 
         $recordCount = $model->CounterAllCourses();
@@ -85,6 +89,8 @@ class UserAccountController
 
     public function ShowListUsers()
     {
+        $this->ClearCustomData();
+        unset($_SESSION['errorArray']);
         $model = new UserAccountModel();
 
         $recordCount = $model->CounterAllUsers();
@@ -121,7 +127,7 @@ class UserAccountController
                 $model = new UserAccountModel();
                 $result = $model->UpdateUserWithoutPassword($login, $email, $phone, $iduser);
 
-                if(isset($_FILES['imageUserEditer'])) {
+                if(isset($_FILES['imageUserEditer']) && strlen($_FILES['imageUserEditer']['name']) > 0) {
                     $uploader = new ImageUpload();
                     $uploader->Upload($iduser);
                 }
@@ -143,7 +149,7 @@ class UserAccountController
                 $model = new UserAccountModel();
                 $result = $model->UpdateUserWithPassword($login, $password, $email, $phone, $iduser);
 
-                if(isset($_FILES['imageUserEditer'])) {
+                if(isset($_FILES['imageUserEditer']) && strlen($_FILES['imageUserEditer']['name']) > 0) {
                     $uploader = new ImageUpload();
                     $uploader->Upload($iduser);
                 }
@@ -183,7 +189,6 @@ class UserAccountController
 
     public function SaveCustomData(string $login, string $email, string $phone)
     {
-        session_start();
         $_SESSION['customLogin'] = $login;
         $_SESSION['customEmail'] = $email;
         $_SESSION['customPhone'] = $phone;
@@ -191,6 +196,7 @@ class UserAccountController
 
     public function ClearCustomData()
     {
+        unset($_SESSION['customCourseName']);
         unset($_SESSION['customLogin']);
         unset($_SESSION['customEmail']);
         unset($_SESSION['customPhone']);
@@ -260,7 +266,7 @@ class UserAccountController
     public function ContentAddElement($json, int $userId)
     {
         $model = new UserAccountModel();
-        $addarray = ["type" => $_POST["addType"], "content" => $_POST["addContent"]];
+        $addarray = ["type" => htmlspecialchars($_POST["addType"], ENT_QUOTES), "content" => htmlspecialchars($_POST["addContent"], ENT_QUOTES)];
         array_push($json, $addarray);
 
         $json = array_values($json);
@@ -276,7 +282,7 @@ class UserAccountController
         $model = new UserAccountModel();
         $id = (int)$_POST['ElementId'];
 
-        $newElement = [["type" => $_POST['updateType'],"content" => $_POST['updateContent']]];
+        $newElement = [["type" => htmlspecialchars($_POST['updateType'], ENT_QUOTES),"content" => htmlspecialchars($_POST['updateContent'], ENT_QUOTES)]];
         $json[$id] = $newElement[0];
 
         $json = array_values($json);
@@ -333,7 +339,7 @@ class UserAccountController
                 header("Refresh:0; url=http://localhost/courses/".$_POST['idCourseForEdit']."/update"); die;
             } else {
                 $model = new UserAccountModel();
-                $result = $model->UpdateMyCourse($_POST['EditFormCourse'], $_POST['idCourseForEdit'], $userId);
+                $result = $model->UpdateMyCourse(htmlspecialchars($_POST['EditFormCourse'], ENT_QUOTES), $_POST['idCourseForEdit'], $userId);
                 if ($result) {
                     $this->ClearCustomData();
                     unset($_SESSION['errorArray']);
@@ -349,6 +355,54 @@ class UserAccountController
         } else {
             $this->alertMessage("Ошибка: Все поля должны быть заполнены!");
             header("Refresh:0; url=http://localhost/courses/".$_POST['idCourseForEdit']."/update"); die;
+        }
+    }
+
+    public function ShowSelectedUser()
+    {
+        $model = new UserAccountModel();
+        $userId = $this->GetIdFromURL();
+        $stmt = $model->GetSelectedUser($userId);
+        require ($_SERVER['DOCUMENT_ROOT'].'/app/UserAccounts/Views/SelectedUserView.php');
+    }
+
+    public function ShowCreateMyCourse()
+    {
+        require ($_SERVER['DOCUMENT_ROOT'].'/app/UserAccounts/Views/CreateMyCourseView.php');
+    }
+
+    public function SaveCourseNameData(string $name)
+    {
+        $_SESSION['customCourseName'] = $name;
+    }
+
+    public function TryCreateMyCourse()
+    {
+        unset($_SESSION['errorArray']);
+        if (isset($_POST['CreateFormCourse'])) {
+            $this->SaveCourseNameData($_POST['CreateFormCourse']);
+            $idAuthor = $this->GetUserIdFromSession();
+            $idAccessForCreate = -1; //
+            if(!$this->CheckCourseDataValidation($idAccessForCreate, $_POST['CreateFormCourse'], $idAuthor)){
+                header("Refresh:0; url=http://localhost/courses/create"); die;
+            } else {
+                $model = new CourseModel();
+                $result = $model->CreateCourse(htmlspecialchars($_POST['CreateFormCourse'], ENT_QUOTES), $idAuthor);
+                if ($result) {
+                    $this->ClearCustomData();
+                    unset($_SESSION['errorArray']);
+                    $this->alertMessage("Курс успешно создан!");
+                    header("Refresh:0; url=http://localhost/courses/create");
+                    die;
+                } else {
+                    $this->alertMessage("Ошибка: Не удалось создать курс, повторите попытку позже!");
+                    header("Refresh:0; url=http://localhost/courses/create");
+                    die;
+                }
+            }
+        } else {
+            $this->alertMessage("Ошибка: Все поля должны быть заполнены!");
+            header("Refresh:0; url=http://localhost/courses/create"); die;
         }
     }
 }

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>List Users</title>
+    <title>Пользователи</title>
     <script>
         function deleteName(f) {
             if (confirm("Вы уверены, что хотите удалить пользователя?")){
@@ -29,8 +29,8 @@
 <h2>Список пользователей</h2>
 <a href="http://localhost/users/create" class='btn btn-outline-success'>Создать запись</a>
 <?php
-echo "<table class='table table-striped'><tr><th></th><th>Photo</th><th>Id</th><th>Login</th>
-      <th>Email</th><th>Phone</th><th>Role</th><th></th><th></th></tr>";
+echo "<table class='table table-striped'><tr><th></th><th>Фото</th><th>Id</th><th>Логин</th>
+      <th>Почта</th><th>Телефон</th><th>Роль</th><th>Статус пользователя</th><th></th><th></th></tr>";
 while ($row = $stmt->fetch())
 {
     if(!empty($row['deleted_at'])){
@@ -44,7 +44,7 @@ while ($row = $stmt->fetch())
     if(!empty($row["avatar_image"]) && file_exists($_SERVER['DOCUMENT_ROOT'].$row["avatar_image"])){
         echo "<td><img src='".$row["avatar_image"]."' alt='Loading...' width='55' height='55'></td>";
     }
-    else{
+    else {
         echo "<td><img src='/public/userImages/standartPhoto.png' alt='Loading...' width='55' height='55'></td>";
     }
     echo "<td>" . $row["user_id"] . "</td>";
@@ -52,6 +52,11 @@ while ($row = $stmt->fetch())
     echo "<td>" . $row["email"] . "</td>";
     echo "<td>" . $row["phone"] . "</td>";
     echo "<td>" . $row["role_name"] . "</td>";
+    if(empty($row["deleted_at"])) {
+        echo "<td><b class='statusTextActive'>АКТИВЕН</b></td>";
+    } else {
+        echo "<td><b class='statusTextDeleted'>УДАЛЕНО: </b>" . $row["deleted_at"] . "</td>";
+    }
 
     if(!empty($row['deleted_at'])){
         echo "<td colspan='2'><a class='btn btn-outline-secondary' href='http://localhost/users/".$row["user_id"]."/recover' onclick='recoverName(this);return false;'>Восстановить</a></td>";

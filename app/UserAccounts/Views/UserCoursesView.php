@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>My courses</title>
+    <title>Мои курсы</title>
     <script>
         function deleteName(f) {
             if (confirm("Вы уверены, что хотите удалить курс?")){
@@ -22,14 +22,15 @@
 <a class="btn btn-primary" href="http://localhost/LogOut" onclick="return  confirm('Вы точно хотите выйти?')">Выход</a>
 <a class="btn btn-primary" href="http://localhost/myprofile">В личный кабинет</a>
 <h2>Список моих курсов</h2>
+<a href="http://localhost/courses/create" class='btn btn-outline-success'>Создать запись</a>
 <?php
 echo "<table class='table table-striped'>
 <tr>
 <th></th>
-<th>Id</th>
-<th>Course</th>
-<th>Author</th>
-<th>Deleted At</th>
+<th>Id курса</th>
+<th>Название курса</th>
+<th>Автор</th>
+<th>Статус курса</th>
 <th></th>
 <th></th>
 </tr>";
@@ -44,7 +45,11 @@ while ($row = $stmt->fetch())
     echo "<td>" . $row["course_id"] . "</td>";
     echo "<td>" . $row["course_name"] . "</td>";
     echo "<td>" . $row["login"] . "</td>";
-    echo "<td>" . $row["deleted_at"] . "</td>";
+    if(empty($row["deleted_at"])) {
+        echo "<td><b class='statusTextActive'>АКТИВЕН</b></td>";
+    } else {
+        echo "<td><b class='statusTextDeleted'>УДАЛЕНО: </b>" . $row["deleted_at"] . "</td>";
+    }
     if(!empty($row['deleted_at'])){
         echo "<td colspan='2'><a class='btn btn-outline-secondary' href='http://localhost/courses/".$row["course_id"]."/recover' onclick='recoverName(this);return false;'>Восстановить</a></td>";
     }
