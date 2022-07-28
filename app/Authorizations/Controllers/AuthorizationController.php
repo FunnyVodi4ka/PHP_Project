@@ -17,11 +17,11 @@ class AuthorizationController
     public function CheckSession()
     {
         session_start();
-        if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1) {
+        if (isset($_SESSION["is_auth"]) && $_SESSION["is_role"] == 1) {
             header("Refresh:0; url=adminpanel");
             die;
         }
-        if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 2) {
+        if (isset($_SESSION["is_auth"]) && $_SESSION["is_role"] == 2) {
             header("Refresh:0; url=myprofile");
             die;
         }
@@ -42,10 +42,8 @@ class AuthorizationController
     public function TryAuthorization()
     {
         $this->CheckSession();
-        $enterLogin = $_POST['loginEnter']; //можно ли сразу передавать?
-        $enterPassword = $_POST['passwordEnter'];
         $model = new AuthorizationModel();
-        $enterResult = $model->CheckUser($enterLogin, $enterPassword);
+        $enterResult = $model->CheckUser($_POST['loginEnter'], $_POST['passwordEnter']);
         if($enterResult == "admin"){
             header("Refresh:0; url=adminpanel");
             die;

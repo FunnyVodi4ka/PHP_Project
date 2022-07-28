@@ -38,7 +38,6 @@ class UserController
 
     public function GetIdFromSession()
     {
-        session_start();
         $myId = (int)$_SESSION["is_userid"];
         return $myId;
     }
@@ -123,7 +122,7 @@ class UserController
                 isset($_POST['emailCreater']) && isset($_POST['phoneCreater']) && isset($_POST['roleCreater'])) {
                 $this->SaveCustomData($_POST['loginCreater'], $_POST['emailCreater'], $_POST['phoneCreater']);
                 $idAccessForCreate = $this->GetIdFromSession(); //
-                if(!$this->CheckDataValidation($idAccessForCreate, $_POST['loginCreater'], $_POST['passwordCreater'], $_POST['emailCreater'], $_POST['phoneCreater'])){
+                if(!$this->CheckDataValidation($idAccessForCreate, $_POST['loginCreater'], $_POST['passwordCreater'], $_POST['emailCreater'], $_POST['phoneCreater'], $_POST['roleCreater'])){
                     header("Refresh:0; url=http://localhost/users/create"); die;
                 } else {
                     $model = new UserModel();
@@ -219,7 +218,6 @@ class UserController
 
     public function SaveCustomData(string $login, string $email, string $phone)
     {
-        session_start();
         $_SESSION['customLogin'] = $login;
         $_SESSION['customEmail'] = $email;
         $_SESSION['customPhone'] = $phone;

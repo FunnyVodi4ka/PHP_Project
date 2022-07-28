@@ -15,7 +15,7 @@
     while ($row = $stmt->fetch())
     {
         $_POST["Login"] = $row["login"];
-        $_POST["Password"] = $row["password"];
+        //$_POST["Password"] = $row["password"];
         $_POST["Email"] = $row["email"];
         $_POST["Phone"] = $row["phone"];
     }

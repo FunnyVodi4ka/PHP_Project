@@ -1,10 +1,11 @@
 <?php
 function Connection(){
-    $host = '';
-    $db   = '';
-    $user = '';
-    $pass = '';
-    $charset = '';
+    try {
+    $host = '';//Your host, For example *localhost*
+    $db   = '';//Your database, For example *mydatabase*
+    $user = '';//Your username, For example *root*
+    $pass = '';//Your password, For example *12345*
+    $charset = ''; //Your encoding, For example *utf8*
 
     $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
     $opt = [
@@ -14,8 +15,8 @@ function Connection(){
     ];
     $pdo = new PDO($dsn, $user, $pass, $opt);
     return $pdo;
-    if($pdo->connect_error){
-        die("Ошибка: " . $pdo->connect_error);
+    } catch (PDOException $e) {
+        print "Error: " . $e->getMessage() . "<br/>";
+        die();
     }
-    return $pdo;
 }

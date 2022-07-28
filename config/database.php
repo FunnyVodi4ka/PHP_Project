@@ -1,5 +1,6 @@
 <?php
 function Connection(){
+    try {
     $host = 'localhost';
     $db   = 'CrudDatabase';
     $user = 'root';
@@ -14,8 +15,8 @@ function Connection(){
     ];
     $pdo = new PDO($dsn, $user, $pass, $opt);
     return $pdo;
-    if($pdo->connect_error){
-        die("Ошибка: " . $pdo->connect_error);
+    } catch (PDOException $e) {
+        print "Error: " . $e->getMessage() . "<br/>";
+        die();
     }
-    return $pdo;
 }

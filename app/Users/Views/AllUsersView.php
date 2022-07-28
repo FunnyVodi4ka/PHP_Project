@@ -24,7 +24,6 @@
         <a class="btn btn-primary" href="http://localhost/LogOut" onclick="return  confirm('Вы точно хотите выйти?')">Выход</a>
         <a class="btn btn-primary" href="http://localhost/adminpanel">Назад</a>
     </b>
-    <b>Добрый день, Администратор!</b>
 </div>
 <h2>Список пользователей</h2>
 <a href="http://localhost/users/create" class='btn btn-outline-success'>Создать запись</a>

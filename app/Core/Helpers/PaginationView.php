@@ -49,9 +49,9 @@
         </li>
         <form method="get">
             <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="PageRows" onchange="form.submit();">
-                <option value="10" <?php if ($_SESSION['PageRows'] == 10) {echo "selected";}?>>10</option>
-                <option value="25" <?php if ($_SESSION['PageRows'] == 25) {echo "selected";}?>>25</option>
-                <option value="50" <?php if ($_SESSION['PageRows'] == 50) {echo "selected";}?>>50</option>
+                <option value="10" <?php if (isset($_SESSION['PageRows']) == 10 && $_SESSION['PageRows'] == 10) {echo "selected";}?>>10</option>
+                <option value="25" <?php if (isset($_SESSION['PageRows']) == 25 && $_SESSION['PageRows'] == 25) {echo "selected";}?>>25</option>
+                <option value="50" <?php if (isset($_SESSION['PageRows']) == 50 && $_SESSION['PageRows'] == 50) {echo "selected";}?>>50</option>
             </select>
         </form>
     </ul>

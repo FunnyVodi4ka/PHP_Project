@@ -12,11 +12,11 @@ class RegistrationController
     public function CheckSession()
     {
         session_start();
-        if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 1) {
+        if (isset($_SESSION["is_auth"]) && $_SESSION["is_role"] == 1) {
             header("Refresh:0; url=http://localhost/adminpanel");
             die;
         }
-        if ($_SESSION["is_auth"] && $_SESSION["is_role"] == 2) {
+        if (isset($_SESSION["is_auth"]) && $_SESSION["is_role"] == 2) {
             header("Refresh:0; url=http://localhost/myaccount");
             die;
         }
@@ -58,7 +58,7 @@ class RegistrationController
                     header("Refresh:0; url=http://localhost/register"); die;
                 } else {
                     $model = new RegistrationModel();
-                    $result = $model->CreateUser($_POST['loginRegister'], $_POST['passwordRegister'], $_POST['emailRegister'], isset($_POST['phoneRegister']));
+                    $result = $model->CreateUser($_POST['loginRegister'], $_POST['passwordRegister'], $_POST['emailRegister'], $_POST['phoneRegister']);
                     if ($result) {
                         $this->ClearCustomData();
                         unset($_SESSION['errorArray']);

@@ -49,6 +49,10 @@ class ValidationForCourses
     }
     public function CheckContent(string $content)
     {
-        return true;
+        if(strlen($content) <= 1000) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
