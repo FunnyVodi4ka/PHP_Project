@@ -166,6 +166,7 @@ img {
     border: solid 1px gray;
     border-radius: 25px;
     width: 600px;
+    /*min-height: 50px;*/
 }
 
 .form-select {
@@ -175,4 +176,8 @@ img {
 
 .btn {
     margin: 5px;
+}
+
+textarea {
+    min-height: 70px;
 }
